@@ -203,7 +203,7 @@ environments/       # Environments folder
 * Collections
   * [dburles:collection-helpers](https://github.com/dburles/meteor-collection-helpers)
   * [aldeed:collection2](https://github.com/aldeed/meteor-collection2)
-* Routing
+* Router
   * [kadira:flow-router](https://github.com/kadirahq/flow-router)
   * [kadira:react-layout](https://github.com/kadirahq/meteor-react-layout)
   * [meteorhacks:fast-render](https://github.com/meteorhacks/fast-render)

@@ -4,6 +4,8 @@
 # 'meteor add' and 'meteor remove' will edit this file for you,
 # but you can also edit it by hand.
 
+# Meteor Core
+
 meteor-base             # Packages every Meteor app needs to have
 mobile-experience       # Packages for a great mobile UX
 mongo                   # The database Meteor supports right now
@@ -16,17 +18,39 @@ standard-minifiers      # JS/CSS minifiers run for production mode
 es5-shim                # ECMAScript 5 compatibility for older browsers.
 ecmascript              # Enable ECMAScript2015+ syntax in app code
 
-fourseven:scss
-react
-fastclick
 check
+fastclick
+react
+
+# Accounts
+
 accounts-password
-kadira:flow-router
+
+# Collections
+
 dburles:collection-helpers
+aldeed:collection2
+
+# Router
+
+kadira:flow-router
 kadira:react-layout
 meteorhacks:fast-render
+
+# SEO
+
 spiderable
 tomwasd:flow-router-seo
+
+# Analytics
+
 datariot:ganalytics
+
+# UI/UX
+
 natestrauser:animate-css
 fortawesome:fontawesome
+
+# Development
+
+fourseven:scss
