@@ -200,11 +200,9 @@ environments/       # Environments folder
   * [react](https://github.com/meteor/meteor/tree/devel/packages/react)
 * Accounts
   * [accounts-password](https://github.com/meteor/meteor/tree/devel/packages/accounts-password)
-  * [useraccounts:unstyled](https://github.com/meteor-useraccounts/unstyled/)
-  * [useraccounts:flow-routing](https://github.com/meteor-useraccounts/flow-routing)
-  * [gwendall:useraccounts-react](https://github.com/gwendall/meteor-useraccounts-react)
 * Collections
   * [dburles:collection-helpers](https://github.com/dburles/meteor-collection-helpers)
+  * [aldeed:collection2](https://github.com/aldeed/meteor-collection2)
 * Routing
   * [kadira:flow-router](https://github.com/kadirahq/flow-router)
   * [kadira:react-layout](https://github.com/kadirahq/meteor-react-layout)
