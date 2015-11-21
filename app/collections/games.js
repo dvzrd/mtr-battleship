@@ -20,7 +20,11 @@ let GamesSchema = new SimpleSchema({
     'creator': {
         type: String,
         label: 'The user that created the game'
+    },
+    'playerCount': {
+        type: String,
+        label: 'The player count of the game'
     }
 });
 
-Games.attachSchema( GamesSchema );
+Games.attachSchema(GamesSchema);
