@@ -196,9 +196,13 @@ environments/       # Environments folder
   * [standard-minifiers](https://github.com/meteor/meteor/tree/devel/packages/standard-minifiers)
   * [tracker](https://github.com/meteor/meteor/tree/devel/packages/tracker)
   * [check](https://github.com/meteor/meteor/tree/devel/packages/check)
+  * [browser-policy](https://github.com/meteor/meteor/tree/devel/packages/browser-policy)
   * [fastclick](http://github.com/meteor/meteor/tree/devel/packages/fastclick)
   * [react](https://github.com/meteor/meteor/tree/devel/packages/react)
+  * [reactive-var](https://github.com/meteor/meteor/tree/devel/packages/reactive-var)
+  * [reactive-dict](https://github.com/meteor/meteor/tree/devel/packages/reactive-dict)
 * Accounts
+  * [accounts-base](https://github.com/meteor/meteor/tree/devel/packages/accounts-base)
   * [accounts-password](https://github.com/meteor/meteor/tree/devel/packages/accounts-password)
 * Collections
   * [dburles:collection-helpers](https://github.com/dburles/meteor-collection-helpers)
@@ -217,9 +221,8 @@ environments/       # Environments folder
   * [fortawesome:fontawesome](https://github.com/MeteorPackaging/Font-Awesome)
 * Development
   * [fourseven:scss](https://github.com/fourseven/meteor-scss)
-* Tests
-  * [sanjo:jasmine](https://github.com/xolvio/meteor-jasmine)
-  * [velocity:html-reporter](https://github.com/meteor-velocity/html-reporter/)
+  * [stevezhu:lodash](https://github.com/stevezhu/meteor-lodash)
+  * [digilord:faker](https://github.com/digilord/meteor-faker)
 
 ## License
 

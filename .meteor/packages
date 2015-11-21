@@ -19,11 +19,15 @@ es5-shim                # ECMAScript 5 compatibility for older browsers.
 ecmascript              # Enable ECMAScript2015+ syntax in app code
 
 check
+browser-policy
 fastclick
 react
+reactive-var
+reactive-dict
 
 # Accounts
 
+accounts-base
 accounts-password
 
 # Collections
@@ -54,3 +58,6 @@ fortawesome:fontawesome
 # Development
 
 fourseven:scss
+stevezhu:lodash
+digilord:faker
+
