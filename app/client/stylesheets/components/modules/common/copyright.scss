@@ -1,0 +1,11 @@
+@import '../../../_variables';
+
+.copyright.module {
+  padding: $space-mini;
+  text-align: center;
+
+  .copyright {
+    margin: 0;
+    font-size: $font-size-small;
+  }
+}

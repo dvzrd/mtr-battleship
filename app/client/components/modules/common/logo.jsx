@@ -2,7 +2,7 @@ App.Logo = React.createClass({
     render() {
         return (
             <module className="logo module">
-                <h1 className="logo">Space Battleship</h1>
+                <a className="logo">Space <i className="fa fa-rocket"></i> Battleship</a>
             </module>
         );
     }
