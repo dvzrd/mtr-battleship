@@ -9,7 +9,7 @@ App.RecoverPassword = React.createClass({
     },
     render() {
         return (
-            <view className="recover password view">
+            <view className="recover account password view">
                     <h2 className="title">Recover Password</h2>
 
                     <form id="recoverPassword" className="recover password form" onSubmit={this.handleSubmit}>

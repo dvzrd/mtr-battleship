@@ -9,7 +9,7 @@ App.Login = React.createClass({
     },
     render() {
         return (
-            <view className="login view">
+            <view className="account login view">
                 <h2 className="title">Login</h2>
 
                 <form id="login" className="login form" onSubmit={this.handleSubmit}>
@@ -18,14 +18,14 @@ App.Login = React.createClass({
                         <input type="email" name="emailAddress" className="email input" placeholder="Email Address"/>
                     </div>
                     <div className="input group">
-                        <label className="label" htmlFor="password">Password <a className="route link"
-                                                                                href="/recover-password">Forgot
-                            Password?</a></label>
+                        <label className="label" htmlFor="password">Password</label>
                         <input type="password" name="password" className="password input" placeholder="Password"/>
                     </div>
                     <button type="submit" className="primary button">Login</button>
                 </form>
-                <p>Don't have an account? <a href="/signup">Sign Up</a>.</p>
+                <p className="message">Forgot Password? <a className="route link" href="/recover-password">Reset here</a>.</p>
+
+                <p className="message">Don't have an account? <a className="route link" href="/signup">Register here</a>.</p>
             </view>
         );
     }

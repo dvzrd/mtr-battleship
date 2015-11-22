@@ -9,7 +9,7 @@ App.Signup = React.createClass({
     },
     render() {
         return (
-            <view className="signup view">
+            <view className="account signup view">
                 <h2 className="title">Sign Up</h2>
 
                 <form id="signup" className="signup form" onSubmit={this.handleSubmit}>
@@ -21,9 +21,9 @@ App.Signup = React.createClass({
                         <label className="label" htmlFor="password">Password</label>
                         <input type="password" name="password" className="form-control" placeholder="Password"/>
                     </div>
-                    <button type="submit" class="primary button">Sign Up</button>
+                    <button type="submit" className="primary button">Sign Up</button>
                 </form>
-                <p>Already have an account? <a href="/login">Log In</a>.</p>
+                <p className="message">Already have an account? <a className="route link" href="/login">Log In</a>.</p>
             </view>
         );
     }

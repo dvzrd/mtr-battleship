@@ -9,7 +9,7 @@ App.ResetPassword = React.createClass({
     },
     render() {
         return (
-            <view className="reset password view">
+            <view className="reset account password view">
                     <h2 className="title">Reset Password</h2>
 
                     <form id="resetPassword" className="reset password form" onSubmit={this.handleSubmit}>
