@@ -13,16 +13,16 @@ Games.deny({
 });
 
 let GamesSchema = new SimpleSchema({
-    'name': {
+    'title': {
         type: String,
-        label: 'The name of the game.'
+        label: 'The title of the game.'
     },
     'creator': {
         type: String,
         label: 'The user that created the game'
     },
     'playerCount': {
-        type: String,
+        type: Number,
         label: 'The player count of the game'
     }
 });
