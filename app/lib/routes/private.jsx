@@ -9,10 +9,10 @@ const privateRoutes = FlowRouter.group({
     triggersEnter: [privateRedirect]
 });
 
-privateRoutes.route('/battle/:name', {
+privateRoutes.route('/battle/:_id', {
     name: 'battle',
     action(params) {
-        ReactLayout.render(App.Layout, {view: <App.Battle id={params.id} />});
+        ReactLayout.render(App.Layout, {view: <App.Battle id={params._id} />});
     }
 });
 

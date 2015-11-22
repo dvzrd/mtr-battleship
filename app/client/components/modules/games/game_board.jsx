@@ -7,11 +7,12 @@ App.GameBoard = React.createClass({
     },
 
     getMeteorData() {
-        let subscription = Meteor.subscribe('games');
+        let gameId = 'T95GjXmxJvvmz6txw';
+        let subscription = Meteor.subscribe('game', gameId);
 
         return {
             isLoading: !subscription.ready(),
-            games: Games.find().fetch()
+            game: Games.findOne({_id: gameId})
         };
     },
 
@@ -20,7 +21,7 @@ App.GameBoard = React.createClass({
             return <App.Loading />;
         } else {
             return (
-                <module className="game board module">
+                <module className="game board module" id={this.data.game._id}>
                     <div className="grid" id="A">
                         <div className="cell" id="1A"></div>
                         <div className="cell" id="2A"></div>

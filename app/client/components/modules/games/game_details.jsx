@@ -7,11 +7,12 @@ App.GameDetails = React.createClass({
     },
 
     getMeteorData() {
-        let subscription = Meteor.subscribe('games');
+        let gameId = FlowRouter.getParam('_id');
+        let subscription = Meteor.subscribe('game', gameId);
 
         return {
             isLoading: !subscription.ready(),
-            games: Games.find().fetch()
+            game: Games.findOne({_id: gameId})
         };
     },
 
@@ -21,7 +22,7 @@ App.GameDetails = React.createClass({
         } else {
             return (
                 <module className="game details module">
-                    <h2 className="centered title">Title {this.data.games.title}</h2>
+                    <h2 className="centered title">{this.data.game.title}</h2>
 
                     <div className="players">
                         <h4 className="left player">
