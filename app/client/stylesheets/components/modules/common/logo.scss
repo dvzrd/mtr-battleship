@@ -11,5 +11,13 @@
     cursor: pointer;
     color: $offset-color;
     text-decoration: none;
+
+    .fa {
+      color: $primary-color;
+    }
+
+    &:hover {
+      color: $primary-color;
+    }
   }
 }
