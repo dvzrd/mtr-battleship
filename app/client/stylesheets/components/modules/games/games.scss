@@ -1,21 +1,38 @@
 @import '../../../_variables';
 
 .games.module {
+  padding: 0;
 
   .games.list {
 
     .game.item {
+      margin: 0;
+      padding: $space-base;
+      border-bottom: $space-micro solid $neutral-color;
 
-      .title {
-        display: block;
+      .route.link {
+        text-decoration: none;
+
+        .title {
+          display: block;
+          margin: 0;
+
+          .date {
+            float: right;
+          }
+        }
+
+        .creator {
+          display: block;
+        }
         
-        .date {
-          float: right;
+        &:hover {
+          
         }
       }
 
-      .creator {
-        display: block;
+      &:last-child {
+        border: 0;
       }
     }
   }
