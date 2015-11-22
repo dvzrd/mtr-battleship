@@ -21,8 +21,9 @@ App.Menu = React.createClass({
                     {this.leftButtons()}
                 </div>
                 <div className="right buttons">
-                    <button type="button" className="secondary icon button"><i className="fa fa-bars"></i></button>
-
+                    <button type="button" className="secondary icon button">
+                        <i className="fa fa-bars"></i>
+                    </button>
                 </div>
             </module>
         );

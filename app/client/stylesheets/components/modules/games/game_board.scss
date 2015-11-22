@@ -1,0 +1,26 @@
+@import '../../../_variables';
+
+.game.board.module {
+  padding: 0;
+  border: $space-mini solid $light;
+
+  .grid {
+    display: flex;
+    flex-wrap: wrap;
+    height: 16vh;
+    margin: 0;
+    padding: 0;
+    background-color: $secondary-color;
+
+    .cell {
+      cursor: pointer;
+      flex: 1;
+      padding: $space-base;
+      box-shadow: 0 0 0 $space-atomic $light;
+      
+      &:hover {
+        background-color: $highlight-color;
+      }
+    }
+  }
+}

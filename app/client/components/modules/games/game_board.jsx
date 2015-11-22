@@ -20,8 +20,42 @@ App.GameBoard = React.createClass({
             return <App.Loading />;
         } else {
             return (
-                <module className="game board">
-                    game board
+                <module className="game board module">
+                    <div className="grid">
+                        <div className="cell"></div>
+                        <div className="cell"></div>
+                        <div className="cell"></div>
+                        <div className="cell"></div>
+                        <div className="cell"></div>
+                    </div>
+                    <div className="grid">
+                        <div className="cell"></div>
+                        <div className="cell"></div>
+                        <div className="cell"></div>
+                        <div className="cell"></div>
+                        <div className="cell"></div>
+                    </div>
+                    <div className="grid">
+                        <div className="cell"></div>
+                        <div className="cell"></div>
+                        <div className="cell"></div>
+                        <div className="cell"></div>
+                        <div className="cell"></div>
+                    </div>
+                    <div className="grid">
+                        <div className="cell"></div>
+                        <div className="cell"></div>
+                        <div className="cell"></div>
+                        <div className="cell"></div>
+                        <div className="cell"></div>
+                    </div>
+                    <div className="grid">
+                        <div className="cell"></div>
+                        <div className="cell"></div>
+                        <div className="cell"></div>
+                        <div className="cell"></div>
+                        <div className="cell"></div>
+                    </div>
                 </module>
             );
         }
