@@ -219,6 +219,8 @@ environments/       # Environments folder
 * UI/UX
   * [natestrauser:animate-css](https://github.com/nate-strauser/meteor-animate-css)
   * [fortawesome:fontawesome](https://github.com/MeteorPackaging/Font-Awesome)
+  * [themeteorchef:jquery-validation](https://github.com/themeteorchef/jquery-validation/)
+  * [themeteorchef:bert](https://github.com/themeteorchef/bert/)
 * Development
   * [fourseven:scss](https://github.com/fourseven/meteor-scss)
   * [stevezhu:lodash](https://github.com/stevezhu/meteor-lodash)

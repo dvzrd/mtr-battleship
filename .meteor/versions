@@ -94,6 +94,8 @@ standard-minifiers@1.0.2
 stevezhu:lodash@3.10.1
 templating@1.1.5
 templating-tools@1.0.0
+themeteorchef:bert@2.1.0
+themeteorchef:jquery-validation@1.14.0
 tomwasd:flow-router-seo@0.0.3
 tracker@1.0.9
 ui@1.0.8
