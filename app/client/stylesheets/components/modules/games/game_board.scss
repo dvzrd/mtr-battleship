@@ -2,7 +2,11 @@
 
 .game.board.module {
   padding: 0;
-  border: $space-mini solid $light;
+  background-color: $secondary-color;
+  background: $background-image;
+  background-size: cover;
+  background-position: $half $half;
+  background-repeat: no-repeat;
 
   .grid {
     display: flex;
@@ -10,7 +14,6 @@
     height: 16vh;
     margin: 0;
     padding: 0;
-    background-color: $secondary-color;
 
     .cell {
       cursor: pointer;
