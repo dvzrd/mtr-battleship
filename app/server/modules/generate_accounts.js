@@ -1,6 +1,7 @@
 let administrators = [
     {
         name: { first: 'Admin', last: 'McAdmin' },
+        username: 'admin',
         email: 'admin@admin.com',
         password: 'admin'
     }
@@ -39,6 +40,7 @@ let _checkIfUserExists = ( email ) => {
 let _createUser = ( user ) => {
     Accounts.createUser({
         email: user.email,
+        username: user.username,
         password: user.password,
         profile: {
             name: user.name
@@ -53,6 +55,7 @@ let _generateFakeUsers = ( count ) => {
         users.push({
             name: { first: faker.name.firstName(), last: faker.name.lastName() },
             email: faker.internet.email(),
+            username: faker.internet.userName(),
             password: 'password'
         });
     }
