@@ -12,7 +12,7 @@ let currentRoute = ( route ) => {
     return FlowRouter.current().route.name === route ? 'active' : '';
 };
 
-FlowHelpers = {
+RouterHelpers = {
     pathFor: pathFor,
     urlFor: urlFor,
     currentRoute: currentRoute

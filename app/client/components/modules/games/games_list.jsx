@@ -3,7 +3,7 @@ App.GamesList = React.createClass({
         return (
             <ul className="unstyled games list">
                 {this.props.games.map((game, index) => {
-                    return <App.Game key={index} game={game} />;
+                    return <App.GameItem key={index} game={game} />;
                 })}
             </ul>
         );
