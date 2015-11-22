@@ -11,9 +11,11 @@
   .grid {
     display: flex;
     flex-wrap: wrap;
-    height: 16vh;
+    height: $fluid-eighth;
     margin: 0;
     padding: 0;
+    border-left: $space-mini solid $light;
+    border-right: $space-mini solid $light;
 
     .cell {
       cursor: pointer;
