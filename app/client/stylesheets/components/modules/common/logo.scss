@@ -2,13 +2,14 @@
 
 .logo.module {
   padding: $space-mini;
-  box-shadow: 0 0 $space-micro 0 $secondary-color;
-  background-color: $offset-color;
+  box-shadow: 0 0 $space-micro 0 $dark;
+  background-color: $secondary-color;
   text-align: center;
+  z-index: 1;
 
   .logo {
     cursor: pointer;
-    color: $secondary-color;
+    color: $offset-color;
     text-decoration: none;
   }
 }

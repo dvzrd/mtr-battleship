@@ -10,6 +10,14 @@
       padding: $space-base;
       border-bottom: $space-micro solid $neutral-color;
 
+      &:last-child {
+        border: 0;
+      }
+
+      &:hover {
+        background-color: $offset-color;
+      }
+
       .route.link {
         text-decoration: none;
 
@@ -25,14 +33,6 @@
         .creator {
           display: block;
         }
-        
-        &:hover {
-          
-        }
-      }
-
-      &:last-child {
-        border: 0;
       }
     }
   }
