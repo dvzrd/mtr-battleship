@@ -2,11 +2,17 @@ App.Layout = React.createClass({
     render() {
         return (
             <layout className="layout">
-                <App.Header />
+                <header className="header">
+                    <App.Logo />
+                </header>
 
-                {this.props.view}
+                <main className="main">
+                    {this.props.view}
+                </main>
 
-                <App.Footer />
+                <footer className="footer">
+                    <App.Copyright />
+                </footer>
             </layout>
         );
     }

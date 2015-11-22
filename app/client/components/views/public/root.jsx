@@ -1,9 +1,9 @@
 App.Root = React.createClass({
     render() {
         return (
-            <main className="view">
+            <view className="root view">
                 <p>root view</p>
-            </main>
+            </view>
         );
     }
 });
