@@ -1,3 +1,7 @@
-//imports
-//@import 'elements/forms';
-//@import 'components/login';
+@import 'components/layouts/layout';
+
+@import 'components/modules/common/copyright';
+@import 'components/modules/common/logo';
+@import 'components/modules/games/games';
+
+@import 'components/views/public/root';
