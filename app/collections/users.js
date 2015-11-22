@@ -1,11 +1,11 @@
 Meteor.users.allow({
-        insert: () => false,
+    insert: () => false,
     update: () => false,
     remove: () => false
 });
 
 Meteor.users.deny({
-        insert: () => true,
+    insert: () => true,
     update: () => true,
     remove: () => true
 });

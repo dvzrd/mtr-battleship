@@ -17,6 +17,8 @@ App.GameDetails = React.createClass({
     },
 
     defender() {
+        // @TODO: if creator is current user show username
+        // else show option to create AI challenger
         if (!Meteor.loggingIn() && Meteor.user()) {
             return (
                 <h4 className="left player">
@@ -33,7 +35,21 @@ App.GameDetails = React.createClass({
     },
 
     challenger() {
-
+        //@TODO: if challenger is null - show option to create AI challenger
+        // else show challenger and check if current user
+        if (!Meteor.loggingIn() && Meteor.user()) {
+            return (
+                <h4 className="right player">
+                    {this.data.game.challenger} <small className="points">10/50 points</small>
+                </h4>
+            );
+        } else {
+            return (
+                <h4 className="right player">
+                    No Player Found
+                </h4>
+            );
+        }
     },
 
     render() {
@@ -46,9 +62,7 @@ App.GameDetails = React.createClass({
 
                     <div className="players">
                         {this.defender()}
-                        <h4 className="right player">
-                            Player 2 <small className="points">10/50 points</small>
-                        </h4>
+                        {this.challenger()}
                     </div>
                 </module>
             );
