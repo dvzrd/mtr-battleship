@@ -63,3 +63,30 @@
   margin: 0;
   padding: $space-base;
 }
+
+// list
+
+.list {
+  margin: 0;
+  list-style-type: square;
+
+  &.unstyled {
+    padding: 0;
+    list-style-type: none;
+  }
+
+  &.ordered {
+    list-style-type: upper-hexadecimal;
+    text-indent: initial;
+  }
+
+  &.inline {
+    display: inline;
+    padding: 0;
+    list-style-type: none;
+
+    .item {
+      display: inline;
+    }
+  }
+}
