@@ -1,0 +1,65 @@
+@import '_variables';
+
+// button
+
+.button {
+  cursor: pointer;
+  margin: 0;
+  padding: $space-tiny $space-base;
+  outline: 0;
+  border: 0;
+  border-radius: $space-micro;
+  background-color: $link-color;
+  color: $light;
+  font-size: $space-base;
+
+  &.primary {
+    background-color: $primary-color;
+    color: $light;
+
+    &:hover {
+      background-color: $offset-color;
+      color: $light;
+    }
+  }
+
+  &.secondary {
+    background-color: $secondary-color;
+    color: $light;
+
+    &:hover {
+      color: $link-color;
+    }
+  }
+
+  &.icon {
+    padding: $space-mini $space-tiny - $space-quantum;
+    font-size: $font-size-base + $font-size-tiny;
+  }
+
+  &.menu {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    margin: $space-micro;
+    z-index: 1;
+  }
+}
+
+// view
+
+.view {
+  display: block;
+  position: relative;
+  margin: 0;
+  padding: 0;
+}
+
+// module
+
+.module {
+  display: block;
+  position: relative;
+  margin: 0;
+  padding: $space-base;
+}

@@ -1,0 +1,43 @@
+@import '../../_variables';
+
+html {
+  width: $full;
+  height: $full;
+
+  body {
+    width: $full;
+    height: $full;
+    margin: 0;
+    padding: 0;
+
+    .layout {
+      position: relative;
+      display: flex;
+      min-height: $fluid-full;
+      flex-direction: column;
+      overflow: hidden;
+
+      .header {
+        position: relative;
+        display: flex;
+        flex-wrap: wrap;
+        margin: 0;
+        padding: 0;
+
+        .module {
+          flex: 1;
+          padding: $space-mini;
+        }
+      }
+
+      .main {
+        position: relative;
+        flex: 1;
+      }
+
+      .footer {
+        position: relative;
+      }
+    }
+  }
+}
