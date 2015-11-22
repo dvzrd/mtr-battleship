@@ -12,6 +12,6 @@ const privateRoutes = FlowRouter.group({
 privateRoutes.route('/dashboard', {
     name: 'dashboard',
     action() {
-        ReactLayout.render(App.Layout, {yield: <App.Dashboard />});
+        ReactLayout.render(App.Layout, {view: <App.Dashboard />});
     }
 });

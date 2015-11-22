@@ -13,6 +13,7 @@ publicRoutes.route('/', {
     name: 'root',
     action() {
         ReactLayout.render(App.Layout, {view: <App.Root />});
+        //GAnalytics.pageview();
     }
 });
 
