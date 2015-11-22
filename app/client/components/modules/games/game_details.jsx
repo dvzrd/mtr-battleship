@@ -21,7 +21,7 @@ App.GameDetails = React.createClass({
         } else {
             return (
                 <module className="game details module">
-                    <h2 className="title">Title {this.data.games.title}</h2>
+                    <h2 className="centered title">Title {this.data.games.title}</h2>
 
                     <div className="players">
                         <h4 className="left player">

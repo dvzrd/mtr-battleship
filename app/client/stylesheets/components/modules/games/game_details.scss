@@ -1,0 +1,23 @@
+@import '../../../_variables';
+
+.game.details.module {
+
+  .title {
+    margin-bottom: $space-micro;
+    border-bottom: $space-atomic solid $neutral-color;
+  }
+
+  .players {
+    display: flex;
+    flex-wrap: wrap;
+
+    .player {
+      flex: 1;
+      margin: 0;
+
+      &.right {
+        text-align: right;
+      }
+    }
+  }
+}

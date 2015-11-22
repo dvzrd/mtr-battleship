@@ -65,6 +65,16 @@
   padding: $space-base;
 }
 
+// title
+
+.title {
+  margin: 0;
+
+  &.centered {
+    text-align: center;
+  }
+}
+
 // list
 
 .list {
