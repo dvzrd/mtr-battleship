@@ -2,4 +2,21 @@
 
 .games.module {
 
+  .games.list {
+
+    .game.item {
+
+      .title {
+        display: block;
+        
+        .date {
+          float: right;
+        }
+      }
+
+      .creator {
+        display: block;
+      }
+    }
+  }
 }
