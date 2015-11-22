@@ -2,7 +2,7 @@
 
 A battleship game built with Meteor and React.
 
-[VIEW THE DEMO](http://battleship.meteor.com)
+[VIEW THE DEMO](http://spacebattle.meteor.com)
 
 * [What it is](#what-it-is)
 * [How to use](#how-to-use)
