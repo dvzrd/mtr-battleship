@@ -13,7 +13,7 @@ privateRoutes.route('/battle/:name', {
     name: 'battle',
     action(params) {
         ReactLayout.render(App.Layout, {
-            content: <App.Battle id={params.id} />
+            view: <App.Battle id={params.id} />
         });
     }
 });
