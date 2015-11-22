@@ -31,8 +31,7 @@ let GamesSchema = new SimpleSchema({
     },
     'playerCount': {
         type: Number,
-        label: 'The player count of the game',
-        limit: 2
+        label: 'The player count of the game'
     },
     'winner': {
         type: String,

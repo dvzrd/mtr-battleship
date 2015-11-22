@@ -34,8 +34,11 @@ let _generateGames = (count) => {
         games.push({
             title: 'Game Title',
             creator: 'admin',
-            playerCount: 0,
-            createdAt: new Date()
+            createdAt: new Date(),
+            challenger: null,
+            playerCount: 1,
+            winner: null,
+            completedAt: null
         });
     }
 
