@@ -16,6 +16,26 @@ App.GameDetails = React.createClass({
         };
     },
 
+    defender() {
+        if (!Meteor.loggingIn() && Meteor.user()) {
+            return (
+                <h4 className="left player">
+                    {this.data.game.creator} <small className="points">10/50 points</small>
+                </h4>
+            );
+        } else {
+            return (
+                <h4 className="left player">
+                    No Player Found
+                </h4>
+            );
+        }
+    },
+
+    challenger() {
+
+    },
+
     render() {
         if (this.data.isLoading) {
             return <App.Loading />;
@@ -25,9 +45,7 @@ App.GameDetails = React.createClass({
                     <h2 className="centered title">{this.data.game.title}</h2>
 
                     <div className="players">
-                        <h4 className="left player">
-                            Player 1 <small className="points">10/50 points</small>
-                        </h4>
+                        {this.defender()}
                         <h4 className="right player">
                             Player 2 <small className="points">10/50 points</small>
                         </h4>
