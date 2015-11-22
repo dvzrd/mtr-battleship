@@ -12,9 +12,7 @@ const privateRoutes = FlowRouter.group({
 privateRoutes.route('/battle/:name', {
     name: 'battle',
     action(params) {
-        ReactLayout.render(App.Layout, {
-            view: <App.Battle id={params.id} />
-        });
+        ReactLayout.render(App.Layout, {view: <App.Battle id={params.id} />});
     }
 });
 
