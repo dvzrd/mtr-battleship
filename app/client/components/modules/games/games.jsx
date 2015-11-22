@@ -1,11 +1,12 @@
 App.Games = React.createClass({
     mixins: [ReactMeteorData],
     getMeteorData() {
-        let subscription = Meteor.subscribe('games');
+        let selector = {winner: null};
+        let subscription = Meteor.subscribe('games', selector);
 
         return {
             isLoading: !subscription.ready(),
-            games: Games.find().fetch()
+            games: Games.find({}, {sort: {createdAt: -1}}).fetch()
         };
     },
     render() {
