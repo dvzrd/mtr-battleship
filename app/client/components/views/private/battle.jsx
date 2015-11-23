@@ -4,6 +4,7 @@ App.Battle = React.createClass({
             <view className="animated fadeIn battle view">
                 <App.GameDetails />
                 <App.GameBoard />
+                <App.GameBoard />
             </view>
         );
     }
