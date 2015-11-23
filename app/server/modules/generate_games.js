@@ -32,7 +32,7 @@ let _generateGames = (count) => {
 
     for (let i = 0; i < count; i++) {
         games.push({
-            title: 'Game Title',
+            title: faker.name.title(),
             creator: 'admin',
             createdAt: new Date(),
             challenger: null,
