@@ -9,14 +9,14 @@ App.RecoverPassword = React.createClass({
     },
     render() {
         return (
-            <view className="recover account password view">
+            <view className="animated fadeIn recover account password view">
                     <h2 className="title">Recover Password</h2>
 
                     <form id="recoverPassword" className="recover password form" onSubmit={this.handleSubmit}>
                         <p className="info alert">Enter your email address below to receive a link to reset your password.</p>
 
                         <div className="input group">
-                            <label className="label" htmlFor="emailAddress">Email Address</label>
+                            <label className="label" htmlFor="emailAddress"><i className="fa fa-envelope"></i></label>
                             <input type="email" name="emailAddress" className="email input" placeholder="Email Address"/>
                         </div>
                         <button type="submit" className="primary button">Recover Password</button>

@@ -2,4 +2,23 @@
 
 .account.view {
   padding: $space-base;
+
+  .title {
+    margin: $space-base auto;
+    text-align: center;
+  }
+
+  .form {
+    width: $half;
+    margin: $space-base auto;
+
+    .input.group {
+      display: flex;
+      margin-bottom: $space-tiny;
+
+      .input {
+        flex: 1;
+      }
+    }
+  }
 }

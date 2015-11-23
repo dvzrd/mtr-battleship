@@ -9,7 +9,7 @@ App.ResetPassword = React.createClass({
     },
     render() {
         return (
-            <view className="reset account password view">
+            <view className="animated fadeIn reset account password view">
                     <h2 className="title">Reset Password</h2>
 
                     <form id="resetPassword" className="reset password form" onSubmit={this.handleSubmit}>
@@ -17,12 +17,12 @@ App.ResetPassword = React.createClass({
                             your new password.</p>
 
                         <div className="input group">
-                            <label className="label" htmlFor="newPassword">New Password</label>
-                            <input type="password" name="newPassword" className="password input" placeholder="New Password"/>
+                            <label className="label" htmlFor="newPassword"><i className="fa fa-lock"></i></label>
+                            <input type="password" name="newPassword" className="password input" placeholder="New password"/>
                         </div>
                         <div className="input group">
-                            <label className="label" htmlFor="password">Repeat New Password</label>
-                            <input type="password" name="repeatNewPassword" className="password input" placeholder="Password"/>
+                            <label className="label" htmlFor="password"><i className="fa fa-lock"></i></label>
+                            <input type="password" name="repeatNewPassword" className="password input" placeholder="Repeat new password"/>
                         </div>
                         <button type="submit" className="primary button">Reset Password &amp; Login</button>
                     </form>

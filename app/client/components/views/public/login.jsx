@@ -9,16 +9,16 @@ App.Login = React.createClass({
     },
     render() {
         return (
-            <view className="account login view">
+            <view className="animated fadeIn account login view">
                 <h2 className="title">Login</h2>
 
                 <form id="login" className="login form" onSubmit={this.handleSubmit}>
                     <div className="input group">
-                        <label className="label" htmlFor="emailAddress">Email Address</label>
+                        <label className="label" htmlFor="emailAddress"><i className="fa fa-envelope"></i></label>
                         <input type="email" name="emailAddress" className="email input" placeholder="Email Address"/>
                     </div>
                     <div className="input group">
-                        <label className="label" htmlFor="password">Password</label>
+                        <label className="label" htmlFor="password"><i className="fa fa-lock"></i></label>
                         <input type="password" name="password" className="password input" placeholder="Password"/>
                     </div>
                     <button type="submit" className="primary button">Login</button>

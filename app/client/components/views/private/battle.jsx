@@ -1,7 +1,7 @@
 App.Battle = React.createClass({
     render() {
         return (
-            <view className="battle view">
+            <view className="animated fadeIn battle view">
                 <App.GameDetails />
                 <App.GameBoard />
             </view>
