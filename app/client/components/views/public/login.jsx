@@ -19,15 +19,18 @@ App.Login = React.createClass({
                                autofocus/>
                     </div>
                     <div className="input group">
-                        <label className="label" htmlFor="password"><i className="fa fa-lock"></i></label>
+                        <label className="label" htmlFor="password"><i className="fa fa-unlock"></i></label>
                         <input type="password" name="password" className="password input" placeholder="Password"/>
                     </div>
                     <button type="submit" className="primary button">Login</button>
                 </form>
-                <p className="message">Forgot Password? <a className="route link" href="/recover-password">Reset
-                    here</a>.</p>
+                <p className="message">
+                    Forgot Password? <a className="route link" href="/recover-password">Reset
+                    here</a>.
+                </p>
 
-                <p className="message">Don't have an account? <a className="route link" href="/signup">Register here</a>.
+                <p className="message">
+                    Don't have an account? <a className="route link" href="/signup">Register here</a>.
                 </p>
             </view>
         );

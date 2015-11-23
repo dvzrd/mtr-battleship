@@ -17,9 +17,9 @@ App.Signup = React.createClass({
                         <label className="label" htmlFor="emailAddress"><i className="fa fa-envelope"></i></label>
                         <input type="email" name="emailAddress" className="email input" placeholder="Email Address"/>
                     </div>
-                    <div className="form-group">
-                        <label className="label" htmlFor="password"><i className="fa fa-lock"></i></label>
-                        <input type="password" name="password" className="form-control" placeholder="Password"/>
+                    <div className="input group">
+                        <label className="label" htmlFor="password"><i className="fa fa-unlock"></i></label>
+                        <input type="password" name="password" className="password input" placeholder="Password"/>
                     </div>
                     <button type="submit" className="primary button">Sign Up</button>
                 </form>

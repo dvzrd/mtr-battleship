@@ -101,3 +101,41 @@
     }
   }
 }
+
+// forms
+
+.input.group {
+  display: flex;
+  margin-bottom: $space-tiny;
+
+  .label {
+    vertical-align: middle;
+    padding: ($space-small - $space-atomic) $space-small;
+    border-radius: $space-micro;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    background: $neutral-color;
+  }
+
+  .input {
+    flex: 1;
+    margin: 0;
+    padding: $space-tiny;
+    outline: 0;
+    border: $space-micro solid $neutral-color;
+    border-radius: $space-micro;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    background: $background-color;
+    line-height: $line-height-base;
+    font-size: $font-size-base;
+  }
+}
+
+// messages and alerts
+
+.message {
+  margin-bottom: $space-tiny;
+  font-size: $font-size-base;
+  text-align: center;
+}
