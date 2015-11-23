@@ -6,15 +6,11 @@
   .buttons {
     position: fixed;
     bottom: 0;
-    margin: $space-mini;
+    width: $full;
     z-index: 1;
 
-    &.left {
-      left: 0;
-    }
-
-    &.right {
-      right: 0;
+    .button {
+      margin: $space-micro;
     }
   }
 }
