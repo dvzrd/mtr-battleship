@@ -1,23 +1,27 @@
 @import '../../../_variables';
 
 .game.details.module {
+  padding: 0;
+  z-index: 2;
 
-  .title {
-    margin: $space-small auto $space-micro;
-    border-bottom: $space-atomic solid $neutral-color;
-  }
+  .player {
+    display: block;
+    position: absolute;
+    width: $full;
+    margin: 0;
+    text-align: center;
 
-  .players {
-    display: flex;
-    flex-wrap: wrap;
+    &.creator {
+      bottom: $space-small - $space-quantum;
+    }
 
-    .player {
-      flex: 1;
-      margin: 0;
+    &.destroyer {
+      top: $space-tiny;
+    }
 
-      &.right {
-        text-align: right;
-      }
+    .label.username {
+      background-color: $negative-color;
+      color: $light;
     }
   }
 }

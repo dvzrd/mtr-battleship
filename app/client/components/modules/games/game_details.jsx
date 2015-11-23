@@ -16,38 +16,49 @@ App.GameDetails = React.createClass({
         };
     },
 
-    defender() {
+    creator() {
         // @TODO: if creator is current user show username
-        // else show option to create AI challenger
+        // else show option to create AI destroyer
         if (!Meteor.loggingIn() && Meteor.user()) {
             return (
-                <h4 className="left player">
-                    {this.data.game.creator} <small className="points">10/50 points</small>
-                </h4>
+                <div className="player creator">
+                    <span className="label username">
+                        {this.data.game.creator}
+                        <span className="points">10/50 points</span>
+                    </span>
+                </div>
             );
         } else {
             return (
-                <h4 className="left player">
-                    No Player Found
-                </h4>
+                <div className="player creator">
+                    <span className="label username">
+                        No Player Found
+                    </span>
+                </div>
             );
         }
     },
 
-    challenger() {
-        //@TODO: if challenger is null - show option to create AI challenger
-        // else show challenger and check if current user
+    destroyer() {
+        //@TODO: if destroyer is null - show option to create AI challenger
+        // else show destroyer and check if current user
         if (!Meteor.loggingIn() && Meteor.user()) {
             return (
-                <h4 className="right player">
-                    {this.data.game.challenger} <small className="points">10/50 points</small>
-                </h4>
+                <div className="player destroyer">
+                    <span className="label username">
+                        {this.data.game.challenger}
+                        destroyer
+                        <span className="points">10/50 points</span>
+                    </span>
+                </div>
             );
         } else {
             return (
-                <h4 className="right player">
-                    No Player Found
-                </h4>
+                <div className="player destroyer">
+                    <span className="label username">
+                        No Player Found
+                    </span>
+                </div>
             );
         }
     },
@@ -58,12 +69,9 @@ App.GameDetails = React.createClass({
         } else {
             return (
                 <module className="game details module">
-                    <h2 className="centered title">{this.data.game.title}</h2>
-
-                    <div className="players">
-                        {this.defender()}
-                        {this.challenger()}
-                    </div>
+                    {this.creator()}
+                    <div className="versus divider">vs</div>
+                    {this.destroyer()}
                 </module>
             );
         }

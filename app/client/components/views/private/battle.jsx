@@ -3,9 +3,7 @@ App.Battle = React.createClass({
         return (
             <view className="animated fadeIn battle view">
                 <App.GameBoard />
-                <div className="versus divider">
-                    vs
-                </div>
+                <App.GameDetails />
                 <App.GameBoard />
             </view>
         );

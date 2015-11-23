@@ -110,15 +110,15 @@
   }
 }
 
-// dividers
+// divider
 
 .divider {
   display: block;
   user-select: none;
   margin: $space-base 0;
-  background-color: $secondary-color;
-  color: $light;
-  font-size: $font-size-base;
+  background-color: $neutral-color;
+  color: $secondary-color;
+  font-size: $font-size-tiny;
   line-height: $line-height-base;
 
   &.versus {
@@ -128,11 +128,22 @@
     height: auto;
     margin: 0;
     overflow: hidden;
+    background-color: $negative-color;
+    color: $light;
     text-align: center;
   }
 }
 
-// forms
+// label
+
+.label {
+  padding: $space-micro $space-tiny;
+  border-radius: $space-micro;
+  background-color: $neutral-color;
+  font-size: $font-size-small;
+}
+
+// form
 
 .input.group {
   display: flex;
@@ -162,7 +173,7 @@
   }
 }
 
-// messages and alerts
+// message
 
 .message {
   margin-bottom: $space-tiny;
