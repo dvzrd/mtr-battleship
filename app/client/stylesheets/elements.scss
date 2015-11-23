@@ -110,6 +110,28 @@
   }
 }
 
+// dividers
+
+.divider {
+  display: block;
+  user-select: none;
+  margin: $space-base 0;
+  background-color: $secondary-color;
+  color: $light;
+  font-size: $font-size-base;
+  line-height: $line-height-base;
+
+  &.versus {
+    display: table;
+    white-space: nowrap;
+    width: $full;
+    height: auto;
+    margin: 0;
+    overflow: hidden;
+    text-align: center;
+  }
+}
+
 // forms
 
 .input.group {

@@ -1,14 +1,15 @@
 @import '../../../_variables';
 
 .game.board.module {
-  margin-bottom: $space-base;
+  height: 40vh;
+  margin: $space-mini auto;
   padding: 0;
   background-color: $secondary-color;
 
   .grid {
     display: flex;
     flex-wrap: wrap;
-    height: $fluid-eighth;
+    height: 8vh;
     margin: 0;
     padding: 0;
     border-left: $space-mini solid $light;
