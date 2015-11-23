@@ -24,7 +24,7 @@ App.ResetPassword = React.createClass({
                             <label className="label" htmlFor="password"><i className="fa fa-lock"></i></label>
                             <input type="password" name="repeatNewPassword" className="password input" placeholder="Repeat new password"/>
                         </div>
-                        <button type="submit" className="primary button">Reset Password &amp; Login</button>
+                        <button type="submit" className="primary centered button">Reset Password &amp; Login</button>
                     </form>
             </view>
         );

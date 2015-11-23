@@ -19,7 +19,7 @@
     color: $light;
 
     &:hover {
-      background-color: $offset-color;
+      background-color: $secondary-color;
       color: $light;
     }
   }
@@ -29,13 +29,21 @@
     color: $light;
 
     &:hover {
-      color: $link-color;
+      color: $primary-color;
     }
   }
 
   &.icon {
     padding: $space-mini $space-tiny - $space-quantum;
     font-size: $font-size-base + $font-size-tiny;
+  }
+
+  &.centered {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   &.menu {
@@ -106,7 +114,7 @@
 
 .input.group {
   display: flex;
-  margin-bottom: $space-tiny;
+  margin-bottom: $space-base;
 
   .label {
     vertical-align: middle;

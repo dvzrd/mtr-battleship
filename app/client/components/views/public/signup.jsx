@@ -21,7 +21,7 @@ App.Signup = React.createClass({
                         <label className="label" htmlFor="password"><i className="fa fa-unlock"></i></label>
                         <input type="password" name="password" className="password input" placeholder="Password"/>
                     </div>
-                    <button type="submit" className="primary button">Sign Up</button>
+                    <button type="submit" className="primary centered button">Sign Up</button>
                 </form>
                 <p className="message">Already have an account? <a className="route link" href="/login">Log In</a>.</p>
             </view>

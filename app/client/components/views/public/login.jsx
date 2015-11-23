@@ -22,7 +22,7 @@ App.Login = React.createClass({
                         <label className="label" htmlFor="password"><i className="fa fa-unlock"></i></label>
                         <input type="password" name="password" className="password input" placeholder="Password"/>
                     </div>
-                    <button type="submit" className="primary button">Login</button>
+                    <button type="submit" className="primary centered button">Login</button>
                 </form>
                 <p className="message">
                     Forgot Password? <a className="route link" href="/recover-password">Reset

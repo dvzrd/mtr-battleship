@@ -19,7 +19,7 @@ App.RecoverPassword = React.createClass({
                             <label className="label" htmlFor="emailAddress"><i className="fa fa-envelope"></i></label>
                             <input type="email" name="emailAddress" className="email input" placeholder="Email Address"/>
                         </div>
-                        <button type="submit" className="primary button">Recover Password</button>
+                        <button type="submit" className="primary centered button">Recover Password</button>
                     </form>
             </view>
         );
