@@ -1,9 +1,9 @@
 App.Menu = React.createClass({
-    leftButtons() {
+    renderButtons() {
         if (!Meteor.loggingIn() && Meteor.user()) {
             return (
-                <a className="secondary icon button" href="#" onClick={Meteor.logout}>
-                    <i className="fa fa-power-off"></i>
+                <a className="secondary icon button" href={RouterHelpers.pathFor('dashboard')}>
+                    <i className="fa fa-user"></i>
                 </a>
             );
         } else {
@@ -17,13 +17,8 @@ App.Menu = React.createClass({
     render() {
         return (
             <module className="menu module">
-                <div className="left buttons">
-                    {this.leftButtons()}
-                </div>
                 <div className="right buttons">
-                    <button type="button" className="secondary icon button">
-                        <i className="fa fa-cog"></i>
-                    </button>
+                    {this.renderButtons()}
                 </div>
             </module>
         );

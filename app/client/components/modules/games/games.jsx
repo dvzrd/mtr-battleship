@@ -1,7 +1,7 @@
 App.Games = React.createClass({
     mixins: [ReactMeteorData],
     getMeteorData() {
-        let selector = {winner: null};
+        let selector = {completedAt: null};
         let subscription = Meteor.subscribe('games', selector);
 
         return {
