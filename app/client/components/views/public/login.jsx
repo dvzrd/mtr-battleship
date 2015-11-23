@@ -15,7 +15,8 @@ App.Login = React.createClass({
                 <form id="login" className="login form" onSubmit={this.handleSubmit}>
                     <div className="input group">
                         <label className="label" htmlFor="emailAddress"><i className="fa fa-envelope"></i></label>
-                        <input type="email" name="emailAddress" className="email input" placeholder="Email Address"/>
+                        <input type="email" name="emailAddress" className="email input" placeholder="Email Address"
+                               autofocus/>
                     </div>
                     <div className="input group">
                         <label className="label" htmlFor="password"><i className="fa fa-lock"></i></label>
@@ -23,9 +24,11 @@ App.Login = React.createClass({
                     </div>
                     <button type="submit" className="primary button">Login</button>
                 </form>
-                <p className="message">Forgot Password? <a className="route link" href="/recover-password">Reset here</a>.</p>
+                <p className="message">Forgot Password? <a className="route link" href="/recover-password">Reset
+                    here</a>.</p>
 
-                <p className="message">Don't have an account? <a className="route link" href="/signup">Register here</a>.</p>
+                <p className="message">Don't have an account? <a className="route link" href="/signup">Register here</a>.
+                </p>
             </view>
         );
     }
