@@ -7,7 +7,6 @@
 
     .game.item {
       margin: 0;
-      padding: $space-base;
       border-bottom: $space-micro solid $neutral-color;
 
       &:last-child {
@@ -19,6 +18,9 @@
       }
 
       .route.link {
+        display: block;
+        margin: 0;
+        padding: $space-base;
         text-decoration: none;
 
         .title {
