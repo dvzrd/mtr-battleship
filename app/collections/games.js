@@ -27,7 +27,8 @@ let GamesSchema = new SimpleSchema({
     },
     'challenger': {
         type: String,
-        label: 'The username of user that joined the game'
+        label: 'The username of user that joined the game',
+        optional: true
     },
     'playerCount': {
         type: Number,
@@ -35,11 +36,13 @@ let GamesSchema = new SimpleSchema({
     },
     'winner': {
         type: String,
-        label: 'The username of the winner of this game'
+        label: 'The username of the winner of this game',
+        optional: true
     },
     'completedAt': {
         type: Date,
-        label: 'The date the game was completed'
+        label: 'The date the game was completed',
+        optional: true
     }
 });
 

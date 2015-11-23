@@ -7,7 +7,7 @@ App.GameBoard = React.createClass({
     },
 
     getMeteorData() {
-        let gameId = 'T95GjXmxJvvmz6txw';
+        let gameId = FlowRouter.getParam('_id');
         let subscription = Meteor.subscribe('game', gameId);
 
         return {
