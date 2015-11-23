@@ -25,12 +25,12 @@ App.Login = React.createClass({
                     <button type="submit" className="primary centered button">Login</button>
                 </form>
                 <p className="message">
-                    Forgot Password? <a className="route link" href="/recover-password">Reset
+                    Forgot Password? <a className="route link" href={RouterHelpers.pathFor('recoverPassword')}>Reset
                     here</a>.
                 </p>
 
                 <p className="message">
-                    Don't have an account? <a className="route link" href="/signup">Register here</a>.
+                    Don't have an account? <a className="route link" href={RouterHelpers.pathFor('signup')}>Register here</a>.
                 </p>
             </view>
         );

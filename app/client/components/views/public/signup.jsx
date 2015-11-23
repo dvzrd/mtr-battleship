@@ -23,7 +23,7 @@ App.Signup = React.createClass({
                     </div>
                     <button type="submit" className="primary centered button">Sign Up</button>
                 </form>
-                <p className="message">Already have an account? <a className="route link" href="/login">Log In</a>.</p>
+                <p className="message">Already have an account? <a className="route link" href={RouterHelpers.pathFor('login')}>Log In</a>.</p>
             </view>
         );
     }

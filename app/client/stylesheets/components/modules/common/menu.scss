@@ -3,14 +3,18 @@
 .menu.module {
   padding: 0;
 
-  .buttons {
+  .button {
     position: fixed;
     bottom: 0;
-    width: $full;
+    margin: $space-micro;
     z-index: 1;
 
-    .button {
-      margin: $space-micro;
+    &.left {
+      left: 0;
+    }
+
+    &.right {
+      right: 0;
     }
   }
 }
