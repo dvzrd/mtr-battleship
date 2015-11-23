@@ -2,9 +2,22 @@
 
 .game.board.module {
   height: 40vh;
+  width: $full;
   margin: $space-mini auto;
   padding: 0;
   background-color: $secondary-color;
+
+  @media (min-width: $phone-width) {
+    width: $three-quarters;
+  }
+
+  @media (min-width: $tablet-width) {
+    width: $two-thirds;
+  }
+
+  @media (min-width: $laptop-width) {
+    width: $half;
+  }
 
   .grid {
     display: flex;
