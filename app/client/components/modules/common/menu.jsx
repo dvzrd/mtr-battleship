@@ -1,20 +1,53 @@
 App.Menu = React.createClass({
-    PropTypes: {
+    PropTypes: {},
+    getInitialState: function () {
+        return {renderGameCreate: false};
+    },
+    shouldComponentUpdate() {
+        return true;
+    },
+    handleCreateClick: function (event) {
+        event.preventDefault();
 
+        this.setState({renderGameCreate: !this.state.renderGameCreate});
     },
-    getInitialState: function() {
-        return { renderGameCreate: false };
+    handleCompleteGameClick: function (event) {
+        event.preventDefault();
+        // @TODO: refactor - move this call into gameComplete with reactive gameId
+
+        let gameId = FlowRouter.getParam('_id');
+
+        Meteor.call('completeGame', gameId, (error) => {
+            if (error) {
+                Bert.alert(error.reason, 'warning');
+            } else {
+                Bert.alert('Game completed!', 'success');
+                FlowRouter.go('root');
+            }
+        });
     },
-    handleCreateClick: function() {
-        this.setState({ renderGameCreate: !this.state.renderGameCreate });
+    renderActiveButton() {
+        // @TODO: move this login into button component
+        if (FlowRouter.current().route.name === 'battle') {
+            return (
+                <button type="button" className="left secondary icon button" onClick={this.handleCompleteGameClick}>
+                    <i className="fa fa-trash"></i>
+                </button>
+            )
+        } else {
+            return (
+                <button type="button" className="left secondary icon button" onClick={this.handleCreateClick}>
+                    {this.state.renderGameCreate ? <i className="fa fa-times"></i> : <i className="fa fa-plus"></i>}
+                </button>
+            )
+        }
     },
     renderButtons() {
+        // @TODO: move these buttons into own component with propTypes for different button varieties
         if (!Meteor.loggingIn() && Meteor.user()) {
             return (
                 <div className="buttons">
-                    <button type="button" className="left secondary icon button" onClick={this.handleCreateClick}>
-                        {this.state.renderGameCreate ? <i className="fa fa-times"></i> : <i className="fa fa-plus"></i>}
-                    </button>
+                    {this.renderActiveButton()}
                     <a className="right secondary icon button" href={RouterHelpers.pathFor('dashboard')}>
                         <i className="fa fa-user"></i>
                     </a>
@@ -33,7 +66,7 @@ App.Menu = React.createClass({
         return (
             <module className="menu module">
                 {this.renderButtons()}
-                <App.GameCreate isActive={!!this.state.renderGameCreate} />
+                <App.GameCreate isActive={!!this.state.renderGameCreate}/>
             </module>
         );
     }
