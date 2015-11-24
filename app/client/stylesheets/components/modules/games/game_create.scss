@@ -1,0 +1,15 @@
+@import '../../../_variables';
+
+.create.game.module {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: $full;
+  height: $fluid-full;
+  margin: auto;
+  background-color: rgba(57, 56, 62, 0.9);
+
+  .form {
+    margin-top: 35vh;
+  }
+}
