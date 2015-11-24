@@ -38,6 +38,15 @@
     }
   }
 
+  &.negative {
+    background-color: $negative-color;
+    color: $light;
+
+    &:hover {
+      color: $primary-color;
+    }
+  }
+
   &.icon {
     padding: $space-mini $space-tiny - $space-quantum;
     font-size: $font-size-base + $font-size-tiny;
@@ -49,6 +58,11 @@
     justify-content: center;
     margin-left: auto;
     margin-right: auto;
+  }
+
+  &.circular {
+    padding: 0 $space-micro $space-quantum;
+    border-radius: $space-god;
   }
 }
 
@@ -119,12 +133,9 @@
   line-height: $line-height-base;
 
   &.versus {
-    display: table;
-    white-space: nowrap;
-    width: $full;
-    height: auto;
+    position: relative;
+    height: 0.35em;
     margin: 0;
-    overflow: hidden;
     background-color: $negative-color;
     color: $light;
     text-align: center;
