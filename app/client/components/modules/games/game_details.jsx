@@ -16,47 +16,65 @@ App.GameDetails = React.createClass({
         };
     },
 
-    creator() {
-        // @TODO: if creator is current user show username
-        // else show option to create AI destroyer
-        if (!Meteor.loggingIn() && Meteor.user()) {
+    // @TODO: refactor both player renders into own component
+
+    renderCreator() {
+        if (this.data.game.creator === Meteor.user().username) {
             return (
                 <div className="player creator">
                     <span className="label username">
-                        {this.data.game.creator}
-                        <span className="points">10/50 points</span>
+                        {this.data.game.creator} <span className="points">
+                        10/50 points</span>
                     </span>
                 </div>
             );
-        } else {
+        }
+        if (this.data.game.creator === null) {
+            // @TODO: show button to add opponent ai
             return (
                 <div className="player creator">
                     <span className="label username">
                         No Player Found
+                    </span>
+                </div>
+            )
+        } else {
+            return (
+                <div className="player creator">
+                    <span className="label username">
+                        {this.data.game.creator} <span className="points">
+                        10/50 points</span>
                     </span>
                 </div>
             );
         }
     },
 
-    destroyer() {
-        //@TODO: if destroyer is null - show option to create AI challenger
-        // else show destroyer and check if current user
-        if (!Meteor.loggingIn() && Meteor.user()) {
+    renderDestroyer() {
+        if (this.data.game.destroyer === Meteor.user().username) {
             return (
                 <div className="player destroyer">
                     <span className="label username">
-                        {this.data.game.challenger}
-                        destroyer
-                        <span className="points">10/50 points</span>
+                        {this.data.game.destroyer} <span className="points">
+                        10/50 points</span>
                     </span>
                 </div>
             );
-        } else {
+        } if (this.data.game.destroyer === null) {
+            // @TODO: show button to add opponent ai
             return (
                 <div className="player destroyer">
                     <span className="label username">
                         No Player Found
+                    </span>
+                </div>
+            )
+        } else {
+            return (
+                <div className="player destroyer">
+                    <span className="label username">
+                        {this.data.game.destroyer} <span className="points">
+                        10/50 points</span>
                     </span>
                 </div>
             );
@@ -69,9 +87,9 @@ App.GameDetails = React.createClass({
         } else {
             return (
                 <module className="game details module">
-                    {this.creator()}
+                    {this.renderCreator()}
                     <div className="versus divider">vs</div>
-                    {this.destroyer()}
+                    {this.renderDestroyer()}
                 </module>
             );
         }

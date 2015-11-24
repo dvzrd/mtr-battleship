@@ -36,14 +36,18 @@ let _handleGameCreate = () => {
     };
 
     Meteor.call('createGame', gameAttributes, (error, gameId) => {
-        let toBattle = '/battle/' + gameId;
+
+        var pathDef = '/battle/:_id',
+            params = {_id: gameId},
+            path = FlowRouter.path(pathDef, params);
+
         if (error) {
             Bert.alert(error.reason, 'warning');
         } else {
             Bert.alert('Game created!', 'success');
             //@TODO: find a better way to toggle this modal
             $('.create.game.module.active').removeClass('active');
-            FlowRouter.go(toBattle);
+            FlowRouter.go(path);
         }
     });
 };

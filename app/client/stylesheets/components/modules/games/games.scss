@@ -6,7 +6,10 @@
   .games.list {
 
     .game.item {
+      cursor: pointer;
+      display: block;
       margin: 0;
+      padding: $space-base;
       border-bottom: $space-micro solid $neutral-color;
 
       &:last-child {
@@ -17,24 +20,17 @@
         background-color: $offset-color;
       }
 
-      .route.link {
+      .title {
         display: block;
         margin: 0;
-        padding: $space-base;
-        text-decoration: none;
 
-        .title {
-          display: block;
-          margin: 0;
-
-          .date {
-            float: right;
-          }
+        .date {
+          float: right;
         }
+      }
 
-        .creator {
-          display: block;
-        }
+      .creator {
+        display: block;
       }
     }
   }
