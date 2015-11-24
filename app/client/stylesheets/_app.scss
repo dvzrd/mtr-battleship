@@ -1,7 +1,15 @@
 @import 'components/layouts/layout';
 
 @import 'components/modules/common/copyright';
+@import 'components/modules/common/loading';
 @import 'components/modules/common/logo';
+@import 'components/modules/common/menu';
+
+
+@import 'components/modules/games/game_board';
+@import 'components/modules/games/game_create';
+@import 'components/modules/games/game_details';
 @import 'components/modules/games/games';
 
-@import 'components/views/public/root';
+@import 'components/views/account';
+@import 'components/views/battle';

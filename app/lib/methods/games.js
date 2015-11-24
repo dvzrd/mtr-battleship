@@ -21,12 +21,15 @@ Meteor.methods({
             return exception;
         }
     },
-    completeGame(argument) {
-        check(argument, Object);
+    completeGame(gameId) {
+        check(gameId, String);
+
+        var user = Meteor.user(),
+            now = new Date();
 
         try {
-            var gameId = Games.update(argument._id, {
-                $set: {'key': argument.key}
+            var gameId = Games.update(gameId, {
+                $set: {'completedAt': now}
             });
             return gameId;
         } catch (exception) {

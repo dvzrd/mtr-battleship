@@ -3,11 +3,28 @@ App.Menu = React.createClass({
     getInitialState: function () {
         return {renderGameCreate: false};
     },
-    handleCreateClick: function () {
+    shouldComponentUpdate() {
+        return true;
+    },
+    handleCreateClick: function (event) {
+        event.preventDefault();
+
         this.setState({renderGameCreate: !this.state.renderGameCreate});
     },
-    handleCompleteGameClick: function () {
-        console.log('call completeGame method');
+    handleCompleteGameClick: function (event) {
+        event.preventDefault();
+        // @TODO: refactor - move this call into gameComplete with reactive gameId
+
+        let gameId = FlowRouter.getParam('_id');
+
+        Meteor.call('completeGame', gameId, (error) => {
+            if (error) {
+                Bert.alert(error.reason, 'warning');
+            } else {
+                Bert.alert('Game completed!', 'success');
+                FlowRouter.go('root');
+            }
+        });
     },
     renderActiveButton() {
         // @TODO: move this login into button component
