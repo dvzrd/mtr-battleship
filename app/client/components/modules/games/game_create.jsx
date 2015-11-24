@@ -4,6 +4,13 @@ App.GameCreate = React.createClass({
             form: '#gameCreate'
         });
     },
+    propTypes: {
+        isActive: React.PropTypes.bool,
+        className: React.PropTypes.string
+    },
+    shouldComponentUpdate() {
+        return true;
+    },
     handleSubmit(event) {
         event.preventDefault();
     },
@@ -26,8 +33,14 @@ App.GameCreate = React.createClass({
         }
     },
     render() {
+        let className = 'create game module';
+
+        if (this.props.isActive) {
+            className += ' active';
+        }
+
         return (
-            <module className="create game module">
+            <module className={className}>
                 {this.renderForm()}
             </module>
         );

@@ -25,9 +25,25 @@ let validation = (component) => {
 };
 
 let _handleGameCreate = () => {
-    let title = $('[name="title"]').val();
+    let gameAttributes = {
+        title: $('[name="title"]').val(),
+        creator: Meteor.user().username,
+        createdAt: new Date(),
+        destroyer: null,
+        playerCount: 1,
+        winner: null,
+        completedAt: null
+    };
 
-    console.log('call create game method');
+    Meteor.call('createGame', gameAttributes, (error) => {
+        if (error) {
+            Bert.alert(error.reason, 'warning');
+        } else {
+            Bert.alert('Game created!', 'success');
+            $('.create.game.module.active').removeClass('active');
+            FlowRouter.go('/dashboard');
+        }
+    });
 };
 
 Modules.client.gameCreate = gameCreate;

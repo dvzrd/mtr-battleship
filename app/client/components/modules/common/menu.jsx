@@ -1,4 +1,7 @@
 App.Menu = React.createClass({
+    PropTypes: {
+
+    },
     getInitialState: function() {
         return { renderGameCreate: false };
     },
@@ -30,7 +33,7 @@ App.Menu = React.createClass({
         return (
             <module className="menu module">
                 {this.renderButtons()}
-                {this.state.renderGameCreate ? <App.GameCreate /> : null}
+                <App.GameCreate isActive={!!this.state.renderGameCreate} />
             </module>
         );
     }
