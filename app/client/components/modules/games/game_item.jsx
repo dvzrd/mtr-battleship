@@ -10,10 +10,6 @@ App.GameItem = React.createClass({
             path = FlowRouter.path(pathDef, params),
             currentUser = Meteor.user();
 
-        console.log('current: ' + currentUser.username);
-        console.log('creator ' + this.props.game.creator);
-        console.log('destroyer ' + this.props.game.destroyer);
-
         if (this.props.game.destroyer === currentUser.username) {
             FlowRouter.go(path);
         }
