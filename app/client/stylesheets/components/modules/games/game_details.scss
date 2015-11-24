@@ -8,10 +8,11 @@
     position: absolute;
     margin: 0;
     text-align: center;
+    z-index: 1;
 
     &.creator {
       left: 0;
-      bottom: $space-mini;
+      bottom: $space-micro;
 
       .label {
         border-top-right-radius: $space-small;
@@ -20,7 +21,7 @@
 
     &.destroyer {
       right: 0;
-      top: $space-micro;
+      top: 0;
 
       .label {
         border-bottom-left-radius: $space-small;
@@ -30,6 +31,18 @@
     .label.username {
       background-color: $negative-color;
       color: $light;
+    }
+  }
+
+  .versus {
+
+    .button {
+      position: absolute;
+      top: -0.5em;
+      left: 50%;
+      transform: translate(-50%, 0);
+      margin: 0 auto;
+      font-size: 1.5rem;
     }
   }
 }

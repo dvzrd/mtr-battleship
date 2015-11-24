@@ -62,6 +62,14 @@ App.GameDetails = React.createClass({
         }
     },
 
+    handleTargetClick(event) {
+        event.preventDefault();
+
+        console.log('clicked target button');
+        // @TODO: disable event until both boards are status ready,
+        // if board not ready, player has to submit unit placements
+    },
+
     render() {
         if (this.data.isLoading) {
             return <App.Loading />;
@@ -70,7 +78,9 @@ App.GameDetails = React.createClass({
                 <module className="game details module">
                     {this.renderCreator()}
                     <div className="versus divider">
-                        <i className="fa fa-bullseye"></i>
+                        <button type="button" className="negative circular icon button" onClick={this.handleTargetClick}>
+                            <i className="fa fa-bullseye"></i>
+                        </button>
                     </div>
                     {this.renderDestroyer()}
                 </module>
