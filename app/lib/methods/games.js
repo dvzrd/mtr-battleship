@@ -2,13 +2,33 @@
 
 Meteor.methods({
     createGame(creatorAttributes) {
-        check(creatorAttributes, Object);
+        check(creatorAttributes, {
+            title: String
+        });
 
-        try {
-            var game = Games.insert(creatorAttributes);
-            return game;
-        } catch (exception) {
-            return exception;
+        var now = new Date(),
+            user = Meteor.user(),
+            duplicateTitle = Games.findOne({title: creatorAttributes.title});
+
+        if (!user) {
+            throw new Meteor.Error('user-not-logged-in', 'You need to be logged in to create games.');
+        }
+        if (duplicateTitle) {
+            return Meteor.Error('game-title-already-exists', 'This game title already exists.');
+        } else {
+
+            var game = _.extend(creatorAttributes, {
+                creator: user.username,
+                createdAt: now,
+                destroyer: null,
+                playerCount: 1,
+                winner: null,
+                completedAt: null
+            }), gameId = Games.insert(game);
+
+            return {
+                _id: gameId
+            };
         }
     },
     joinGame(gameId) {
