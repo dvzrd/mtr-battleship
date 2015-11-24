@@ -1,10 +1,12 @@
+// @TODO: add more exceptions
+
 Meteor.methods({
     createGame(creatorAttributes) {
         check(creatorAttributes, Object);
 
         try {
-            var gameId = Games.insert(creatorAttributes);
-            return gameId;
+            var game = Games.insert(creatorAttributes);
+            return game;
         } catch (exception) {
             return exception;
         }
@@ -12,11 +14,13 @@ Meteor.methods({
     joinGame(destroyerAttributes) {
         check(destroyerAttributes, Object);
 
+        var user = Meteor.user();
+
         try {
-            var gameId = Games.update(destroyerAttributes._id, {
-                $set: {'key': destroyerAttributes.key}
+            var game = Games.update(destroyerAttributes.gameId, {
+                $set: {'destroyer': user.username}
             });
-            return gameId;
+            return game;
         } catch (exception) {
             return exception;
         }
@@ -24,14 +28,13 @@ Meteor.methods({
     completeGame(gameId) {
         check(gameId, String);
 
-        var user = Meteor.user(),
-            now = new Date();
+        var now = new Date();
 
         try {
-            var gameId = Games.update(gameId, {
+            var game = Games.update(gameId, {
                 $set: {'completedAt': now}
             });
-            return gameId;
+            return game;
         } catch (exception) {
             return exception;
         }
@@ -40,10 +43,10 @@ Meteor.methods({
         check(argument, Object);
 
         try {
-            var gameId = Games.update(argument._id, {
+            var game = Games.update(argument._id, {
                 $set: {'key': argument.key}
             });
-            return gameId;
+            return game;
         } catch (exception) {
             return exception;
         }
