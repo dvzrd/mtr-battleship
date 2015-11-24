@@ -1,4 +1,4 @@
-// @TODO: add more exceptions
+// @TODO: add exceptions
 
 Meteor.methods({
     createGame(creatorAttributes) {
@@ -11,14 +11,14 @@ Meteor.methods({
             return exception;
         }
     },
-    joinGame(destroyerAttributes) {
-        check(destroyerAttributes, Object);
+    joinGame(gameId) {
+        check(gameId, String);
 
         var user = Meteor.user();
 
         try {
-            var game = Games.update(destroyerAttributes.gameId, {
-                $set: {'destroyer': user.username}
+            var game = Games.update(gameId, {
+                $set: {'destroyer': user.username, 'playerCount': 2}
             });
             return game;
         } catch (exception) {
