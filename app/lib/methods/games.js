@@ -1,5 +1,3 @@
-// @TODO: add exceptions
-
 Meteor.methods({
     createGame(creatorAttributes) {
         check(creatorAttributes, {
@@ -64,27 +62,36 @@ Meteor.methods({
     completeGame(gameId) {
         check(gameId, String);
 
-        var now = new Date();
+        var user = Meteor.user(),
+            game = Games.findOne({_id: gameId}),
+            now = new Date();
 
-        try {
-            var game = Games.update(gameId, {
+        if (!user) {
+            throw new Meteor.Error('user-not-logged-in', 'Need to be logged in to close a game');
+        }
+        if (!game) {
+            throw new Meteor.Error('game-does-not-exist', 'This game is not in the collection');
+        } else {
+            Games.update(gameId, {
                 $set: {'completedAt': now}
             });
-            return game;
-        } catch (exception) {
-            return exception;
         }
     },
-    declareWinner(argument) {
-        check(argument, Object);
+    declareWinner(winnerAttributes) {
+        check(winnerAttributes, {
+            gameId: String,
+            winner: String
+        });
 
-        try {
-            var game = Games.update(argument._id, {
-                $set: {'key': argument.key}
+        var game = Games.findOne({_id: gameId}),
+            now = new Date();
+
+        if (!game) {
+            throw new Meteor.Error('game-does-not-exist', 'This game is not in the collection');
+        } else {
+            Games.update(winnerAttributes.gameId, {
+                $set: {'winner': winnerAttributes.winner, 'completedAt': now}
             });
-            return game;
-        } catch (exception) {
-            return exception;
         }
     }
 });
