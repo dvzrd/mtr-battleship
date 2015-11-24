@@ -1,20 +1,35 @@
 App.Menu = React.createClass({
-    PropTypes: {
-
+    PropTypes: {},
+    getInitialState: function () {
+        return {renderGameCreate: false};
     },
-    getInitialState: function() {
-        return { renderGameCreate: false };
+    handleCreateClick: function () {
+        this.setState({renderGameCreate: !this.state.renderGameCreate});
     },
-    handleCreateClick: function() {
-        this.setState({ renderGameCreate: !this.state.renderGameCreate });
+    handleCompleteGameClick: function () {
+        console.log('call completeGame method');
+    },
+    renderActiveButton() {
+        if (FlowRouter.current().route.name === 'battle') {
+            return (
+                <button type="button" className="left secondary icon button" onClick={this.handleCompleteGameClick}>
+                    <i className="fa fa-trash"></i>
+                </button>
+            )
+        } else {
+            return (
+                <button type="button" className="left secondary icon button" onClick={this.handleCreateClick}>
+                    {this.state.renderGameCreate ? <i className="fa fa-times"></i> : <i className="fa fa-plus"></i>}
+                </button>
+            )
+        }
     },
     renderButtons() {
+        // @TODO: make buttons into components
         if (!Meteor.loggingIn() && Meteor.user()) {
             return (
                 <div className="buttons">
-                    <button type="button" className="left secondary icon button" onClick={this.handleCreateClick}>
-                        {this.state.renderGameCreate ? <i className="fa fa-times"></i> : <i className="fa fa-plus"></i>}
-                    </button>
+                    {this.renderActiveButton()}
                     <a className="right secondary icon button" href={RouterHelpers.pathFor('dashboard')}>
                         <i className="fa fa-user"></i>
                     </a>
@@ -33,7 +48,7 @@ App.Menu = React.createClass({
         return (
             <module className="menu module">
                 {this.renderButtons()}
-                <App.GameCreate isActive={!!this.state.renderGameCreate} />
+                <App.GameCreate isActive={!!this.state.renderGameCreate}/>
             </module>
         );
     }
