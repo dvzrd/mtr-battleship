@@ -10,15 +10,19 @@ App.GameItem = React.createClass({
             path = FlowRouter.path(pathDef, params),
             currentUser = Meteor.user();
 
+        if (currentUser === null) {
+            Bert.alert('You need to login first', 'warning');
+        }
         if (this.props.game.creator === currentUser.username) {
             FlowRouter.go(path);
         }
         if (this.props.game.destroyer === currentUser.username) {
             FlowRouter.go(path);
         } else {
+            // @TODO: fix this horrible logic - move into method
             if (this.props.game.playerCount === 2 || this.props.game.creator === currentUser.username) {
                 // @TODO: method for joining a recently created and available game
-                Bert.alert('This game is full', 'warning');
+                Bert.alert('I cannot let you do that', 'warning');
             } else {
                 Meteor.call('joinGame', gameId, (error) => {
                     if (error) {
