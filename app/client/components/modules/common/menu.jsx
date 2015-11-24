@@ -9,9 +9,9 @@ App.Menu = React.createClass({
         if (!Meteor.loggingIn() && Meteor.user()) {
             return (
                 <div className="buttons">
-                    <a className="left secondary icon button" href="#" onClick={this.handleCreateClick}>
+                    <button type="button" className="left secondary icon button" onClick={this.handleCreateClick}>
                         {this.state.renderGameCreate ? <i className="fa fa-times"></i> : <i className="fa fa-plus"></i>}
-                    </a>
+                    </button>
                     <a className="right secondary icon button" href={RouterHelpers.pathFor('dashboard')}>
                         <i className="fa fa-user"></i>
                     </a>

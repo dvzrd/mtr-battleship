@@ -14,7 +14,7 @@ let validation = (component) => {
             }
         },
         messages: {
-            emailAddress: {
+            title: {
                 required: 'You need a title for your game so others can find it.'
             }
         },
