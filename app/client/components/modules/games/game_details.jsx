@@ -19,16 +19,6 @@ App.GameDetails = React.createClass({
     // @TODO: refactor both player renders into own component
 
     renderCreator() {
-        if (this.data.game.creator === Meteor.user().username) {
-            return (
-                <div className="player creator">
-                    <span className="label username">
-                        {this.data.game.creator} <span className="points">
-                        10/50 points</span>
-                    </span>
-                </div>
-            );
-        }
         if (this.data.game.creator === null) {
             // @TODO: show button to add opponent ai
             return (
@@ -43,7 +33,7 @@ App.GameDetails = React.createClass({
                 <div className="player creator">
                     <span className="label username">
                         {this.data.game.creator} <span className="points">
-                        10/50 points</span>
+                        {this.data.game.creatorScore} points</span>
                     </span>
                 </div>
             );
@@ -51,16 +41,7 @@ App.GameDetails = React.createClass({
     },
 
     renderDestroyer() {
-        if (this.data.game.destroyer === Meteor.user().username) {
-            return (
-                <div className="player destroyer">
-                    <span className="label username">
-                        {this.data.game.destroyer} <span className="points">
-                        10/50 points</span>
-                    </span>
-                </div>
-            );
-        } if (this.data.game.destroyer === null) {
+        if (this.data.game.destroyer === null) {
             // @TODO: show button to add opponent ai
             return (
                 <div className="player destroyer">
@@ -74,7 +55,7 @@ App.GameDetails = React.createClass({
                 <div className="player destroyer">
                     <span className="label username">
                         {this.data.game.destroyer} <span className="points">
-                        10/50 points</span>
+                        {this.data.game.destroyerScore} points</span>
                     </span>
                 </div>
             );
@@ -88,7 +69,9 @@ App.GameDetails = React.createClass({
             return (
                 <module className="game details module">
                     {this.renderCreator()}
-                    <div className="versus divider">vs</div>
+                    <div className="versus divider">
+                        <i className="fa fa-bullseye"></i>
+                    </div>
                     {this.renderDestroyer()}
                 </module>
             );

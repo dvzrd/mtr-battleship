@@ -1,7 +1,11 @@
 @import '../../_variables';
 
 .battle.view {
-  border: $space-micro solid $negative-color;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: $full;
+  height: $full;
   background: $background-image;
   background-size: cover;
   background-position: $half $half;

@@ -5,18 +5,26 @@
   z-index: 2;
 
   .player {
-    display: block;
     position: absolute;
-    width: $full;
     margin: 0;
     text-align: center;
 
     &.creator {
-      bottom: $space-small - $space-quantum;
+      left: 0;
+      bottom: $space-mini;
+
+      .label {
+        border-top-right-radius: $space-small;
+      }
     }
 
     &.destroyer {
-      top: $space-tiny;
+      right: 0;
+      top: $space-micro;
+
+      .label {
+        border-bottom-left-radius: $space-small;
+      }
     }
 
     .label.username {

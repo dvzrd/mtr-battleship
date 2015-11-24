@@ -21,6 +21,10 @@ let GamesSchema = new SimpleSchema({
         type: String,
         label: 'The username of user that created the game'
     },
+    'creatorScore': {
+        type: Number,
+        label: 'The score of the user that created the game'
+    },
     'createdAt': {
         type: Date,
         label: 'The date the game was created'
@@ -29,6 +33,10 @@ let GamesSchema = new SimpleSchema({
         type: String,
         label: 'The username of user that joined the game',
         optional: true
+    },
+    'destroyerScore': {
+        type: Number,
+        label: 'The score of the user that joined the game'
     },
     'playerCount': {
         type: Number,

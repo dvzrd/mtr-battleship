@@ -1,10 +1,11 @@
 @import '../../../_variables';
 
 .game.board.module {
-  height: 40vh;
+  height: 40.5vh;
   width: $full;
   margin: 0 auto;
   padding: 0;
+  border: $space-micro solid $negative-color;
 
   @media (min-width: $phone-width) {
     width: $three-quarters;
@@ -16,6 +17,10 @@
 
   @media (min-width: $laptop-width) {
     width: $half;
+  }
+
+  &:first-child {
+    margin-top: $space-large + $space-tiny;
   }
 
   .grid {
