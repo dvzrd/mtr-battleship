@@ -16,7 +16,6 @@ App.Games = React.createClass({
             return (
                 <module className="games module">
                     <App.GamesList games={this.data.games} />
-                    <App.GameCreate />
                 </module>
             );
         }
