@@ -69,7 +69,9 @@ App.GameDetails = React.createClass({
             return (
                 <module className="game details module">
                     {this.renderCreator()}
-                    <div className="versus divider">vs</div>
+                    <div className="versus divider">
+                        <i className="fa fa-bullseye"></i>
+                    </div>
                     {this.renderDestroyer()}
                 </module>
             );
