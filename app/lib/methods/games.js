@@ -6,7 +6,7 @@ Meteor.methods({
 
         var now = new Date(),
             user = Meteor.user(),
-            duplicateTitle = Games.findOne({title: creatorAttributes.title});
+            duplicateTitle = Games.findOne({title: creatorAttributes.title, completedAt: null});
 
         if (!user) {
             throw new Meteor.Error('user-not-logged-in', 'You need to be logged in to create games.');
