@@ -1,6 +1,6 @@
 App.GameCreate = React.createClass({
     componentDidMount() {
-        Modules.client.battleCreate({
+        Modules.client.gameCreate({
             form: '#gameCreate'
         });
     },
