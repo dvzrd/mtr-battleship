@@ -2,6 +2,7 @@
 
 //@TODO: images not being found - investigate
 .battle.view {
+  border: ($space-tiny - $space-quantum) solid $negative-color;
   background: $background-image;
   background-size: cover;
   background-position: $half $half;
