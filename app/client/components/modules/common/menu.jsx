@@ -10,6 +10,7 @@ App.Menu = React.createClass({
         console.log('call completeGame method');
     },
     renderActiveButton() {
+        // @TODO: move this login into button component
         if (FlowRouter.current().route.name === 'battle') {
             return (
                 <button type="button" className="left secondary icon button" onClick={this.handleCompleteGameClick}>
@@ -25,7 +26,7 @@ App.Menu = React.createClass({
         }
     },
     renderButtons() {
-        // @TODO: make buttons into components
+        // @TODO: move these buttons into own component with propTypes for different button varieties
         if (!Meteor.loggingIn() && Meteor.user()) {
             return (
                 <div className="buttons">
