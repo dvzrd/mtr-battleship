@@ -10,12 +10,16 @@ App.Games = React.createClass({
         };
     },
     render() {
+        let noGames = this.data.games.length === 0;
         if (this.data.isLoading) {
             return <App.Loading />;
         } else {
             return (
                 <module className="games module">
-                    <App.GamesList games={this.data.games} />
+                    {noGames ?
+                        // TODO: make component for messages
+                        <p className="centered message">There are no games, try adding some!</p> :
+                        <App.GamesList games={this.data.games}/>}
                 </module>
             );
         }
