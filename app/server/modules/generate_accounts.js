@@ -2,7 +2,13 @@ let administrators = [
     {
         name: {first: 'Admin', last: 'McAdmin'},
         username: 'admin',
-        email: 'admin@admin.com',
+        email: 'admin@spacebattle.co',
+        password: 'admin'
+    },
+    {
+        name: {first: '00', last: '1'},
+        username: 'AI',
+        email: 'ai@spacebattle.co',
         password: 'admin'
     }
 ];

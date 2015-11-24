@@ -17,8 +17,10 @@ Meteor.methods({
 
             var game = _.extend(creatorAttributes, {
                 creator: user.username,
+                creatorScore: 0,
                 createdAt: now,
                 destroyer: null,
+                destroyerScore: 0,
                 playerCount: 1,
                 winner: null,
                 completedAt: null
@@ -75,6 +77,36 @@ Meteor.methods({
             Games.update(gameId, {
                 $set: {'completedAt': now}
             });
+        }
+    },
+    updateScore(scoreAttributes) {
+        check(scoreAttributes, {
+            gameId: String,
+            player: String,
+            boardId: String,
+            targetId: String
+        });
+
+        var game = Games.findOne({_id: gameId, completedAt: null}),
+            creatorScoredPoints = game.creator === scoreAttributes.player,
+            pointsLimit = game.creatorScore === 25 || game.destroyerScore === 25,
+            points = +5;
+
+        if (!game) {
+            throw new Meteor.Error('game-does-not-exist', 'This game is not in the collection');
+        }
+        if (pointsLimit) {
+            throw new Meteor.Error('points-limit-reached', 'You have reached the limit of the amount of points you can score');
+        } else {
+            if (creatorScoredPoints) {
+                Games.update(scoreAttributes.gameId, {
+                    $set: {'creatorScore': points}
+                });
+            } else {
+                Games.update(scoreAttributes.gameId, {
+                    $set: {'destroyerScore': points}
+                });
+            }
         }
     },
     declareWinner(winnerAttributes) {
