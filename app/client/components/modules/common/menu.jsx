@@ -1,11 +1,20 @@
 App.Menu = React.createClass({
+    PropTypes: {
+
+    },
+    getInitialState: function() {
+        return { renderGameCreate: false };
+    },
+    handleCreateClick: function() {
+        this.setState({ renderGameCreate: !this.state.renderGameCreate });
+    },
     renderButtons() {
         if (!Meteor.loggingIn() && Meteor.user()) {
             return (
                 <div className="buttons">
-                    <a className="left secondary icon button" href="#">
-                        <i className="fa fa-plus"></i>
-                    </a>
+                    <button type="button" className="left secondary icon button" onClick={this.handleCreateClick}>
+                        {this.state.renderGameCreate ? <i className="fa fa-times"></i> : <i className="fa fa-plus"></i>}
+                    </button>
                     <a className="right secondary icon button" href={RouterHelpers.pathFor('dashboard')}>
                         <i className="fa fa-user"></i>
                     </a>
@@ -24,6 +33,7 @@ App.Menu = React.createClass({
         return (
             <module className="menu module">
                 {this.renderButtons()}
+                <App.GameCreate isActive={!!this.state.renderGameCreate} />
             </module>
         );
     }

@@ -25,7 +25,7 @@ let GamesSchema = new SimpleSchema({
         type: Date,
         label: 'The date the game was created'
     },
-    'challenger': {
+    'destroyer': {
         type: String,
         label: 'The username of user that joined the game',
         optional: true

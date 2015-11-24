@@ -142,32 +142,68 @@
 
 // form
 
-.input.group {
-  display: flex;
-  margin-bottom: $space-base;
+.form {
+  width: $full;
+  margin: $space-giant auto $space-base;
 
-  .label {
-    vertical-align: middle;
-    padding: ($space-small - $space-atomic) $space-small;
-    border-radius: $space-micro;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-    background: $neutral-color;
-    font-size: $space-base;
+  @media (min-width: $phone-width) {
+    width: $three-quarters;
   }
 
-  .input {
-    flex: 1;
-    margin: 0;
-    padding: $space-tiny;
-    outline: 0;
-    border: $space-micro solid $neutral-color;
-    border-radius: $space-micro;
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-    background: $background-color;
-    line-height: $line-height-base;
-    font-size: $font-size-base;
+  @media (min-width: $tablet-width) {
+    width: $half;
+  }
+
+  @media (min-width: $laptop-width) {
+    width: $third;
+  }
+
+  @media (min-width: $desktop-width) {
+    width: $quarter;
+  }
+
+  .input.group {
+    display: flex;
+    position: relative;
+    margin-bottom: $space-large;
+
+    label,
+    .label {
+      vertical-align: middle;
+      padding: ($space-small - $space-atomic) $space-small;
+      border-radius: $space-micro;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+      background: $neutral-color;
+      font-size: $space-base;
+
+      &.error {
+        position: absolute;
+        top: $space-large + $space-small;
+        left: 0;
+        width: $full;
+        padding: $space-mini;
+        border: $space-micro solid $neutral-color;
+        color: $negative-color;
+        font-size: $font-size-small;
+        text-align: center;
+      }
+    }
+
+    input,
+    .input {
+      flex: 1;
+      margin: 0;
+      padding: $space-tiny;
+      outline: 0;
+      border: $space-micro solid $neutral-color;
+      border-radius: $space-micro;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+      background: $background-color;
+      line-height: $line-height-base;
+      font-size: $font-size-base;
+    }
   }
 }
 

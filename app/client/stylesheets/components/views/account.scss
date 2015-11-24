@@ -7,25 +7,4 @@
     margin: $space-base auto;
     text-align: center;
   }
-
-  .form {
-    width: $full;
-    margin: $space-giant auto $space-base;
-
-    @media (min-width: $phone-width) {
-      width: $three-quarters;
-    }
-
-    @media (min-width: $tablet-width) {
-      width: $half;
-    }
-
-    @media (min-width: $laptop-width) {
-      width: $third;
-    }
-
-    @media (min-width: $desktop-width) {
-      width: $quarter;
-    }
-  }
 }

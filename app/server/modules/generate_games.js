@@ -35,7 +35,7 @@ let _generateGames = (count) => {
             title: faker.hacker.phrase(),
             creator: 'admin',
             createdAt: new Date(),
-            challenger: null,
+            destroyer: null,
             playerCount: 1,
             winner: null,
             completedAt: null
