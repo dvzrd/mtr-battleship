@@ -67,7 +67,7 @@ App.GameDetails = React.createClass({
 
         console.log('clicked target button');
         // @TODO: disable event until both boards are status ready,
-        // if board not ready, player has to submit unit placements
+        // if one board is not ready, player has to submit unit placements
     },
 
     render() {
