@@ -2,33 +2,23 @@ App.GameItem = React.createClass({
     handleGameJoin(event) {
         event.preventDefault();
 
-        // @TODO: Move this to joinGame method (and Modules.client)
-
         var pathDef = '/battle/:_id',
             gameId = this.props.game._id,
             params = {_id: gameId},
             path = FlowRouter.path(pathDef, params),
             currentUser = Meteor.user();
 
-        if (this.props.game.destroyer === currentUser.username) {
-            FlowRouter.go(path);
-        }
-        if (this.props.game.playerCount === 2) {
-            // @TODO: method for joining a recently created and available game
-            Bert.alert('This game is full', 'warning');
+        if (!currentUser) {
+            Bert.alert('You need to be logged in to join a game', 'warning');
         } else {
-            if (this.props.game.creator === currentUser.username) {
-                FlowRouter.go(path);
-            } else {
-                Meteor.call('joinGame', gameId, (error) => {
-                    if (error) {
-                        Bert.alert(error.reason, 'warning');
-                    } else {
-                        Bert.alert('Get ready to destroy!', 'success');
-                        FlowRouter.go(path);
-                    }
-                });
-            }
+            Meteor.call('joinGame', gameId, (error) => {
+                if (error) {
+                    Bert.alert(error.reason, 'warning');
+                } else {
+                    Bert.alert('Get ready to destroy!', 'success');
+                    FlowRouter.go(path);
+                }
+            });
         }
     },
     render() {

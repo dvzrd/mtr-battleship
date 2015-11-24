@@ -26,30 +26,27 @@ let validation = (component) => {
 
 let _handleGameCreate = () => {
     let gameAttributes = {
-        title: $('[name="title"]').val(),
-        creator: Meteor.user().username,
-        createdAt: new Date(),
-        destroyer: null,
-        playerCount: 1,
-        winner: null,
-        completedAt: null
-    };
+        title: $('[name="title"]').val()
+    }, currentUser = Meteor.user();
 
-    Meteor.call('createGame', gameAttributes, (error, gameId) => {
+    if (!currentUser) {
+        Bert.alert('You need to be logged in to create games', 'warning');
+    } else {
+        Meteor.call('createGame', gameAttributes, (error, gameId) => {
+            let pathDef = '/battle/:_id',
+                params = gameId,
+                path = FlowRouter.path(pathDef, params);
 
-        var pathDef = '/battle/:_id',
-            params = {_id: gameId},
-            path = FlowRouter.path(pathDef, params);
-
-        if (error) {
-            Bert.alert(error.reason, 'warning');
-        } else {
-            Bert.alert('Game created!', 'success');
-            //@TODO: find a better way to toggle this modal
-            $('.create.game.module.active').removeClass('active');
-            FlowRouter.go(path);
-        }
-    });
+            if (error) {
+                Bert.alert(error.reason, 'warning');
+            } else {
+                Bert.alert('Game created!', 'success');
+                //@TODO: find a better way to toggle this modal
+                $('.create.game.module.active').removeClass('active');
+                FlowRouter.go(path);
+            }
+        });
+    }
 };
 
 Modules.client.gameCreate = gameCreate;

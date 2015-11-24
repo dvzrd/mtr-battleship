@@ -5,8 +5,6 @@ App.Battle = React.createClass({
         Modules.client.gameComplete({
             gameId: gameId
         });
-        //var gameId = new ReactiveVar(FlowRouter.getParam('_id'));
-        //console.log(gameId.curValue);
     },
     render() {
         return (

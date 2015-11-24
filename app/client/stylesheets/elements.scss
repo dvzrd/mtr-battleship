@@ -213,4 +213,11 @@
   margin-bottom: $space-tiny;
   font-size: $font-size-base;
   text-align: center;
+
+  &.centered {
+    display: flex;
+    height: 90vh;
+    align-items: center;
+    justify-content: center;
+  }
 }
