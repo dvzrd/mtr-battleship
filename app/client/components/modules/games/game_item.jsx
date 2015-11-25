@@ -25,9 +25,8 @@ App.GameItem = React.createClass({
 
                     Meteor.call('createGameBoard', boardAttributes, (error, boardId) => {
                         if (error) {
-                            console.error(error.reason);
+                            Bert.alert(error.reason, 'success');
                         } else {
-                            console.log(boardId);
                             FlowRouter.go(path);
                         }
                     });
