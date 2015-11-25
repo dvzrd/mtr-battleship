@@ -1,7 +1,8 @@
 App.GameBoard = React.createClass({
     mixins: [ReactMeteorData],
-    PropTypes: {},
-
+    PropTypes: {
+        boardId: React.PropTypes.string
+    },
     shouldComponentUpdate() {
         return true;
     },
