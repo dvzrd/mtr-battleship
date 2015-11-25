@@ -40,10 +40,21 @@ let _handleGameCreate = () => {
             if (error) {
                 Bert.alert(error.reason, 'warning');
             } else {
-                Bert.alert('Game created!', 'success');
                 //@TODO: find a better way to toggle this modal
                 $('.create.game.module.active').removeClass('active');
-                FlowRouter.go(path);
+
+                Bert.alert('Game created!', 'success');
+
+                // @TODO: refactor this call to gameBoardCreate module
+
+                Meteor.call('createGameBoard', gameId, (error, boardId) => {
+                    if (error) {
+                        console.error(error.reason);
+                    } else {
+                        console.log(boardId);
+                        FlowRouter.go(path);
+                    }
+                });
             }
         });
     }

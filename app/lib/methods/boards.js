@@ -12,7 +12,7 @@ Meteor.methods({
             throw new Meteor.Error('user-not-logged-in', 'You need to be logged in to create a game board.');
         }
         if (duplicateBoard) {
-            throw new Meteor.Error('game-board-already-exists', 'This game board already exists.');
+            return Meteor.Error('game-board-already-exists', 'This game board already exists.');
         } else {
 
             var board = _.extend(creatorAttributes, {
