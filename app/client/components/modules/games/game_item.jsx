@@ -2,6 +2,7 @@ App.GameItem = React.createClass({
     handleGameJoin(event) {
         event.preventDefault();
 
+        // @TODO: refactor - separate module gameJoin
         var pathDef = '/battle/:_id',
             gameId = this.props.game._id,
             params = {_id: gameId},
@@ -16,7 +17,20 @@ App.GameItem = React.createClass({
                     Bert.alert(error.reason, 'warning');
                 } else {
                     Bert.alert('Get ready to destroy!', 'success');
-                    FlowRouter.go(path);
+
+                    // @TODO: refactor - separate module createGameBoard
+                    let boardAttributes = {
+                        gameId: gameId
+                    };
+
+                    Meteor.call('createGameBoard', boardAttributes, (error, boardId) => {
+                        if (error) {
+                            console.error(error.reason);
+                        } else {
+                            console.log(boardId);
+                            FlowRouter.go(path);
+                        }
+                    });
                 }
             });
         }
