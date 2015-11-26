@@ -30,7 +30,7 @@ Meteor.methods({
     placeBattleUnits(placementAttributes) {
         check(placementAttributes, {
             boardId: String,
-            unitPlacements: Array
+            unitPlacements: Object
         });
 
         var user = Meteor.user(),

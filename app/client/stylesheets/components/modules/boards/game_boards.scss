@@ -16,7 +16,7 @@
     width: $full;
     margin: $space-jumbo auto;
     padding: 0;
-    border: $space-micro solid $negative-color;
+    border: $space-micro solid $highlight-color;
 
     @media (min-width: $phone-width) {
       width: $three-quarters;
@@ -43,7 +43,7 @@
         cursor: pointer;
         flex: 0 0 20%;
         padding: $space-base;
-        box-shadow: 0 0 0 $space-quantum $negative-color;
+        box-shadow: 0 0 0 $space-quantum $highlight-color;
 
         &:hover {
           background-color: $highlight-color;

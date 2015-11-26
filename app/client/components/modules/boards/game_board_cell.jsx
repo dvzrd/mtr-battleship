@@ -10,7 +10,7 @@ App.GameBoardCell = React.createClass({
     handleCellTarget(event) {
         event.preventDefault();
 
-        console.log('clicked on ' + this.props.targetId);
+        console.log(Meteor.user().username + ' clicked on ' + this.props.targetId);
     },
 
     render() {

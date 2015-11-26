@@ -17,22 +17,34 @@ App.GameBoards = React.createClass({
             destroyerBoard: Boards.findOne({gameId: gameId, owner: destroyer})
         };
     },
+
+    // @TODO: refactor all this logic into a separate module
+    // condense into a loop
+
     renderGameCreatorBoard() {
-        if (this.data.creatorBoard) {
+        let unitsPlaced = this.data.creatorBoard.unitPlacements,
+            attacking = this.data.creatorBoard.status === 'attacking';
+
+        if (unitsPlaced) {
             return (
-                <App.GameBoard boardId={this.data.creatorBoard._id}/>
+                <App.GameBoard boardId={this.data.destroyerBoard._id}/>
+            );
+        }
+        if (attacking) {
+            return (
+                <App.GameBoard boardId={this.data.destroyerBoard._id}/>
             );
         } else {
-            // @TODO: show messages from messages component
             return (
-                <p className="message">You have no opponent</p>
+                    <App.GameBoard boardId={this.data.creatorBoard._id}/>
             );
         }
     },
+
     renderGameDestroyerBoard() {
         if (this.data.destroyerBoard) {
             return (
-                <App.GameBoard boardId={this.data.destroyerBoard._id} />
+                <App.GameBoard boardId={this.data.destroyerBoard._id}/>
             );
         } else {
             // @TODO: show messages from messages component
@@ -41,6 +53,7 @@ App.GameBoards = React.createClass({
             );
         }
     },
+
     render () {
         if (this.data.isLoading) {
             return <App.Loading />;
@@ -49,6 +62,7 @@ App.GameBoards = React.createClass({
                 <module className="game boards module">
                     {this.renderGameCreatorBoard()}
                     {this.renderGameDestroyerBoard()}
+                    <button type="button" className="centered primary button">Place Units</button>
                 </module>
             )
         }
