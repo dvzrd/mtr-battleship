@@ -25,12 +25,11 @@ let BoardsSchema = new SimpleSchema({
         type: Date,
         label: 'The date the board was created'
     },
-    // @TODO: consider new collection for placements or use .$ to define array objs
-    //'unitPlacements': {
-    //    type: Array,
-    //    label: 'The placement of the owners units on the board',
-    //    optional: true
-    //},
+    'unitPlacements': {
+        type: Object,
+        label: 'The placement of the owners units on the board',
+        optional: true
+    },
     'status': {
         type: String,
         label: 'The status of the game',

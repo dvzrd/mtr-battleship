@@ -25,17 +25,24 @@ App.GameBoards = React.createClass({
             <App.GameBoard />
         );
     },
+    renderGameBoards() {
+        return (
+            <module className="game boards module">
+                {this.renderGameCreatorBoard()}
+                <App.GameDetails />
+                {this.renderGameDestroyerBoard()}
+            </module>
+        )
+    },
     render () {
         if (this.data.isLoading) {
             return <App.Loading />;
         } else {
             return (
                 <module className="game boards module">
-                    {this.renderGameCreatorBoard()}
-                    <App.GameDetails />
-                    {this.renderGameDestroyerBoard()}
+                    {this.renderGameBoards()}
                 </module>
-            );
+            )
         }
     }
 });
