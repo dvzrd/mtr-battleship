@@ -8,12 +8,6 @@ App.GameBoardCell = React.createClass({
         return true;
     },
 
-    getInitialState() {
-        return {
-            selected: []
-        }
-    },
-
     // @TODO: break this up and move into a separate module
 
     handleCellTarget(event) {
@@ -22,28 +16,30 @@ App.GameBoardCell = React.createClass({
 
         let user = Meteor.user(),
             board = this.props.board,
-            boardOwner = user.username === board.owner,
-            targetCell = '#' + this.props.targetId;
+            boardId = '#' + this.props.board._id,
+            boardGrid = $(boardId).find('.grid'),
+            targetCell = '#' + this.props.targetId,
+            isBoardOwner = user.username === board.owner;
 
-        console.log(this.props.board);
+        //console.log(this.props.board);
 
-        if (boardOwner) {
-
+        if (isBoardOwner) {
             if (board.status === null) {
                 $(targetCell).addClass('selected');
-                var selected = this.state.selected.slice();
-                selected.push(this.props.targetId);
-                this.setState({ selected: selected });
-                console.log(this.state.selected);
-                console.log(selected);
+                // @TODO: only select 5 cells
+                // if selected > 5, replace selection
+                console.log(boardGrid);
+
             } else {
                 Bert.alert('Game in progress', 'warning');
             }
         } else {
-            $(targetCell).addClass('target');
+            if (board.status === 'defending') {
+                $(targetCell).addClass('target');
+            } else {
+                Bert.alert('Waiting for opponent', 'warning');
+            }
         }
-
-        console.log(this.state.selected);
     },
 
     render() {
