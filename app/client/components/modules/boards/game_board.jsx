@@ -1,7 +1,7 @@
 App.GameBoard = React.createClass({
     mixins: [ReactMeteorData],
     PropTypes: {
-        boardId: React.PropTypes.string
+        board: React.PropTypes.object
     },
     shouldComponentUpdate() {
         return true;
@@ -9,7 +9,6 @@ App.GameBoard = React.createClass({
 
     getMeteorData() {
         return {
-            board: Boards.findOne({_id: this.props.boardId}),
             // @TODO: move to a collection
             cells: [
                 {id: '1A'}, {id: '2A'}, {id: '3A'}, {id: '4A'}, {id: '5A'},
@@ -21,27 +20,35 @@ App.GameBoard = React.createClass({
         };
     },
 
+    handleUnitPlacement(event) {
+        event.preventDefault();
+    },
+
+    handleTargetFire(event) {
+        event.preventDefault();
+    },
+
     renderActions() {
-        if (!this.data.board.unitPlacements) {
+        if (!this.props.board.unitPlacements) {
             return (
-                <button type="button" className="fluid primary button">Place Units</button>
+                <button type="button" className="fluid primary button" onClick={this.handleUnitPlacement}>Place Units</button>
             );
         } else {
             return (
-                <button type="button" className="fluid primary button">Target Fire</button>
+                <button type="button" className="fluid primary button" onClick={this.handleTargetFire}>Target Fire</button>
             )
         }
     },
 
     render() {
-        const {boardId} = this.props;
+        const board = this.props.board;
 
         return (
-            <module className="game board module" id={this.props.boardId}>
+            <module className="game board module" id={board._id}>
                 <div className="grid">
                     {this.data.cells.map((cell) => {
                         return (
-                            <App.GameBoardCell key={cell.id} targetId={cell.id}/>
+                            <App.GameBoardCell key={cell.id} board={board} targetId={cell.id}/>
                         );
                     })}
                 </div>

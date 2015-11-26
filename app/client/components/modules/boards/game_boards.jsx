@@ -28,16 +28,16 @@ App.GameBoards = React.createClass({
 
             if (unitsPlaced) {
                 return (
-                    <App.GameBoard boardId={this.data.destroyerBoard._id}/>
+                    <App.GameBoard board={this.data.destroyerBoard}/>
                 );
             }
             if (attacking) {
                 return (
-                    <App.GameBoard boardId={this.data.destroyerBoard._id}/>
+                    <App.GameBoard board={this.data.destroyerBoard}/>
                 );
             } else {
                 return (
-                    <App.GameBoard boardId={this.data.creatorBoard._id}/>
+                    <App.GameBoard board={this.data.creatorBoard}/>
                 );
             }
         } else {
@@ -55,16 +55,16 @@ App.GameBoards = React.createClass({
 
             if (unitsPlaced) {
                 return (
-                    <App.GameBoard boardId={this.data.creatorBoard._id}/>
+                    <App.GameBoard board={this.data.creatorBoard}/>
                 );
             }
             if (attacking) {
                 return (
-                    <App.GameBoard boardId={this.data.creatorBoard._id}/>
+                    <App.GameBoard board={this.data.creatorBoard}/>
                 );
             } else {
                 return (
-                    <App.GameBoard boardId={this.data.destroyerBoard._id}/>
+                    <App.GameBoard board={this.data.destroyerBoard}/>
                 );
             }
         } else {

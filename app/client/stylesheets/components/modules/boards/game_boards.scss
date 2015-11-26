@@ -45,6 +45,22 @@
         padding: $space-base;
         box-shadow: 0 0 0 $space-quantum $highlight-color;
 
+        &.selected {
+          background-color: $highlight-color;
+        }
+
+        &.target {
+          background-color: $negative-color;
+        }
+
+        &.hit {
+          background-color: $positive-color;
+        }
+
+        &.miss {
+          background-color: $caution-color;
+        }
+
         &:hover {
           background-color: $highlight-color;
         }
