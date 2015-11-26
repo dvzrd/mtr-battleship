@@ -10,11 +10,16 @@ App.GameBoardCell = React.createClass({
     },
 
     getMeteorData() {
-        let selectedCells = [];
+        let user = Meteor.user(),
+            boardId = this.props.board._id,
+            selector = {boardId: boardId, owner: user.username},
+            subscription = Meteor.subscribe('selections', selector);
 
         return {
-            unitPlacements: selectedCells
-        }
+            isLoading: !subscription.ready(),
+            selections: Selections.find({}, {sort: {createdAt: -1}}).fetch(),
+            oldestSelection: Selections.findOne({}, {sort: {createdAt: 1}})
+        };
     },
 
     // @TODO: break this up and move into a separate module
@@ -27,21 +32,54 @@ App.GameBoardCell = React.createClass({
             board = this.props.board,
             targetCell = '#' + this.props.targetId,
             isBoardOwner = user.username === board.owner,
-            unitPlacements = this.data.unitPlacements;
+            unitPlacements = this.data.selections,
+            oldestSelectionId = this.data.oldestSelection._id;
 
-        //console.log(this.props.board);
+        console.log(oldestSelectionId);
 
         if (isBoardOwner) {
             if (board.status === null) {
-                // @TODO: only select 5 cells
-                // if selected > 5, replace selection
-                if (unitPlacements.length > 5) {
+                let selectionAttributes = {
+                    boardId: board._id,
+                    selection: targetCell
+                };
+
+                if (unitPlacements.length >= 5) {
                     console.log('five targets selected');
                     console.log(unitPlacements.length);
+                    console.log(oldestSelectionId);
+
+                    Meteor.call('removeSelection', oldestSelectionId, (error, removedSelection) => {
+                        if (error) {
+                            console.error(error.reason);
+                        } else {
+                            console.log(removedSelection);
+                            console.log(unitPlacements.length);
+                            $(removedSelection).removeClass('selected');
+
+                            Meteor.call('insertSelection', selectionAttributes, (error, selectionId) => {
+                                if (error) {
+                                    console.error(error.reason);
+                                } else {
+                                    console.log('selected target cell');
+                                    console.log(selectionId);
+                                    console.log(unitPlacements.length);
+                                    $(targetCell).addClass('selected');
+                                }
+                            });
+                        }
+                    })
                 } else {
-                    $(targetCell).toggleClass('selected');
-                    unitPlacements.push(targetCell);
-                    console.log(unitPlacements.length);
+                    Meteor.call('insertSelection', selectionAttributes, (error, selectionId) => {
+                        if (error) {
+                            console.error(error.reason);
+                        } else {
+                            console.log('selected target cell');
+                            console.log(selectionId);
+                            console.log(unitPlacements.length);
+                            $(targetCell).addClass('selected');
+                        }
+                    });
                 }
             } else {
                 Bert.alert('Game in progress', 'warning');
@@ -58,8 +96,10 @@ App.GameBoardCell = React.createClass({
     render() {
         const {targetId} = this.props;
 
+        let className = 'cell';
+
         return (
-            <div className='cell' id={targetId} onClick={this.handleCellTarget}></div>
+            <div className={className} id={targetId} onClick={this.handleCellTarget}></div>
         );
     }
 });

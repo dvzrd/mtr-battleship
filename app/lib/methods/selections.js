@@ -13,7 +13,7 @@ Meteor.methods({
             throw new Meteor.Error('user-not-logged-in', 'You need to be logged in select units.');
         }
         if (duplicateSelection) {
-            return Meteor.Error('game-board-already-exists', 'This selection was already made.');
+            return Meteor.Error('selection-already-exists', 'This selection was already made.');
         } else {
 
             var selection = _.extend(selectionAttributes, {
@@ -30,7 +30,7 @@ Meteor.methods({
         check(selectionId, String);
 
         var user = Meteor.user(),
-            selection = Selections.findOne({selectionId: selectionId, owner: user.username});
+            selection = Selections.findOne({_id: selectionId, owner: user.username});
 
         if (!user) {
             throw new Meteor.Error('user-not-logged-in', 'You need to be logged in remove a selection');
@@ -38,7 +38,11 @@ Meteor.methods({
         if (!selection) {
             throw new Meteor.Error('selection-does-not-exist', 'This selection is not in the collection');
         } else {
+            let removedSelection = selection.selection;
+
             Selections.remove(selectionId);
+
+            return removedSelection;
         }
     }
 });

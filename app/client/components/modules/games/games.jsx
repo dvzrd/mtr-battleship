@@ -1,8 +1,8 @@
 App.Games = React.createClass({
     mixins: [ReactMeteorData],
     getMeteorData() {
-        let selector = {completedAt: null};
-        let subscription = Meteor.subscribe('games', selector);
+        let selector = {completedAt: null},
+            subscription = Meteor.subscribe('games', selector);
 
         return {
             isLoading: !subscription.ready(),

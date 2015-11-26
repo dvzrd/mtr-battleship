@@ -31,4 +31,4 @@ let SelectionsSchema = new SimpleSchema({
     }
 });
 
-Boards.attachSchema(SelectionsSchema);
+Selections.attachSchema(SelectionsSchema);
