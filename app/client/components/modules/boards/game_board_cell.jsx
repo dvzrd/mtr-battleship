@@ -1,6 +1,7 @@
 App.GameBoardCell = React.createClass({
     mixins: [ReactMeteorData],
     propTypes: {
+        className: React.PropTypes.string,
         targetId: React.PropTypes.string,
         board: React.PropTypes.object
     },
@@ -21,6 +22,7 @@ App.GameBoardCell = React.createClass({
 
         return {
             isLoading: !subscription.ready(),
+            className: 'cell',
             selections: Selections.find({}, {sort: {createdAt: -1}}).fetch(),
             oldestSelection: Selections.findOne({}, {sort: {createdAt: 1}})
         };
@@ -69,7 +71,11 @@ App.GameBoardCell = React.createClass({
                                     } else {
                                         console.log(selectionId);
                                         console.log(unitPlacements.length);
-                                        $(targetCell).addClass('selected');
+                                        //$(targetCell).addClass('selected');
+
+                                        this.setState({targetSelected: true});
+
+                                        this.data.className += ' selected';
                                     }
                                 });
                             }
@@ -83,7 +89,10 @@ App.GameBoardCell = React.createClass({
                             console.log('selected target cell');
                             console.log(selectionId);
                             console.log(unitPlacements.length);
-                            $(targetCell).addClass('selected');
+                            this.setState({targetSelected: true});
+
+                            this.data.className += ' selected';
+                            //$(targetCell).addClass('selected');
                         }
                     });
                 }
@@ -102,7 +111,11 @@ App.GameBoardCell = React.createClass({
     render() {
         const {targetId} = this.props;
 
-        let className = 'cell';
+        let className = this.data.className;
+
+        if (this.state.targetSelected) {
+            className += ' selected';
+        }
 
         return (
             <div className={className} id={targetId} onClick={this.handleCellTarget}></div>
