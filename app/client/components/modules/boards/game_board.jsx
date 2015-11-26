@@ -16,33 +16,14 @@ App.GameBoard = React.createClass({
             isLoading: !subscription.ready(),
             game: Games.findOne({_id: gameId}),
             //board: Boards.fineOne({_id: boardId}),
-            grid: [
-                {
-                    id: 'A',
-                    cells: 5
-                },
-                {
-                    id: 'B',
-                    cells: 5
-                },
-                {
-                    id: 'C',
-                    cells: 5
-                },
-                {
-                    id: 'D',
-                    cells: 5
-                },
-                {
-                    id: 'E',
-                    cells: 5
-                }
+            cells: [
+                {id: '1A'}, {id: '2A'}, {id: '3A'}, {id: '4A'}, {id: '5A'},
+                {id: '1B'}, {id: '2B'}, {id: '3B'}, {id: '4B'}, {id: '5B'},
+                {id: '1C'}, {id: '2C'}, {id: '3C'}, {id: '4C'}, {id: '5C'},
+                {id: '1D'}, {id: '2D'}, {id: '3D'}, {id: '4D'}, {id: '5D'},
+                {id: '1E'}, {id: '2E'}, {id: '3E'}, {id: '4E'}, {id: '5E'}
             ]
         };
-    },
-
-    renderGameGrid() {
-
     },
 
     render() {
@@ -51,13 +32,13 @@ App.GameBoard = React.createClass({
         } else {
             return (
                 <module className="game board module" id='boardId'>
-                    {this.data.grid.map((index) => {
-                        return (
-                            <div className="grid" key={index.id} id={index.id}>
-
-                            </div>
-                        );
-                    })}
+                    <div className="grid">
+                        {this.data.cells.map((cell) => {
+                            return (
+                                <App.GameBoardCell key={cell.id} targetId={cell.id} />
+                            );
+                        })}
+                    </div>
                 </module>
             );
         }

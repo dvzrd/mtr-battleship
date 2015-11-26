@@ -21,18 +21,15 @@ App.GameBoards = React.createClass({
         );
     },
     renderGameDestroyerBoard() {
-        return (
-            <App.GameBoard />
-        );
-    },
-    renderGameBoards() {
-        return (
-            <module className="game boards module">
-                {this.renderGameCreatorBoard()}
-                <App.GameDetails />
-                {this.renderGameDestroyerBoard()}
-            </module>
-        )
+        if (this.data.boards.length < 2) {
+            return (
+                <p className="message">You have no opponent</p>
+            );
+        } else {
+            return (
+                <App.GameBoard />
+            );
+        }
     },
     render () {
         if (this.data.isLoading) {
@@ -40,7 +37,8 @@ App.GameBoards = React.createClass({
         } else {
             return (
                 <module className="game boards module">
-                    {this.renderGameBoards()}
+                    {this.renderGameCreatorBoard()}
+                    {this.renderGameDestroyerBoard()}
                 </module>
             )
         }

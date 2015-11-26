@@ -13,7 +13,6 @@
   background-repeat: no-repeat;
 
   .game.board.module {
-    height: 40.5vh;
     width: $full;
     margin: 0 auto;
     padding: 0;
@@ -37,14 +36,16 @@
 
     .grid {
       display: flex;
+      flex-direction: row;
       flex-wrap: wrap;
-      height: 8vh;
+      align-items: stretch;
+      height: 75vh;
       margin: 0;
       padding: 0;
 
       .cell {
         cursor: pointer;
-        flex: 1;
+        flex: 0 0 20%;
         padding: $space-base;
         box-shadow: 0 0 0 $space-quantum $negative-color;
 
