@@ -5,6 +5,10 @@ App.GameBoardCell = React.createClass({
         board: React.PropTypes.object
     },
 
+    getInitialState: function () {
+        return {targetSelected: false};
+    },
+
     shouldComponentUpdate() {
         return true;
     },
@@ -23,6 +27,8 @@ App.GameBoardCell = React.createClass({
     },
 
     // @TODO: break this up and move into a separate module
+    // This has become a big mess, really need to break this up into functions
+    // see /client/modules/game_create.js for reference
 
     handleCellTarget(event) {
         event.preventDefault();
@@ -34,8 +40,6 @@ App.GameBoardCell = React.createClass({
             isBoardOwner = user.username === board.owner,
             unitPlacements = this.data.selections,
             oldestSelection = this.data.oldestSelection;
-
-        console.log(oldestSelection);
 
         if (isBoardOwner) {
             if (board.status === null) {
@@ -84,7 +88,7 @@ App.GameBoardCell = React.createClass({
                     });
                 }
             } else {
-                Bert.alert('Game in progress', 'warning');
+                Bert.alert('You cannot change unit positions when game is in progress', 'warning');
             }
         } else {
             if (board.status === 'defending') {
