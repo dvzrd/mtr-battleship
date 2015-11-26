@@ -1,4 +1,5 @@
 App.GameBoardCell = React.createClass({
+    mixins: [ReactMeteorData],
     propTypes: {
         targetId: React.PropTypes.string,
         board: React.PropTypes.object
@@ -6,6 +7,14 @@ App.GameBoardCell = React.createClass({
 
     shouldComponentUpdate() {
         return true;
+    },
+
+    getMeteorData() {
+        let selectedCells = [];
+
+        return {
+            unitPlacements: selectedCells
+        }
     },
 
     // @TODO: break this up and move into a separate module
@@ -16,20 +25,24 @@ App.GameBoardCell = React.createClass({
 
         let user = Meteor.user(),
             board = this.props.board,
-            boardId = '#' + this.props.board._id,
-            boardGrid = $(boardId).find('.grid'),
             targetCell = '#' + this.props.targetId,
-            isBoardOwner = user.username === board.owner;
+            isBoardOwner = user.username === board.owner,
+            unitPlacements = this.data.unitPlacements;
 
         //console.log(this.props.board);
 
         if (isBoardOwner) {
             if (board.status === null) {
-                $(targetCell).addClass('selected');
                 // @TODO: only select 5 cells
                 // if selected > 5, replace selection
-                console.log(boardGrid);
-
+                if (unitPlacements.length > 5) {
+                    console.log('five targets selected');
+                    console.log(unitPlacements.length);
+                } else {
+                    $(targetCell).toggleClass('selected');
+                    unitPlacements.push(targetCell);
+                    console.log(unitPlacements.length);
+                }
             } else {
                 Bert.alert('Game in progress', 'warning');
             }
@@ -46,7 +59,7 @@ App.GameBoardCell = React.createClass({
         const {targetId} = this.props;
 
         return (
-            <div className="cell" id={targetId} onClick={this.handleCellTarget}></div>
+            <div className='cell' id={targetId} onClick={this.handleCellTarget}></div>
         );
     }
 });

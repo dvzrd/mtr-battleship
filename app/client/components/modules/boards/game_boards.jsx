@@ -4,6 +4,7 @@ App.GameBoards = React.createClass({
     shouldComponentUpdate() {
         return true;
     },
+
     getMeteorData() {
         let gameId = this.props.game._id,
             creator = this.props.game.creator,
