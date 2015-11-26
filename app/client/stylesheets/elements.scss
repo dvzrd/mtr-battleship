@@ -121,34 +121,24 @@
   }
 }
 
-// divider
-
-.divider {
-  display: block;
-  user-select: none;
-  margin: $space-base 0;
-  background-color: $neutral-color;
-  color: $secondary-color;
-  font-size: $font-size-tiny;
-  line-height: $line-height-base;
-
-  &.versus {
-    position: relative;
-    height: 0.35em;
-    margin: 0;
-    background-color: $negative-color;
-    color: $light;
-    text-align: center;
-  }
-}
-
 // label
 
 .label {
-  padding: $space-micro $space-tiny;
+  padding: $space-tiny $space-base;
   border-radius: $space-micro;
   background-color: $neutral-color;
+  color: $secondary-color;
   font-size: $font-size-small;
+
+  &.primary {
+    background-color: $primary-color;
+    color: $light;
+  }
+
+  &.secondary {
+    background-color: $secondary-color;
+    color: $light;
+  }
 }
 
 // form

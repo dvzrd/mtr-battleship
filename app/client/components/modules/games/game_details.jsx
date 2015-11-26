@@ -23,15 +23,15 @@ App.GameDetails = React.createClass({
             // @TODO: show button to add opponent ai
             return (
                 <div className="player creator">
-                    <span className="label username">
-                        No Player Found
+                    <span className="secondary username label">
+                        No Opponent
                     </span>
                 </div>
             )
         } else {
             return (
                 <div className="player creator">
-                    <span className="label username">
+                    <span className="secondary username label">
                         {this.data.game.creator} <span className="points">
                         {this.data.game.creatorScore} points</span>
                     </span>
@@ -45,29 +45,21 @@ App.GameDetails = React.createClass({
             // @TODO: show button to add opponent ai
             return (
                 <div className="player destroyer">
-                    <span className="label username">
-                        No Player Found
+                    <span className="secondary username label">
+                        No Opponent
                     </span>
                 </div>
             )
         } else {
             return (
                 <div className="player destroyer">
-                    <span className="label username">
+                    <span className="secondary username label">
                         {this.data.game.destroyer} <span className="points">
                         {this.data.game.destroyerScore} points</span>
                     </span>
                 </div>
             );
         }
-    },
-
-    handleTargetClick(event) {
-        event.preventDefault();
-
-        console.log('clicked target button');
-        // @TODO: disable event until both boards are status ready,
-        // if one board is not ready, player has to submit unit placements
     },
 
     render() {
@@ -77,11 +69,6 @@ App.GameDetails = React.createClass({
             return (
                 <module className="game details module">
                     {this.renderCreator()}
-                    <div className="versus divider">
-                        <button type="button" className="negative circular icon button" onClick={this.handleTargetClick}>
-                            <i className="fa fa-bullseye"></i>
-                        </button>
-                    </div>
                     {this.renderDestroyer()}
                 </module>
             );

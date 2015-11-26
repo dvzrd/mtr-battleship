@@ -1,48 +1,29 @@
 @import '../../../_variables';
 
 .game.details.module {
+  display: flex;
+  flex-wrap: wrap;
   padding: 0;
   z-index: 2;
 
   .player {
-    position: absolute;
+    flex: 1;
     margin: 0;
-    text-align: center;
-    z-index: 1;
 
     &.creator {
-      left: 0;
-      bottom: $space-micro;
+      text-align: left;
 
       .label {
-        border-top-right-radius: $space-small;
+        border-bottom-right-radius: $space-small;
       }
     }
 
     &.destroyer {
-      right: 0;
-      top: 0;
+      text-align: right;
 
       .label {
         border-bottom-left-radius: $space-small;
       }
-    }
-
-    .label.username {
-      background-color: $negative-color;
-      color: $light;
-    }
-  }
-
-  .versus {
-
-    .button {
-      position: absolute;
-      top: -0.5em;
-      left: 50%;
-      transform: translate(-50%, 0);
-      margin: 0 auto;
-      font-size: 1.5rem;
     }
   }
 }

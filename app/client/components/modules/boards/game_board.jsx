@@ -9,7 +9,7 @@ App.GameBoard = React.createClass({
 
     getMeteorData() {
         let gameId = FlowRouter.getParam('_id'),
-            boardId = 'get it from gameboards props',
+            boardId = 'getFromProps',
             subscription = Meteor.subscribe('game', gameId);
 
         return {
@@ -31,7 +31,7 @@ App.GameBoard = React.createClass({
             return <App.Loading />;
         } else {
             return (
-                <module className="game board module" id='boardId'>
+                <module className="game board module" id={this.props.boardId}>
                     <div className="grid">
                         {this.data.cells.map((cell) => {
                             return (

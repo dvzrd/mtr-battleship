@@ -14,7 +14,7 @@
 
   .game.board.module {
     width: $full;
-    margin: 0 auto;
+    margin: $space-jumbo auto;
     padding: 0;
     border: $space-micro solid $negative-color;
 
@@ -30,16 +30,12 @@
       width: $half;
     }
 
-    &:first-child {
-      margin-top: $space-large + $space-tiny;
-    }
-
     .grid {
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;
       align-items: stretch;
-      height: 75vh;
+      height: $fluid-three-quarters;
       margin: 0;
       padding: 0;
 
