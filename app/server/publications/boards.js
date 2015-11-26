@@ -1,6 +1,6 @@
 Meteor.publish('boards', function (selector) {
     check(selector, Object);
-    return Boards.find(selector, {fields: {'gameId': 1}});
+    return Boards.find(selector);
 });
 
 Meteor.publish('board', function (boardId) {

@@ -1,16 +1,26 @@
 App.Battle = React.createClass({
-    componentDidMount() {
-        var gameId = FlowRouter.getParam('_id');
+    mixins: [ReactMeteorData],
+    getMeteorData() {
+        let gameId = FlowRouter.getParam('_id'),
+            subscription = Meteor.subscribe('game', gameId);
 
-        Modules.client.gameComplete({
-            gameId: gameId
-        });
+        return {
+            isLoading: !subscription.ready(),
+            game: Games.findOne({_id: gameId})
+        };
     },
     render() {
-        return (
-            <view className="animated fadeIn battle view">
-                <App.GameBoards />
-            </view>
-        );
+        if (this.data.isLoading) {
+            return <App.Loading />;
+        } else {
+            return (
+                <view className="animated fadeIn battle view">
+                    <App.GameDetails />
+                    <App.GameBoards game={this.data.game} />
+
+                    <p>chat module</p>
+                </view>
+            );
+        }
     }
 });

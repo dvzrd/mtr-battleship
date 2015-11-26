@@ -46,12 +46,15 @@ let _handleGameCreate = () => {
                 Bert.alert('Game created!', 'success');
 
                 // @TODO: refactor this call to gameBoardCreate module
+                let gameAttributes = {
+                    gameId: gameId._id
+                };
 
-                Meteor.call('createGameBoard', gameId, (error, boardId) => {
+                Meteor.call('createGameBoard', gameAttributes, (error, boardId) => {
                     if (error) {
                         console.error(error.reason);
                     } else {
-                        console.log(boardId);
+                        console.log('created game board ' + boardId);
                         FlowRouter.go(path);
                     }
                 });

@@ -13,11 +13,10 @@
   background-repeat: no-repeat;
 
   .game.board.module {
-    height: 40.5vh;
     width: $full;
-    margin: 0 auto;
+    margin: $space-jumbo auto;
     padding: 0;
-    border: $space-micro solid $negative-color;
+    border: $space-micro solid $highlight-color;
 
     @media (min-width: $phone-width) {
       width: $three-quarters;
@@ -31,22 +30,36 @@
       width: $half;
     }
 
-    &:first-child {
-      margin-top: $space-large + $space-tiny;
-    }
-
     .grid {
       display: flex;
+      flex-direction: row;
       flex-wrap: wrap;
-      height: 8vh;
+      align-items: stretch;
+      height: $fluid-three-quarters;
       margin: 0;
       padding: 0;
 
       .cell {
         cursor: pointer;
-        flex: 1;
+        flex: 0 0 20%;
         padding: $space-base;
-        box-shadow: 0 0 0 $space-quantum $negative-color;
+        box-shadow: 0 0 0 $space-quantum $highlight-color;
+
+        &.selected {
+          background-color: $highlight-color;
+        }
+
+        &.target {
+          background-color: $negative-color;
+        }
+
+        &.hit {
+          background-color: $positive-color;
+        }
+
+        &.miss {
+          background-color: $caution-color;
+        }
 
         &:hover {
           background-color: $highlight-color;

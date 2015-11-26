@@ -1,12 +1,12 @@
 Meteor.methods({
-    createGameBoard(creatorAttributes) {
-        check(creatorAttributes, {
+    createGameBoard(boardAttributes) {
+        check(boardAttributes, {
             gameId: String
         });
 
         var now = new Date(),
             user = Meteor.user(),
-            duplicateBoard = Boards.findOne({gameId: creatorAttributes.gameId, owner: user.username});
+            duplicateBoard = Boards.findOne({gameId: boardAttributes.gameId, owner: user.username});
 
         if (!user) {
             throw new Meteor.Error('user-not-logged-in', 'You need to be logged in to create a game board.');
@@ -15,7 +15,7 @@ Meteor.methods({
             return Meteor.Error('game-board-already-exists', 'This game board already exists.');
         } else {
 
-            var board = _.extend(creatorAttributes, {
+            var board = _.extend(boardAttributes, {
                 owner: user.username,
                 createdAt: now,
                 unitPlacements: null,
@@ -30,7 +30,7 @@ Meteor.methods({
     placeBattleUnits(placementAttributes) {
         check(placementAttributes, {
             boardId: String,
-            unitPlacements: Array
+            unitPlacements: Object
         });
 
         var user = Meteor.user(),

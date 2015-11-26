@@ -1,64 +1,59 @@
 App.GameBoard = React.createClass({
     mixins: [ReactMeteorData],
-    PropTypes: {},
-
+    PropTypes: {
+        board: React.PropTypes.object
+    },
     shouldComponentUpdate() {
         return true;
     },
 
     getMeteorData() {
-        let gameId = FlowRouter.getParam('_id');
-        let subscription = Meteor.subscribe('game', gameId);
-
         return {
-            isLoading: !subscription.ready(),
-            game: Games.findOne({_id: gameId})
+            // @TODO: move to a collection
+            cells: [
+                {id: '1A'}, {id: '2A'}, {id: '3A'}, {id: '4A'}, {id: '5A'},
+                {id: '1B'}, {id: '2B'}, {id: '3B'}, {id: '4B'}, {id: '5B'},
+                {id: '1C'}, {id: '2C'}, {id: '3C'}, {id: '4C'}, {id: '5C'},
+                {id: '1D'}, {id: '2D'}, {id: '3D'}, {id: '4D'}, {id: '5D'},
+                {id: '1E'}, {id: '2E'}, {id: '3E'}, {id: '4E'}, {id: '5E'}
+            ]
         };
     },
 
-    render() {
-        if (this.data.isLoading) {
-            return <App.Loading />;
+    handleUnitPlacement(event) {
+        event.preventDefault();
+    },
+
+    handleTargetFire(event) {
+        event.preventDefault();
+    },
+
+    renderActions() {
+        if (!this.props.board.unitPlacements) {
+            return (
+                <button type="button" className="fluid primary button" onClick={this.handleUnitPlacement}>Place Units</button>
+            );
         } else {
             return (
-                <module className="game board module" id={this.data.game._id}>
-                    <div className="grid" id="A">
-                        <div className="cell" id="1A"></div>
-                        <div className="cell" id="2A"></div>
-                        <div className="cell" id="3A"></div>
-                        <div className="cell" id="4A"></div>
-                        <div className="cell" id="5A"></div>
-                    </div>
-                    <div className="grid" id="B">
-                        <div className="cell" id="1B"></div>
-                        <div className="cell" id="2B"></div>
-                        <div className="cell" id="3B"></div>
-                        <div className="cell" id="4B"></div>
-                        <div className="cell" id="5B"></div>
-                    </div>
-                    <div className="grid" id="C">
-                        <div className="cell" id="1C"></div>
-                        <div className="cell" id="2C"></div>
-                        <div className="cell" id="3C"></div>
-                        <div className="cell" id="4C"></div>
-                        <div className="cell" id="5C"></div>
-                    </div>
-                    <div className="grid" id="D">
-                        <div className="cell" id="1D"></div>
-                        <div className="cell" id="2D"></div>
-                        <div className="cell" id="3D"></div>
-                        <div className="cell" id="4D"></div>
-                        <div className="cell" id="5D"></div>
-                    </div>
-                    <div className="grid" id="E">
-                        <div className="cell" id="1E"></div>
-                        <div className="cell" id="2E"></div>
-                        <div className="cell" id="3E"></div>
-                        <div className="cell" id="4E"></div>
-                        <div className="cell" id="5E"></div>
-                    </div>
-                </module>
-            );
+                <button type="button" className="fluid primary button" onClick={this.handleTargetFire}>Target Fire</button>
+            )
         }
+    },
+
+    render() {
+        const board = this.props.board;
+
+        return (
+            <module className="game board module" id={board._id}>
+                <div className="grid">
+                    {this.data.cells.map((cell) => {
+                        return (
+                            <App.GameBoardCell key={cell.id} board={board} targetId={cell.id}/>
+                        );
+                    })}
+                </div>
+                {this.renderActions()}
+            </module>
+        );
     }
 });
