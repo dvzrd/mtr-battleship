@@ -9,6 +9,7 @@ App.GameBoard = React.createClass({
 
     getMeteorData() {
         return {
+            board: Boards.findOne({_id: this.props.boardId}),
             // @TODO: move to a collection
             cells: [
                 {id: '1A'}, {id: '2A'}, {id: '3A'}, {id: '4A'}, {id: '5A'},
@@ -18,6 +19,18 @@ App.GameBoard = React.createClass({
                 {id: '1E'}, {id: '2E'}, {id: '3E'}, {id: '4E'}, {id: '5E'}
             ]
         };
+    },
+
+    renderActions() {
+        if (!this.data.board.unitPlacements) {
+            return (
+                <button type="button" className="fluid primary button">Place Units</button>
+            );
+        } else {
+            return (
+                <button type="button" className="fluid primary button">Target Fire</button>
+            )
+        }
     },
 
     render() {
@@ -32,6 +45,7 @@ App.GameBoard = React.createClass({
                         );
                     })}
                 </div>
+                {this.renderActions()}
             </module>
         );
     }

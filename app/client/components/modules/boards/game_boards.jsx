@@ -22,34 +22,55 @@ App.GameBoards = React.createClass({
     // condense into a loop
 
     renderGameCreatorBoard() {
-        let unitsPlaced = this.data.creatorBoard.unitPlacements,
-            attacking = this.data.creatorBoard.status === 'attacking';
+        if (this.data.creatorBoard) {
+            let unitsPlaced = this.data.creatorBoard.unitPlacements,
+                attacking = this.data.creatorBoard.status === 'attacking';
 
-        if (unitsPlaced) {
-            return (
-                <App.GameBoard boardId={this.data.destroyerBoard._id}/>
-            );
-        }
-        if (attacking) {
-            return (
-                <App.GameBoard boardId={this.data.destroyerBoard._id}/>
-            );
-        } else {
-            return (
+            if (unitsPlaced) {
+                return (
+                    <App.GameBoard boardId={this.data.destroyerBoard._id}/>
+                );
+            }
+            if (attacking) {
+                return (
+                    <App.GameBoard boardId={this.data.destroyerBoard._id}/>
+                );
+            } else {
+                return (
                     <App.GameBoard boardId={this.data.creatorBoard._id}/>
-            );
+                );
+            }
+        } else {
+            // @TODO: this should not occur in client, handle it with a method
+            return (
+                <p className="message">The game creator is missing! Join or create another game!</p>
+            )
         }
     },
 
     renderGameDestroyerBoard() {
         if (this.data.destroyerBoard) {
-            return (
-                <App.GameBoard boardId={this.data.destroyerBoard._id}/>
-            );
+            let unitsPlaced = this.data.destroyerBoard.unitPlacements,
+                attacking = this.data.destroyerBoard.status === 'attacking';
+
+            if (unitsPlaced) {
+                return (
+                    <App.GameBoard boardId={this.data.creatorBoard._id}/>
+                );
+            }
+            if (attacking) {
+                return (
+                    <App.GameBoard boardId={this.data.creatorBoard._id}/>
+                );
+            } else {
+                return (
+                    <App.GameBoard boardId={this.data.destroyerBoard._id}/>
+                );
+            }
         } else {
-            // @TODO: show messages from messages component
+            // @TODO: messages module is needed
             return (
-                <p className="message">You have no opponent</p>
+                <p className="message">No Opponent found! Wait for someone to join or add an AI!</p>
             );
         }
     },
@@ -62,7 +83,6 @@ App.GameBoards = React.createClass({
                 <module className="game boards module">
                     {this.renderGameCreatorBoard()}
                     {this.renderGameDestroyerBoard()}
-                    <button type="button" className="centered primary button">Place Units</button>
                 </module>
             )
         }

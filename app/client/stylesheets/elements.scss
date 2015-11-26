@@ -52,6 +52,10 @@
     font-size: $font-size-base + $font-size-tiny;
   }
 
+  &.fluid {
+    width: $full;
+  }
+
   &.centered {
     display: flex;
     align-items: center;
