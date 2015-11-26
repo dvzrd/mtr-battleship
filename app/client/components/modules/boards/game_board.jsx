@@ -8,14 +8,8 @@ App.GameBoard = React.createClass({
     },
 
     getMeteorData() {
-        let gameId = FlowRouter.getParam('_id'),
-            boardId = 'getFromProps',
-            subscription = Meteor.subscribe('game', gameId);
-
         return {
-            isLoading: !subscription.ready(),
-            game: Games.findOne({_id: gameId}),
-            //board: Boards.fineOne({_id: boardId}),
+            // @TODO: move to a collection
             cells: [
                 {id: '1A'}, {id: '2A'}, {id: '3A'}, {id: '4A'}, {id: '5A'},
                 {id: '1B'}, {id: '2B'}, {id: '3B'}, {id: '4B'}, {id: '5B'},
@@ -27,20 +21,18 @@ App.GameBoard = React.createClass({
     },
 
     render() {
-        if (this.data.isLoading) {
-            return <App.Loading />;
-        } else {
-            return (
-                <module className="game board module" id={this.props.boardId}>
-                    <div className="grid">
-                        {this.data.cells.map((cell) => {
-                            return (
-                                <App.GameBoardCell key={cell.id} targetId={cell.id} />
-                            );
-                        })}
-                    </div>
-                </module>
-            );
-        }
+        const {boardId} = this.props;
+
+        return (
+            <module className="game board module" id={this.props.boardId}>
+                <div className="grid">
+                    {this.data.cells.map((cell) => {
+                        return (
+                            <App.GameBoardCell key={cell.id} targetId={cell.id}/>
+                        );
+                    })}
+                </div>
+            </module>
+        );
     }
 });

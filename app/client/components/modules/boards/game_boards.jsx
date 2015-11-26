@@ -1,33 +1,43 @@
 App.GameBoards = React.createClass({
     mixins: [ReactMeteorData],
-    PropTypes: {},
 
     shouldComponentUpdate() {
         return true;
     },
     getMeteorData() {
-        let gameId = FlowRouter.getParam('_id'),
+        let gameId = this.props.game._id,
+            creator = this.props.game.creator,
+            destroyer = this.props.game.destroyer,
             selector = {gameId: gameId},
             subscription = Meteor.subscribe('boards', selector);
 
         return {
             isLoading: !subscription.ready(),
-            boards: Boards.find({}, {sort: {createdAt: -1}}).fetch()
+            creatorBoard: Boards.findOne({gameId: gameId, owner: creator}),
+            destroyerBoard: Boards.findOne({gameId: gameId, owner: destroyer})
         };
     },
     renderGameCreatorBoard() {
-        return (
-            <App.GameBoard />
-        );
-    },
-    renderGameDestroyerBoard() {
-        if (this.data.boards.length < 2) {
+        if (this.data.creatorBoard) {
+            return (
+                <App.GameBoard boardId={this.data.creatorBoard._id}/>
+            );
+        } else {
+            // @TODO: show messages from messages component
             return (
                 <p className="message">You have no opponent</p>
             );
-        } else {
+        }
+    },
+    renderGameDestroyerBoard() {
+        if (this.data.destroyerBoard) {
             return (
-                <App.GameBoard />
+                <App.GameBoard boardId={this.data.destroyerBoard._id} />
+            );
+        } else {
+            // @TODO: show messages from messages component
+            return (
+                <p className="message">You have no opponent</p>
             );
         }
     },

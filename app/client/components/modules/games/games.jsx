@@ -11,6 +11,7 @@ App.Games = React.createClass({
     },
     render() {
         let noGames = this.data.games.length === 0;
+
         if (this.data.isLoading) {
             return <App.Loading />;
         } else {
