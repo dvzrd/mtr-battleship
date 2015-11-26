@@ -33,42 +33,44 @@ App.GameBoardCell = React.createClass({
             targetCell = '#' + this.props.targetId,
             isBoardOwner = user.username === board.owner,
             unitPlacements = this.data.selections,
-            oldestSelectionId = this.data.oldestSelection._id;
+            oldestSelection = this.data.oldestSelection;
 
-        console.log(oldestSelectionId);
+        console.log(oldestSelection);
 
         if (isBoardOwner) {
             if (board.status === null) {
                 let selectionAttributes = {
                     boardId: board._id,
-                    selection: targetCell
+                    selection: this.props.targetId
                 };
 
                 if (unitPlacements.length >= 5) {
                     console.log('five targets selected');
                     console.log(unitPlacements.length);
-                    console.log(oldestSelectionId);
 
-                    Meteor.call('removeSelection', oldestSelectionId, (error, removedSelection) => {
-                        if (error) {
-                            console.error(error.reason);
-                        } else {
-                            console.log(removedSelection);
-                            console.log(unitPlacements.length);
-                            $(removedSelection).removeClass('selected');
+                    if ($(targetCell).hasClass('selected')) {
+                        Bert.alert('You already selected this target', 'warning');
+                    } else {
+                        Meteor.call('removeSelection', oldestSelection._id, (error, removedSelection) => {
+                            if (error) {
+                                console.error(error.reason);
+                            } else {
+                                console.log(removedSelection);
+                                console.log(unitPlacements.length);
+                                $('#' + removedSelection).removeClass('selected');
 
-                            Meteor.call('insertSelection', selectionAttributes, (error, selectionId) => {
-                                if (error) {
-                                    console.error(error.reason);
-                                } else {
-                                    console.log('selected target cell');
-                                    console.log(selectionId);
-                                    console.log(unitPlacements.length);
-                                    $(targetCell).addClass('selected');
-                                }
-                            });
-                        }
-                    })
+                                Meteor.call('insertSelection', selectionAttributes, (error, selectionId) => {
+                                    if (error) {
+                                        console.error(error.reason);
+                                    } else {
+                                        console.log(selectionId);
+                                        console.log(unitPlacements.length);
+                                        $(targetCell).addClass('selected');
+                                    }
+                                });
+                            }
+                        });
+                    }
                 } else {
                     Meteor.call('insertSelection', selectionAttributes, (error, selectionId) => {
                         if (error) {
