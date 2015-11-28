@@ -63,6 +63,7 @@ App.GameBoardCell = React.createClass({
                             } else {
                                 console.log(removedSelection);
                                 console.log(unitPlacements.length);
+
                                 $('#' + removedSelection).removeClass('selected');
 
                                 Meteor.call('insertSelection', selectionAttributes, (error, selectionId) => {
