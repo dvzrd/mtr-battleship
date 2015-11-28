@@ -18,8 +18,22 @@ Meteor.methods({
             var board = _.extend(boardAttributes, {
                 owner: user.username,
                 createdAt: now,
-                unitPlacements: null,
-                status: null,
+                targets: [
+                    {id: '1A', status: null}, {id: '2A', status: null},
+                    {id: '3A', status: null}, {id: '4A', status: null},
+                    {id: '5A', status: null}, {id: '1B', status: null},
+                    {id: '2B', status: null}, {id: '3B', status: null},
+                    {id: '4B', status: null}, {id: '5B', status: null},
+                    {id: '1C', status: null}, {id: '2C', status: null},
+                    {id: '3C', status: null}, {id: '4C', status: null},
+                    {id: '5C', status: null}, {id: '1D', status: null},
+                    {id: '2D', status: null}, {id: '3D', status: null},
+                    {id: '4D', status: null}, {id: '5D', status: null},
+                    {id: '1E', status: null}, {id: '2E', status: null},
+                    {id: '3E', status: null}, {id: '4E', status: null},
+                    {id: '5E', status: null}
+                ],
+                status: null
             }), boardId = Boards.insert(board);
 
             return {
