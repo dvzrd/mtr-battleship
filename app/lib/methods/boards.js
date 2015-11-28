@@ -18,6 +18,7 @@ Meteor.methods({
             var board = _.extend(boardAttributes, {
                 owner: user.username,
                 createdAt: now,
+                // @TODO: function to generate targets
                 targets: [
                     {id: '1A', status: 'empty'}, {id: '2A', status: 'empty'},
                     {id: '3A', status: 'empty'}, {id: '4A', status: 'empty'},

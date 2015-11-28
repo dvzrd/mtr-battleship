@@ -3,6 +3,7 @@ App.GameBoardCell = React.createClass({
     propTypes: {
         className: React.PropTypes.string,
         targetId: React.PropTypes.string,
+        status: React.PropTypes.string,
         board: React.PropTypes.object
     },
 
