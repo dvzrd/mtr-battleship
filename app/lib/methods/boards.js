@@ -42,14 +42,15 @@ Meteor.methods({
             };
         }
     },
-    placeBattleUnits(placementAttributes) {
+    placeUnit(placementAttributes) {
         check(placementAttributes, {
             boardId: String,
-            unitPlacements: Object
+            boardOwner: String,
+            targetId: String
         });
 
         var user = Meteor.user(),
-            board = Boards.findOne({_id: boardId, owner: user.username});
+            board = Boards.findOne({_id: placementAttributes.boardId, owner: placementAttributes.boardOwner});
 
         if (!user) {
             throw new Meteor.Error('user-not-logged-in', 'Need to be logged in to place units on game board');
@@ -57,8 +58,8 @@ Meteor.methods({
         if (!board) {
             throw new Meteor.Error('game-board-does-not-exist', 'This game board is not in the collection');
         } else {
-            Boards.update(placementAttributes.boardId, {
-                $set: {'unitPlacements': placementAttributes.unitPlacements, 'status': 'ready'}
+            Boards.update({_id: placementAttributes.boardId, 'targets.id': placementAttributes.targetId}, {
+                $set: {'targets.$.status': 'selected'}
             });
         }
     },
