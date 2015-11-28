@@ -19,19 +19,19 @@ Meteor.methods({
                 owner: user.username,
                 createdAt: now,
                 targets: [
-                    {id: '1A', status: null}, {id: '2A', status: null},
-                    {id: '3A', status: null}, {id: '4A', status: null},
-                    {id: '5A', status: null}, {id: '1B', status: null},
-                    {id: '2B', status: null}, {id: '3B', status: null},
-                    {id: '4B', status: null}, {id: '5B', status: null},
-                    {id: '1C', status: null}, {id: '2C', status: null},
-                    {id: '3C', status: null}, {id: '4C', status: null},
-                    {id: '5C', status: null}, {id: '1D', status: null},
-                    {id: '2D', status: null}, {id: '3D', status: null},
-                    {id: '4D', status: null}, {id: '5D', status: null},
-                    {id: '1E', status: null}, {id: '2E', status: null},
-                    {id: '3E', status: null}, {id: '4E', status: null},
-                    {id: '5E', status: null}
+                    {id: '1A', status: 'empty'}, {id: '2A', status: 'empty'},
+                    {id: '3A', status: 'empty'}, {id: '4A', status: 'empty'},
+                    {id: '5A', status: 'empty'}, {id: '1B', status: 'empty'},
+                    {id: '2B', status: 'empty'}, {id: '3B', status: 'empty'},
+                    {id: '4B', status: 'empty'}, {id: '5B', status: 'empty'},
+                    {id: '1C', status: 'empty'}, {id: '2C', status: 'empty'},
+                    {id: '3C', status: 'empty'}, {id: '4C', status: 'empty'},
+                    {id: '5C', status: 'empty'}, {id: '1D', status: 'empty'},
+                    {id: '2D', status: 'empty'}, {id: '3D', status: 'empty'},
+                    {id: '4D', status: 'empty'}, {id: '5D', status: 'empty'},
+                    {id: '1E', status: 'empty'}, {id: '2E', status: 'empty'},
+                    {id: '3E', status: 'empty'}, {id: '4E', status: 'empty'},
+                    {id: '5E', status: 'empty'}
                 ],
                 status: null
             }), boardId = Boards.insert(board);
