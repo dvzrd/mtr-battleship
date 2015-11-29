@@ -43,15 +43,14 @@ Meteor.methods({
             };
         }
     },
-    updateStatus(statusAttributes) {
-        check(statusAttributes, {
+    updateStatus(updateAttributes) {
+        check(updateAttributes, {
             boardId: String,
-            boardOwner: String,
             status: String
         });
 
         var user = Meteor.user(),
-            board = Boards.findOne({_id: statusAttributes.boardId});
+            board = Boards.findOne({_id: updateAttributes.boardId});
 
         if (!user) {
             throw new Meteor.Error('user-not-logged-in', 'Need to be logged in to close a game board');
@@ -59,8 +58,8 @@ Meteor.methods({
         if (!board) {
             throw new Meteor.Error('game-board-does-not-exist', 'This game board is not in the collection');
         } else {
-            Boards.update(statusAttributes.boardId, {
-                $set: {'status': statusAttributes.status}
+            Boards.update(updateAttributes.boardId, {
+                $set: {'status': updateAttributes.status}
             });
         }
     },

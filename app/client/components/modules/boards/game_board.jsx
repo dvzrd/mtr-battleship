@@ -9,6 +9,8 @@ App.GameBoard = React.createClass({
 
     getMeteorData() {
         return {
+            boardId: this.props.board._id,
+            boardOwner: this.props.board.owner,
             targets: this.props.board.targets
         };
     },
@@ -16,7 +18,18 @@ App.GameBoard = React.createClass({
     handleUnitDeployment(event) {
         event.preventDefault();
 
-        console.log('units deployed');
+        let updateAttributes = {
+            boardId: this.data.boardId,
+            status: 'ready'
+        };
+
+        Meteor.call('updateStatus', updateAttributes, (error) => {
+           if (error) {
+               Bert.alert(error.reason, 'warning');
+           } else {
+               Bert.alert('Your units are deployed, get ready for battle!', 'success');
+           }
+        });
     },
 
     handleTargetFire(event) {
@@ -40,12 +53,18 @@ App.GameBoard = React.createClass({
     render() {
         const board = this.props.board;
 
+        let boardProps = {
+            boardId: board._id,
+            owner: board.owner,
+            status: board.status
+        };
+
         return (
             <module className="game board module" id={board._id}>
                 <div className="grid">
                     {this.data.targets.map((target) => {
                         return (
-                            <App.GameBoardTarget key={target.id} targetId={target.id} status={target.status} board={board} />
+                            <App.GameBoardTarget key={target.id} boardProps={boardProps} targetId={target.id} status={target.status} />
                         );
                     })}
                 </div>

@@ -1,9 +1,9 @@
 App.GameBoardTarget = React.createClass({
     mixins: [],
     propTypes: {
+        boardProps: React.PropTypes.object,
         targetId: React.PropTypes.string,
-        status: React.PropTypes.string,
-        board: React.PropTypes.object
+        status: React.PropTypes.string
     },
 
     shouldComponentUpdate() {
@@ -17,16 +17,17 @@ App.GameBoardTarget = React.createClass({
         event.preventDefault();
 
         let user = Meteor.user(),
-            board = this.props.board,
-            targetCell = this.props.targetId,
+            boardId = this.props.boardProps.boardId,
+            targetId = this.props.targetId,
+            status = this.props.status,
             targetStatus = this.props.status,
-            isBoardOwner = user.username === board.owner;
+            isBoardOwner = user.username === this.props.boardProps.owner;
 
         if (isBoardOwner) {
-            if (board.status === null) {
+            if (status === null) {
                 let targetAttributes = {
-                    boardId: board._id,
-                    targetId: targetCell
+                    boardId: boardId,
+                    targetId: targetId
                 };
 
                 if (targetStatus === 'empty') {
@@ -34,7 +35,7 @@ App.GameBoardTarget = React.createClass({
                         if (error) {
                             Bert.alert(error.reason, 'warning');
                         } else {
-                            Bert.alert('Unit placed on ' + targetCell, 'success');
+                            Bert.alert('Unit placed on ' + targetId, 'success');
                         }
                     });
                 } else {
@@ -42,7 +43,7 @@ App.GameBoardTarget = React.createClass({
                         if (error) {
                             Bert.alert(error.reason, 'warning');
                         } else {
-                            Bert.alert('Unit removed from ' + targetCell, 'warning');
+                            Bert.alert('Unit removed from ' + targetId, 'warning');
                         }
                     });
                 }
@@ -50,7 +51,7 @@ App.GameBoardTarget = React.createClass({
                 Bert.alert('You cannot change unit positions when game is in progress', 'warning');
             }
         } else {
-            if (board.status === 'defending') {
+            if (status === 'defending') {
                 // call method for offensive targeting
             } else {
                 Bert.alert('Waiting for opponent', 'warning');
