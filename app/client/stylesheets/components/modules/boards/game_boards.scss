@@ -50,15 +50,15 @@
         }
 
         &.target {
-          background-color: $negative-color;
+          background-color: $info-color;
         }
 
-        &.hit {
-          background-color: $positive-color;
-        }
-
-        &.miss {
+        &.missed {
           background-color: $caution-color;
+        }
+
+        &.destroyed {
+          background-color: $negative-color;
         }
 
         &:hover {

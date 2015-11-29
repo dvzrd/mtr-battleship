@@ -33,7 +33,11 @@ App.GameBoardTarget = React.createClass({
                 };
 
                 Meteor.call('placeUnit', placementAttributes, (error) => {
-
+                    if (error) {
+                        Bert.alert(error.reason, 'warning');
+                    } else {
+                        console.log(user.username + ' selected ' + targetCell);
+                    }
                 });
             } else {
                 Bert.alert('You cannot change unit positions when game is in progress', 'warning');
@@ -52,8 +56,18 @@ App.GameBoardTarget = React.createClass({
 
         let className = 'cell';
 
+        // @TODO: refactor later
         if (status === 'selected') {
             className += ' selected';
+        }
+        if (status === 'target') {
+            className += ' target'
+        }
+        if (status === 'missed') {
+            className += 'missed'
+        }
+        if (status === 'destroyed') {
+            className += ' destroyed'
         }
 
         return (
