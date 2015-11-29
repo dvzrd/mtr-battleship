@@ -18,6 +18,7 @@ Meteor.methods({
             var board = _.extend(boardAttributes, {
                 owner: user.username,
                 createdAt: now,
+                status: null,
                 // @TODO: function to generate targets
                 targets: [
                     {id: '1A', status: 'empty'}, {id: '2A', status: 'empty'},
@@ -34,7 +35,7 @@ Meteor.methods({
                     {id: '3E', status: 'empty'}, {id: '4E', status: 'empty'},
                     {id: '5E', status: 'empty'}
                 ],
-                gameStatus: null
+                placementCount: 0
             }), boardId = Boards.insert(board);
 
             return {
@@ -50,15 +51,21 @@ Meteor.methods({
         });
 
         var user = Meteor.user(),
-            board = Boards.findOne({_id: targetAttributes.boardId, owner: targetAttributes.boardOwner});
+            board = Boards.findOne({_id: targetAttributes.boardId, owner: targetAttributes.boardOwner}),
+            placementLimit = board.placementCount === 5;
+
         if (!user) {
             throw new Meteor.Error('user-not-logged-in', 'Need to be logged in to place units on game board');
         }
         if (!board) {
             throw new Meteor.Error('game-board-does-not-exist', 'This game board is not available');
+        }
+        if (placementLimit) {
+            throw new Meteor.Error('max-selected-units', 'This game board has the maximum number of selected units');
         } else {
             Boards.update({_id: targetAttributes.boardId, 'targets.id': targetAttributes.targetId}, {
-                $set: {'targets.$.status': 'selected'}
+                $set: {'targets.$.status': 'selected'},
+                $inc: { placementCount: +1 }
             });
         }
     },
@@ -79,7 +86,8 @@ Meteor.methods({
             throw new Meteor.Error('game-board-does-not-exist', 'This game board is not available');
         } else {
             Boards.update({_id: targetAttributes.boardId, 'targets.id': targetAttributes.targetId}, {
-                $set: {'targets.$.status': 'empty'}
+                $set: {'targets.$.status': 'empty'},
+                $inc: { placementCount: -1 }
             });
         }
     },

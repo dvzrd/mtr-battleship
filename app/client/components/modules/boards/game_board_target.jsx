@@ -24,7 +24,7 @@ App.GameBoardTarget = React.createClass({
             isBoardOwner = user.username === board.owner;
 
         if (isBoardOwner) {
-            if (board.gameStatus === null) {
+            if (board.status === null) {
                 let targetAttributes = {
                     boardId: board._id,
                     boardOwner: user.username,
@@ -52,7 +52,7 @@ App.GameBoardTarget = React.createClass({
                 Bert.alert('You cannot change unit positions when game is in progress', 'warning');
             }
         } else {
-            if (board.gameStatus === 'defending') {
+            if (board.status === 'defending') {
                 // call method for offensive targeting
             } else {
                 Bert.alert('Waiting for opponent', 'warning');

@@ -25,7 +25,7 @@ let BoardsSchema = new SimpleSchema({
         type: Date,
         label: 'The date the board was created'
     },
-    'gameStatus': {
+    'status': {
         type: String,
         label: 'The status of the game',
         optional: true
