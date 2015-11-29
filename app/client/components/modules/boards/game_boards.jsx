@@ -31,14 +31,25 @@ App.GameBoards = React.createClass({
         if (this.data.creatorBoard) {
             let user = Meteor.user(),
                 isCreator = this.props.game.creator === user.username,
-                offensive = this.data.creatorBoard.status === 'offense' && this.data.destroyerBoard === 'defense',
-                defensive = this.data.creatorBoard.status === 'defense' && this.data.destroyerBoard === 'offense',
                 noOpponent = this.data.creatorBoard.status === 'ready' && !this.data.destroyerBoard;
 
             if (isCreator) {
-                let ready = this.data.creatorBoard.status === 'ready' && this.data.destroyerBoard;
+                let ready = this.data.creatorBoard.status === 'ready' && this.data.destroyerBoard,
+                    offensive = this.data.creatorBoard.status === 'offense';
 
-                if (ready) {
+                if (noOpponent) {
+                    // @TODO: messages module
+                    return (
+                        <module className="messages module">
+                            <p className="centered light message">
+                                No one dares to oppose you! Wait for someone foolish enough to try...
+                            </p>
+                            <button type="button" className="primary centered button" onClick={this.spawnBot}>Spawn bot
+                            </button>
+                        </module>
+                    );
+                }
+                if (ready || offensive) {
                     return (
                         <App.GameBoard board={this.data.destroyerBoard}/>
                     );
@@ -48,9 +59,10 @@ App.GameBoards = React.createClass({
                     );
                 }
             } else {
-                let ready = this.data.destroyerBoard.status === 'ready' && this.data.creatorBoard;
+                let ready = this.data.destroyerBoard.status === 'ready' && this.data.creatorBoard,
+                    offensive = this.data.destroyerBoard.status === 'offense';
 
-                if (ready) {
+                if (ready || offensive) {
                     return (
                         <App.GameBoard board={this.data.creatorBoard}/>
                     );
@@ -60,38 +72,6 @@ App.GameBoards = React.createClass({
                     );
                 }
             }
-
-            //if (ready) {
-            //    return (
-            //        <App.GameBoard board={this.data.destroyerBoard}/>
-            //    );
-            //}
-            //if (offensive) {
-            //    return (
-            //        <App.GameBoard board={this.data.destroyerBoard}/>
-            //    );
-            //}
-            //if (defensive) {
-            //    return (
-            //        <App.GameBoard board={this.data.creatorBoard}/>
-            //    );
-            //}
-            //if (noOpponent) {
-            //    // @TODO: messages module
-            //    return (
-            //        <module className="messages module">
-            //            <p className="centered light message">
-            //                No one dares to oppose you! Wait for someone foolish enough to try...
-            //            </p>
-            //            <button type="button" className="primary centered button" onClick={this.spawnBot}>Spawn bot
-            //            </button>
-            //        </module>
-            //    );
-            //} else {
-            //    return (
-            //        <App.GameBoard board={this.data.creatorBoard}/>
-            //    );
-            //}
         } else {
             return (
                 // @TODO: messages module

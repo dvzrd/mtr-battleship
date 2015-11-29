@@ -60,10 +60,10 @@ App.GameBoardTarget = React.createClass({
     },
 
     render() {
-        const {targetId, status} = this.props;
+        const {boardProps, targetId, status} = this.props;
 
         let className = 'cell',
-            isBoardOwner = Meteor.user().username === this.props.boardProps.owner;
+            isBoardOwner = Meteor.user().username === boardProps.owner;
 
         // @TODO: refactor - micro-branching
 
