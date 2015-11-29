@@ -31,10 +31,15 @@ App.GameBoards = React.createClass({
         if (this.data.creatorBoard) {
             let user = Meteor.user(),
                 isCreator = this.props.game.creator === user.username,
-                noOpponent = this.data.creatorBoard.status === 'ready' && !this.data.destroyerBoard;
+                noOpponent = this.data.creatorBoard.status === 'ready' && !this.data.destroyerBoard,
+                gameProps = {
+                    gameId: this.props.game._id,
+                    creator: this.props.game.creator
+                };
+
 
             if (isCreator) {
-                let ready = this.data.creatorBoard.status === 'ready' && this.data.destroyerBoard,
+                let ready = this.data.creatorBoard.status === 'ready' && this.data.destroyerBoard.status === 'ready',
                     offensive = this.data.creatorBoard.status === 'offense';
 
                 if (noOpponent) {
@@ -51,24 +56,24 @@ App.GameBoards = React.createClass({
                 }
                 if (ready || offensive) {
                     return (
-                        <App.GameBoard board={this.data.destroyerBoard}/>
+                        <App.GameBoard gameProps={gameProps} board={this.data.destroyerBoard} />
                     );
                 } else {
                     return (
-                        <App.GameBoard board={this.data.creatorBoard}/>
+                        <App.GameBoard gameProps={gameProps} board={this.data.creatorBoard} />
                     );
                 }
             } else {
-                let ready = this.data.destroyerBoard.status === 'ready' && this.data.creatorBoard,
+                let ready = this.data.destroyerBoard.status === 'ready' && this.data.creatorBoard.status === 'ready',
                     defensive = this.data.destroyerBoard.status === 'defense';
 
                 if (ready || defensive) {
                     return (
-                        <App.GameBoard board={this.data.creatorBoard}/>
+                        <App.GameBoard gameProps={gameProps} board={this.data.creatorBoard}/>
                     );
                 } else {
                     return (
-                        <App.GameBoard board={this.data.destroyerBoard}/>
+                        <App.GameBoard gameProps={gameProps} board={this.data.destroyerBoard}/>
                     );
                 }
             }
