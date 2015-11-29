@@ -60,9 +60,9 @@ App.GameBoards = React.createClass({
                 }
             } else {
                 let ready = this.data.destroyerBoard.status === 'ready' && this.data.creatorBoard,
-                    offensive = this.data.destroyerBoard.status === 'offense';
+                    defensive = this.data.destroyerBoard.status === 'defense';
 
-                if (ready || offensive) {
+                if (ready || defensive) {
                     return (
                         <App.GameBoard board={this.data.creatorBoard}/>
                     );
