@@ -14,65 +14,70 @@ App.GameBoards = React.createClass({
 
         return {
             isLoading: !subscription.ready(),
+            gameId: gameId,
+            creator: creator,
+            destroyer: destroyer,
             creatorBoard: Boards.findOne({gameId: gameId, owner: creator}),
             destroyerBoard: Boards.findOne({gameId: gameId, owner: destroyer})
         };
     },
 
-    // @TODO: refactor all this logic into a separate module
-    // condense into a loop
+    spawnBot(event) {
+        event.preventDefault();
 
-    renderGameCreatorBoard() {
-        if (this.data.creatorBoard) {
-            let unitsPlaced = this.data.creatorBoard.unitPlacements,
-                attacking = this.data.creatorBoard.status === 'attacking';
-
-            if (unitsPlaced) {
-                return (
-                    <App.GameBoard board={this.data.destroyerBoard}/>
-                );
-            }
-            if (attacking) {
-                return (
-                    <App.GameBoard board={this.data.destroyerBoard}/>
-                );
-            } else {
-                return (
-                    <App.GameBoard board={this.data.creatorBoard}/>
-                );
-            }
-        } else {
-            // @TODO: this should not occur in client, handle it with a method
-            return (
-                <p className="message">The game creator is missing! Join or create another game!</p>
-            )
-        }
+        console.log('add HAL 9000 as opponent');
     },
 
-    renderGameDestroyerBoard() {
-        if (this.data.destroyerBoard) {
-            let unitsPlaced = this.data.destroyerBoard.unitPlacements,
-                attacking = this.data.destroyerBoard.status === 'attacking';
+    // @TODO: refactor board render into separate module - employ micro-branching
 
-            if (unitsPlaced) {
+    renderGameBoard() {
+        let user = Meteor.user(),
+            isCreator = this.data.creator === user.username,
+            noOpponent = this.data.creatorBoard.status === 'ready' && !this.data.destroyerBoard,
+            gameProps = {
+                gameId: this.data.gameId,
+                creator: this.data.creator
+            };
+
+
+        if (isCreator) {
+            let ready = this.data.creatorBoard.status === 'ready' && this.data.destroyerBoard.status === 'ready',
+                offensive = this.data.creatorBoard.status === 'offense';
+
+            if (noOpponent) {
+                // @TODO: messages module
                 return (
-                    <App.GameBoard board={this.data.creatorBoard}/>
+                    <module className="messages module">
+                        <p className="centered light message">
+                            No one dares to oppose you! Wait for someone foolish enough to try...
+                        </p>
+                        <button type="button" className="primary centered button" onClick={this.spawnBot}>Spawn bot
+                        </button>
+                    </module>
                 );
             }
-            if (attacking) {
+            if (ready || offensive) {
                 return (
-                    <App.GameBoard board={this.data.creatorBoard}/>
+                    <App.GameBoard gameProps={gameProps} board={this.data.destroyerBoard}/>
                 );
             } else {
                 return (
-                    <App.GameBoard board={this.data.destroyerBoard}/>
+                    <App.GameBoard gameProps={gameProps} board={this.data.creatorBoard}/>
                 );
             }
         } else {
-            // @TODO: messages module is needed
-            return (
-                <p className="message">No Opponent found! Wait for someone to join or add an AI!</p>
-            );
+            let ready = this.data.destroyerBoard.status === 'ready' && this.data.creatorBoard.status === 'ready',
+                defensive = this.data.destroyerBoard.status === 'defense';
+
+            if (ready || defensive) {
+                return (
+                    <App.GameBoard gameProps={gameProps} board={this.data.destroyerBoard}/>
+                );
+            } else {
+                return (
+                    <App.GameBoard gameProps={gameProps} board={this.data.creatorBoard}/>
+                );
+            }
         }
     },
 
@@ -82,8 +87,7 @@ App.GameBoards = React.createClass({
         } else {
             return (
                 <module className="game boards module">
-                    {this.renderGameCreatorBoard()}
-                    {this.renderGameDestroyerBoard()}
+                    {this.renderGameBoard()}
                 </module>
             )
         }

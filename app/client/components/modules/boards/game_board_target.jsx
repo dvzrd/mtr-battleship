@@ -1,5 +1,5 @@
 App.GameBoardTarget = React.createClass({
-    mixins: [],
+    mixins: [ReactMeteorData],
     propTypes: {
         boardProps: React.PropTypes.object,
         targetId: React.PropTypes.string,
@@ -10,6 +10,16 @@ App.GameBoardTarget = React.createClass({
         return true;
     },
 
+    getMeteorData() {
+        return {
+            boardId: this.props.boardProps.boardId,
+            boardStatus: this.props.boardProps.status,
+            boardOwner: this.props.boardProps.owner,
+            targetId: this.props.targetId,
+            targetStatus: this.props.status
+        };
+    },
+
     // @TODO: break this up and move into a separate module
     // see /client/modules/game_create.js for reference
 
@@ -17,25 +27,26 @@ App.GameBoardTarget = React.createClass({
         event.preventDefault();
 
         let user = Meteor.user(),
-            boardId = this.props.boardProps.boardId,
-            targetId = this.props.targetId,
-            status = this.props.status,
-            targetStatus = this.props.status,
-            isBoardOwner = user.username === this.props.boardProps.owner;
+            isBoardOwner = user.username === this.data.boardOwner,
+            noUnitsDeployed = this.data.boardStatus === null,
+            ready = this.data.boardStatus === 'ready',
+            offensive = this.data.boardStatus === 'offense',
+            defensive = this.data.boardStatus === 'defensive',
+            targetEmpty = this.data.targetStatus === 'empty';
 
         if (isBoardOwner) {
-            if (status === null) {
+            if (noUnitsDeployed) {
                 let targetAttributes = {
-                    boardId: boardId,
-                    targetId: targetId
+                    boardId: this.data.boardId,
+                    targetId: this.data.targetId
                 };
 
-                if (targetStatus === 'empty') {
+                if (targetEmpty) {
                     Meteor.call('placeUnit', targetAttributes, (error) => {
                         if (error) {
                             Bert.alert(error.reason, 'warning');
                         } else {
-                            Bert.alert('Unit placed on ' + targetId, 'success');
+                            Bert.alert('Unit placed on ' + targetAttributes.targetId, 'success');
                         }
                     });
                 } else {
@@ -43,43 +54,54 @@ App.GameBoardTarget = React.createClass({
                         if (error) {
                             Bert.alert(error.reason, 'warning');
                         } else {
-                            Bert.alert('Unit removed from ' + targetId, 'warning');
+                            Bert.alert('Unit removed from ' + targetAttributes.targetId, 'warning');
                         }
                     });
                 }
+            }
+            if (defensive) {
+                Bert.alert('You are on the defensive, wait for your opponent to make their move.', 'warning');
             } else {
                 Bert.alert('You cannot change unit positions when game is in progress', 'warning');
             }
         } else {
-            if (status === 'defending') {
+            if (ready || offensive) {
                 // call method for offensive targeting
+                console.log(ready);
+                console.log(offensive);
+                console.log(ready || offensive);
             } else {
-                Bert.alert('Waiting for opponent', 'warning');
+                Bert.alert('Your opponent is a little slow, give them more time.', 'warning');
             }
         }
     },
 
     render() {
-        const {targetId, status} = this.props;
+        let className = 'cell',
+            idName = this.data.targetId,
+            isBoardOwner = Meteor.user().username === this.data.boardOwner,
+            isSelected = this.data.targetStatus === 'selected',
+            isTarget = this.data.targetStatus === 'target',
+            missed = this.data.targetStatus === 'missed',
+            destroyed = this.data.targetStatus === 'destroyed';
 
-        let className = 'cell';
+        // @TODO: refactor - micro-branching
 
-        // @TODO: refactor later
-        if (status === 'selected') {
+        if (isSelected && isBoardOwner) {
             className += ' selected';
         }
-        if (status === 'target') {
+        if (isTarget) {
             className += ' target'
         }
-        if (status === 'missed') {
+        if (missed) {
             className += 'missed'
         }
-        if (status === 'destroyed') {
+        if (destroyed) {
             className += ' destroyed'
         }
 
         return (
-            <div className={className} id={targetId} onClick={this.handleTargetClick}></div>
+            <div className={className} id={idName} onClick={this.handleTargetClick}></div>
         );
     }
 });

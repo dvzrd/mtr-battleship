@@ -39,7 +39,7 @@ A simple battleship game that uses an API
 
 ### Roadmap
 
-* Add in user sessions so the server can handle more than one game at a time.
+* ~~Add in user sessions so the server can handle more than one game at a time.~~
 * Add a leaderboard that keeps winner’s initials and ranks them according to the time it took them to win.
 * Deploy the application.
 
@@ -56,8 +56,8 @@ curl https://install.meteor.com/ | sh
 ### Run Locally
 
 ```
-git clone git@github.com:amazingBastard/mtr-abroad.git
-cd mtr-abroad
+git clone git@github.com:amazingBastard/mtr-battleship.git
+cd mtr-battleship
 ```
 
 Run the following to get the bash file to work:
@@ -157,24 +157,36 @@ Check out the [mup docs](https://github.com/arunoda/meteor-up) for more info.
 app/                # Application folder
   client/             # Client folder
     components/          # Contains react components
-      common/             # Common components (i.e. header, footer)
       layouts/            # Router layouts
+      modules/            # Modules used across the app
+        boards/             # Game boards components
+        common/             # Common components (i.e. header, footer)
+        games/              # Games components
       views/              # Router views
-    stylesheets         # LESS files (with autoprefixer)
+        private/            # Private routes
+        public/             # Public routes
+    helpers/            # Global helper functions
+    modules/            # Reusable modules to keep components high level
+    stylesheets         # SASS files (libSass)
       components/         # Components styles
-        common/             # Common components styles
         layouts/            # All layouts styles
+        modules/            # All modules styles
         views/              # View styles
-      elements.less       # html elements and modules styles
-      helpers.less        # style helpers for global use
-      typography.less     # global typigraphy styles
-      variables.less      # All LESS variables
+      _app.scss           # Stylesheet imports into app
+      _variables.scss     # All SASS variables
+      elements.scss       # html elements and modules styles
+      helpers.scss        # style helpers for global use
+      typography.scss     # global typography styles
   collections/        # All Collections
   lib/                # Lib files that get executed first
+    methods/            # Collection methods (API)
+    modules/            # Lib modules
+    routes/             # Routes (public/private routes, config)
   public/             # Public files
     images/             # Public image files
-  router/             # Router (routes, router config)
-  server/             # Server folder
+  server/             # Server directory
+    modules/            # Server modules
+    publications/       # Collection publications
   tests/              # All tests
 environments/       # Environments folder
   local/              # local environment
@@ -225,6 +237,7 @@ environments/       # Environments folder
   * [fourseven:scss](https://github.com/fourseven/meteor-scss)
   * [stevezhu:lodash](https://github.com/stevezhu/meteor-lodash)
   * [digilord:faker](https://github.com/digilord/meteor-faker)
+  * [msavin:mongol](https://github.com/msavin/Mongol)
 
 ## License
 
