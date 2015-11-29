@@ -41,7 +41,7 @@ App.GameBoard = React.createClass({
                 <div className="grid">
                     {this.data.targets.map((target) => {
                         return (
-                            <App.GameBoardCell key={target.id} targetId={target.id} status={target.status} board={board} />
+                            <App.GameBoardTarget key={target.id} targetId={target.id} status={target.status} board={board} />
                         );
                     })}
                 </div>
