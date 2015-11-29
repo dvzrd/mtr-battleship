@@ -70,7 +70,7 @@ App.GameBoard = React.createClass({
                 // @TODO: messages module
                 <module className="primary messages module">
                     <p className="light message">
-                        Waiting on opponent...
+                        Opponent is planning their move ...
                     </p>
                 </module>
             );
