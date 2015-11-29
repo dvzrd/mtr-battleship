@@ -13,22 +13,26 @@ App.GameBoard = React.createClass({
         };
     },
 
-    handleUnitPlacement(event) {
+    handleUnitDeployment(event) {
         event.preventDefault();
+
+        console.log('units deployed');
     },
 
     handleTargetFire(event) {
         event.preventDefault();
+
+        console.log('attack launched!');
     },
 
     renderActions() {
-        if (!this.props.board.unitPlacements) {
+        if (this.props.board.status === null) {
             return (
-                <button type="button" className="fluid primary button" onClick={this.handleUnitPlacement}>Place Units</button>
+                <button type="button" className="fluid primary button" onClick={this.handleUnitDeployment}>Deploy Units</button>
             );
         } else {
             return (
-                <button type="button" className="fluid primary button" onClick={this.handleTargetFire}>Target Fire</button>
+                <button type="button" className="fluid primary button" onClick={this.handleTargetFire}>Attack Target</button>
             )
         }
     },

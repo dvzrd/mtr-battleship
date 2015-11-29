@@ -15,7 +15,6 @@ App.GameBoardTarget = React.createClass({
 
     handleTargetClick(event) {
         event.preventDefault();
-        console.log(Meteor.user().username + ' clicked on ' + this.props.targetId);
 
         let user = Meteor.user(),
             board = this.props.board,
@@ -27,7 +26,6 @@ App.GameBoardTarget = React.createClass({
             if (board.status === null) {
                 let targetAttributes = {
                     boardId: board._id,
-                    boardOwner: user.username,
                     targetId: targetCell
                 };
 
@@ -36,7 +34,7 @@ App.GameBoardTarget = React.createClass({
                         if (error) {
                             Bert.alert(error.reason, 'warning');
                         } else {
-                            console.log(user.username + ' selected ' + targetCell);
+                            Bert.alert('Unit placed on ' + targetCell, 'success');
                         }
                     });
                 } else {
@@ -44,7 +42,7 @@ App.GameBoardTarget = React.createClass({
                         if (error) {
                             Bert.alert(error.reason, 'warning');
                         } else {
-                            console.log(user.username + ' removed ' + targetCell);
+                            Bert.alert('Unit removed from ' + targetCell, 'warning');
                         }
                     });
                 }
