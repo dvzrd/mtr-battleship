@@ -19,16 +19,16 @@ App.GameBoardTarget = React.createClass({
 
         let user = Meteor.user(),
             board = this.props.board,
-            targetCell = '#' + this.props.targetId,
+            targetCell = this.props.targetId,
             targetStatus = this.props.status,
             isBoardOwner = user.username === board.owner;
 
         if (isBoardOwner) {
-            if (board.status === null) {
+            if (board.gameStatus === null) {
                 let targetAttributes = {
                     boardId: board._id,
                     boardOwner: user.username,
-                    targetId: this.props.targetId
+                    targetId: targetCell
                 };
 
                 if (targetStatus === 'empty') {
@@ -52,8 +52,8 @@ App.GameBoardTarget = React.createClass({
                 Bert.alert('You cannot change unit positions when game is in progress', 'warning');
             }
         } else {
-            if (board.status === 'defending') {
-                $(targetCell).addClass('target');
+            if (board.gameStatus === 'defending') {
+                // call method for offensive targeting
             } else {
                 Bert.alert('Waiting for opponent', 'warning');
             }

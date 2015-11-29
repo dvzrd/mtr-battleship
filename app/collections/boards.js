@@ -25,7 +25,7 @@ let BoardsSchema = new SimpleSchema({
         type: Date,
         label: 'The date the board was created'
     },
-    'status': {
+    'gameStatus': {
         type: String,
         label: 'The status of the game',
         optional: true
@@ -37,6 +37,12 @@ let BoardsSchema = new SimpleSchema({
     'targets.$.status': {
         type: String,
         label: 'Status of the target cell'
+    },
+    placementCount: {
+        type: Number,
+        label: 'The number of units placed on game board',
+        min: 0,
+        max: 5
     }
 });
 

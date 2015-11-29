@@ -34,7 +34,7 @@ Meteor.methods({
                     {id: '3E', status: 'empty'}, {id: '4E', status: 'empty'},
                     {id: '5E', status: 'empty'}
                 ],
-                status: null
+                gameStatus: null
             }), boardId = Boards.insert(board);
 
             return {
