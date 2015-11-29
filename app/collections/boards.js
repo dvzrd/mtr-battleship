@@ -25,15 +25,18 @@ let BoardsSchema = new SimpleSchema({
         type: Date,
         label: 'The date the board was created'
     },
-    'unitPlacements': {
-        type: Object,
-        label: 'The placement of the owners units on the board',
-        optional: true
-    },
     'status': {
         type: String,
         label: 'The status of the game',
         optional: true
+    },
+    'targets.$.id': {
+        type: String,
+        label: 'The id of the target cell'
+    },
+    'targets.$.status': {
+        type: String,
+        label: 'Status of the target cell'
     }
 });
 

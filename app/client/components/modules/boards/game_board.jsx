@@ -9,14 +9,7 @@ App.GameBoard = React.createClass({
 
     getMeteorData() {
         return {
-            // @TODO: move to a collection
-            cells: [
-                {id: '1A'}, {id: '2A'}, {id: '3A'}, {id: '4A'}, {id: '5A'},
-                {id: '1B'}, {id: '2B'}, {id: '3B'}, {id: '4B'}, {id: '5B'},
-                {id: '1C'}, {id: '2C'}, {id: '3C'}, {id: '4C'}, {id: '5C'},
-                {id: '1D'}, {id: '2D'}, {id: '3D'}, {id: '4D'}, {id: '5D'},
-                {id: '1E'}, {id: '2E'}, {id: '3E'}, {id: '4E'}, {id: '5E'}
-            ]
+            targets: this.props.board.targets
         };
     },
 
@@ -46,9 +39,9 @@ App.GameBoard = React.createClass({
         return (
             <module className="game board module" id={board._id}>
                 <div className="grid">
-                    {this.data.cells.map((cell) => {
+                    {this.data.targets.map((target) => {
                         return (
-                            <App.GameBoardCell key={cell.id} board={board} targetId={cell.id} />
+                            <App.GameBoardTarget key={target.id} targetId={target.id} status={target.status} board={board} />
                         );
                     })}
                 </div>
