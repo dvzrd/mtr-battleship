@@ -18,6 +18,7 @@ Meteor.methods({
             var board = _.extend(boardAttributes, {
                 owner: user.username,
                 createdAt: now,
+                status: null,
                 // @TODO: function to generate targets
                 targets: [
                     {id: '1A', status: 'empty'}, {id: '2A', status: 'empty'},
@@ -34,7 +35,7 @@ Meteor.methods({
                     {id: '3E', status: 'empty'}, {id: '4E', status: 'empty'},
                     {id: '5E', status: 'empty'}
                 ],
-                status: null
+                placementCount: 0
             }), boardId = Boards.insert(board);
 
             return {
@@ -42,28 +43,73 @@ Meteor.methods({
             };
         }
     },
-    placeUnit(placementAttributes) {
-        check(placementAttributes, {
+    updateStatus(updateAttributes) {
+        check(updateAttributes, {
             boardId: String,
-            boardOwner: String,
+            status: String
+        });
+
+        var user = Meteor.user(),
+            board = Boards.findOne({_id: updateAttributes.boardId});
+
+        if (!user) {
+            throw new Meteor.Error('user-not-logged-in', 'Need to be logged in to close a game board');
+        }
+        if (!board) {
+            throw new Meteor.Error('game-board-does-not-exist', 'This game board is not in the collection');
+        } else {
+            Boards.update(updateAttributes.boardId, {
+                $set: {'status': updateAttributes.status}
+            });
+        }
+    },
+    placeUnit(targetAttributes) {
+        check(targetAttributes, {
+            boardId: String,
             targetId: String
         });
 
         var user = Meteor.user(),
-            board = Boards.findOne({_id: placementAttributes.boardId, owner: placementAttributes.boardOwner});
+            board = Boards.findOne({_id: targetAttributes.boardId, owner: user.username}),
+            placementLimit = board.placementCount === 5;
 
         if (!user) {
             throw new Meteor.Error('user-not-logged-in', 'Need to be logged in to place units on game board');
         }
         if (!board) {
-            throw new Meteor.Error('game-board-does-not-exist', 'This game board is not in the collection');
+            throw new Meteor.Error('game-board-does-not-exist', 'This game board is not available');
+        }
+        if (placementLimit) {
+            throw new Meteor.Error('max-selected-units', 'You don\'t have any more units to spare.');
         } else {
-            Boards.update({_id: placementAttributes.boardId, 'targets.id': placementAttributes.targetId}, {
-                $set: {'targets.$.status': 'selected'}
+            Boards.update({_id: targetAttributes.boardId, 'targets.id': targetAttributes.targetId}, {
+                $set: {'targets.$.status': 'selected'},
+                $inc: { placementCount: +1 }
             });
         }
     },
-    targetGameBoard(targetAttributes) {
+    removeUnit(targetAttributes) {
+        check(targetAttributes, {
+            boardId: String,
+            targetId: String
+        });
+
+        var user = Meteor.user(),
+            board = Boards.findOne({_id: targetAttributes.boardId, owner: user.username});
+
+        if (!user) {
+            throw new Meteor.Error('user-not-logged-in', 'Need to be logged in to remove units from game board');
+        }
+        if (!board) {
+            throw new Meteor.Error('game-board-does-not-exist', 'This game board is not available');
+        } else {
+            Boards.update({_id: targetAttributes.boardId, 'targets.id': targetAttributes.targetId}, {
+                $set: {'targets.$.status': 'empty'},
+                $inc: { placementCount: -1 }
+            });
+        }
+    },
+    chooseTarget(targetAttributes) {
         check(targetAttributes, {
             boardId: String,
             boardOwner: String,
@@ -79,26 +125,9 @@ Meteor.methods({
         if (!board) {
             throw new Meteor.Error('game-board-does-not-exist', 'This game board is not in the collection');
         } else {
-            // @TODO: if targetId matches unitId in unitPlacements of board
-            // set unitId to destroyed and add point to attacker
+            // @TODO: if targetId matches unit status selected
+            // set unit status to destroyed and add point to attacker
             // else register as miss -- return messages to client
-        }
-    },
-    completeGameBoard(boardId) {
-        check(boardId, String);
-
-        var user = Meteor.user(),
-            board = Boards.findOne({_id: boardId, owner: user.username});
-
-        if (!user) {
-            throw new Meteor.Error('user-not-logged-in', 'Need to be logged in to close a game board');
-        }
-        if (!board) {
-            throw new Meteor.Error('game-board-does-not-exist', 'This game board is not in the collection');
-        } else {
-            Boards.update(boardId, {
-                $set: {'status': 'closed'}
-            });
         }
     }
 });

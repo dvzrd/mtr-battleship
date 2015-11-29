@@ -1,9 +1,9 @@
 App.GameBoardTarget = React.createClass({
     mixins: [],
     propTypes: {
+        boardProps: React.PropTypes.object,
         targetId: React.PropTypes.string,
-        status: React.PropTypes.string,
-        board: React.PropTypes.object
+        status: React.PropTypes.string
     },
 
     shouldComponentUpdate() {
@@ -11,40 +11,48 @@ App.GameBoardTarget = React.createClass({
     },
 
     // @TODO: break this up and move into a separate module
-    // This has become a big mess, really need to break this up into functions
     // see /client/modules/game_create.js for reference
 
-    handleCellTarget(event) {
+    handleTargetClick(event) {
         event.preventDefault();
-        console.log(Meteor.user().username + ' clicked on ' + this.props.targetId);
 
         let user = Meteor.user(),
-            board = this.props.board,
-            targetCell = '#' + this.props.targetId,
+            boardId = this.props.boardProps.boardId,
+            targetId = this.props.targetId,
+            status = this.props.status,
             targetStatus = this.props.status,
-            isBoardOwner = user.username === board.owner;
+            isBoardOwner = user.username === this.props.boardProps.owner;
 
         if (isBoardOwner) {
-            if (board.status === null && targetStatus === 'empty') {
-                let placementAttributes = {
-                    boardId: board._id,
-                    boardOwner: user.username,
-                    targetId: this.props.targetId
+            if (status === null) {
+                let targetAttributes = {
+                    boardId: boardId,
+                    targetId: targetId
                 };
 
-                Meteor.call('placeUnit', placementAttributes, (error) => {
-                    if (error) {
-                        Bert.alert(error.reason, 'warning');
-                    } else {
-                        console.log(user.username + ' selected ' + targetCell);
-                    }
-                });
+                if (targetStatus === 'empty') {
+                    Meteor.call('placeUnit', targetAttributes, (error) => {
+                        if (error) {
+                            Bert.alert(error.reason, 'warning');
+                        } else {
+                            Bert.alert('Unit placed on ' + targetId, 'success');
+                        }
+                    });
+                } else {
+                    Meteor.call('removeUnit', targetAttributes, (error) => {
+                        if (error) {
+                            Bert.alert(error.reason, 'warning');
+                        } else {
+                            Bert.alert('Unit removed from ' + targetId, 'warning');
+                        }
+                    });
+                }
             } else {
                 Bert.alert('You cannot change unit positions when game is in progress', 'warning');
             }
         } else {
-            if (board.status === 'defending') {
-                $(targetCell).addClass('target');
+            if (status === 'defending') {
+                // call method for offensive targeting
             } else {
                 Bert.alert('Waiting for opponent', 'warning');
             }
@@ -71,7 +79,7 @@ App.GameBoardTarget = React.createClass({
         }
 
         return (
-            <div className={className} id={targetId} onClick={this.handleCellTarget}></div>
+            <div className={className} id={targetId} onClick={this.handleTargetClick}></div>
         );
     }
 });
