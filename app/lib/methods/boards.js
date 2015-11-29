@@ -42,24 +42,44 @@ Meteor.methods({
             };
         }
     },
-    placeUnit(placementAttributes) {
-        check(placementAttributes, {
+    placeUnit(targetAttributes) {
+        check(targetAttributes, {
             boardId: String,
             boardOwner: String,
             targetId: String
         });
 
         var user = Meteor.user(),
-            board = Boards.findOne({_id: placementAttributes.boardId, owner: placementAttributes.boardOwner});
-
+            board = Boards.findOne({_id: targetAttributes.boardId, owner: targetAttributes.boardOwner});
         if (!user) {
             throw new Meteor.Error('user-not-logged-in', 'Need to be logged in to place units on game board');
         }
         if (!board) {
-            throw new Meteor.Error('game-board-does-not-exist', 'This game board is not in the collection');
+            throw new Meteor.Error('game-board-does-not-exist', 'This game board is not available');
         } else {
-            Boards.update({_id: placementAttributes.boardId, 'targets.id': placementAttributes.targetId}, {
+            Boards.update({_id: targetAttributes.boardId, 'targets.id': targetAttributes.targetId}, {
                 $set: {'targets.$.status': 'selected'}
+            });
+        }
+    },
+    removeUnit(targetAttributes) {
+        check(targetAttributes, {
+            boardId: String,
+            boardOwner: String,
+            targetId: String
+        });
+
+        var user = Meteor.user(),
+            board = Boards.findOne({_id: targetAttributes.boardId, owner: targetAttributes.boardOwner});
+
+        if (!user) {
+            throw new Meteor.Error('user-not-logged-in', 'Need to be logged in to remove units from game board');
+        }
+        if (!board) {
+            throw new Meteor.Error('game-board-does-not-exist', 'This game board is not available');
+        } else {
+            Boards.update({_id: targetAttributes.boardId, 'targets.id': targetAttributes.targetId}, {
+                $set: {'targets.$.status': 'empty'}
             });
         }
     },
