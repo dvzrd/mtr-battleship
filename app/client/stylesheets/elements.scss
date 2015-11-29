@@ -221,8 +221,13 @@
 
   &.centered {
     display: flex;
-    height: 90vh;
+    height: $fluid-three-quarters;
+    margin: 0 auto;
     align-items: center;
     justify-content: center;
+  }
+
+  &.light {
+    color: $light;
   }
 }

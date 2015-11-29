@@ -19,60 +19,52 @@ App.GameBoards = React.createClass({
         };
     },
 
-    // @TODO: refactor all this logic into a separate module
-    // condense into a loop
+    spawnBot(event) {
+        event.preventDefault();
 
-    renderGameCreatorBoard() {
-        if (this.data.creatorBoard) {
-            let unitsPlaced = this.data.creatorBoard.unitPlacements,
-                attacking = this.data.creatorBoard.status === 'attacking';
-
-            if (unitsPlaced) {
-                return (
-                    <App.GameBoard board={this.data.destroyerBoard}/>
-                );
-            }
-            if (attacking) {
-                return (
-                    <App.GameBoard board={this.data.destroyerBoard}/>
-                );
-            } else {
-                return (
-                    <App.GameBoard board={this.data.creatorBoard}/>
-                );
-            }
-        } else {
-            // @TODO: this should not occur in client, handle it with a method
-            return (
-                <p className="message">The game creator is missing! Join or create another game!</p>
-            )
-        }
+        console.log('add HAL 9000 as opponent');
     },
 
-    renderGameDestroyerBoard() {
-        if (this.data.destroyerBoard) {
-            let unitsPlaced = this.data.destroyerBoard.unitPlacements,
-                attacking = this.data.destroyerBoard.status === 'attacking';
+    // @TODO: refactor board render into separate module - employ micro-branching
 
-            if (unitsPlaced) {
-                return (
-                    <App.GameBoard board={this.data.creatorBoard}/>
-                );
-            }
-            if (attacking) {
-                return (
-                    <App.GameBoard board={this.data.creatorBoard}/>
-                );
-            } else {
+    renderGameBoard() {
+        if (this.data.creatorBoard) {
+            let ready = this.data.creatorBoard.status === 'ready' && this.data.destroyerBoard,
+                offensive = this.data.creatorBoard.status === 'offense' && this.data.destroyerBoard,
+                noOpponent = this.data.creatorBoard.status === 'ready' && !this.data.destroyerBoard;
+
+            if (ready) {
                 return (
                     <App.GameBoard board={this.data.destroyerBoard}/>
                 );
             }
+            if (offensive) {
+                return (
+                    <App.GameBoard board={this.data.destroyerBoard}/>
+                );
+            }
+            if (noOpponent) {
+                // @TODO: messages module
+                return (
+                    <module className="messages module">
+                        <p className="centered light message">
+                            No one dares to oppose you! Wait for someone foolish enough to try...
+                        </p>
+                        <button type="button" className="primary centered button" onClick={this.spawnBot}>Spawn bot</button>
+                    </module>
+                );
+            } else {
+                return (
+                    <App.GameBoard board={this.data.creatorBoard}/>
+                );
+            }
         } else {
-            // @TODO: messages module is needed
             return (
-                <p className="message">No Opponent found! Wait for someone to join or add an AI!</p>
-            );
+                // @TODO: messages module
+                <p className="centered message">
+                    The game creator is missing! You can join or create another game <a href={RouterHelpers.pathFor('root')}>here!</a>
+                </p>
+            )
         }
     },
 
@@ -82,8 +74,7 @@ App.GameBoards = React.createClass({
         } else {
             return (
                 <module className="game boards module">
-                    {this.renderGameCreatorBoard()}
-                    {this.renderGameDestroyerBoard()}
+                    {this.renderGameBoard()}
                 </module>
             )
         }

@@ -19,7 +19,7 @@ App.GameBoardTarget = React.createClass({
         let user = Meteor.user(),
             boardId = this.props.boardProps.boardId,
             targetId = this.props.targetId,
-            status = this.props.status,
+            status = this.props.boardProps.status,
             targetStatus = this.props.status,
             isBoardOwner = user.username === this.props.boardProps.owner;
 
@@ -51,7 +51,7 @@ App.GameBoardTarget = React.createClass({
                 Bert.alert('You cannot change unit positions when game is in progress', 'warning');
             }
         } else {
-            if (status === 'defending') {
+            if (status === 'offense') {
                 // call method for offensive targeting
             } else {
                 Bert.alert('Waiting for opponent', 'warning');
@@ -64,7 +64,8 @@ App.GameBoardTarget = React.createClass({
 
         let className = 'cell';
 
-        // @TODO: refactor later
+        // @TODO: refactor - micro-branching
+
         if (status === 'selected') {
             className += ' selected';
         }
