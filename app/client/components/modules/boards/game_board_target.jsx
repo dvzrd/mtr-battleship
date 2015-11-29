@@ -62,11 +62,12 @@ App.GameBoardTarget = React.createClass({
     render() {
         const {targetId, status} = this.props;
 
-        let className = 'cell';
+        let className = 'cell',
+            isBoardOwner = Meteor.user().username === this.props.boardProps.owner;
 
         // @TODO: refactor - micro-branching
 
-        if (status === 'selected') {
+        if (status === 'selected' && isBoardOwner) {
             className += ' selected';
         }
         if (status === 'target') {

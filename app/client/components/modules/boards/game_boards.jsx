@@ -29,41 +29,78 @@ App.GameBoards = React.createClass({
 
     renderGameBoard() {
         if (this.data.creatorBoard) {
-            let ready = this.data.creatorBoard.status === 'ready' && this.data.destroyerBoard,
-                offensive = this.data.creatorBoard.status === 'offense' && this.data.destroyerBoard,
+            let user = Meteor.user(),
+                isCreator = this.props.game.creator === user.username,
+                offensive = this.data.creatorBoard.status === 'offense' && this.data.destroyerBoard === 'defense',
+                defensive = this.data.creatorBoard.status === 'defense' && this.data.destroyerBoard === 'offense',
                 noOpponent = this.data.creatorBoard.status === 'ready' && !this.data.destroyerBoard;
 
-            if (ready) {
-                return (
-                    <App.GameBoard board={this.data.destroyerBoard}/>
-                );
-            }
-            if (offensive) {
-                return (
-                    <App.GameBoard board={this.data.destroyerBoard}/>
-                );
-            }
-            if (noOpponent) {
-                // @TODO: messages module
-                return (
-                    <module className="messages module">
-                        <p className="centered light message">
-                            No one dares to oppose you! Wait for someone foolish enough to try...
-                        </p>
-                        <button type="button" className="primary centered button" onClick={this.spawnBot}>Spawn bot</button>
-                    </module>
-                );
+            if (isCreator) {
+                let ready = this.data.creatorBoard.status === 'ready' && this.data.destroyerBoard;
+
+                if (ready) {
+                    return (
+                        <App.GameBoard board={this.data.destroyerBoard}/>
+                    );
+                } else {
+                    return (
+                        <App.GameBoard board={this.data.creatorBoard}/>
+                    );
+                }
             } else {
-                return (
-                    <App.GameBoard board={this.data.creatorBoard}/>
-                );
+                let ready = this.data.destroyerBoard.status === 'ready' && this.data.creatorBoard;
+
+                if (ready) {
+                    return (
+                        <App.GameBoard board={this.data.creatorBoard}/>
+                    );
+                } else {
+                    return (
+                        <App.GameBoard board={this.data.destroyerBoard}/>
+                    );
+                }
             }
+
+            //if (ready) {
+            //    return (
+            //        <App.GameBoard board={this.data.destroyerBoard}/>
+            //    );
+            //}
+            //if (offensive) {
+            //    return (
+            //        <App.GameBoard board={this.data.destroyerBoard}/>
+            //    );
+            //}
+            //if (defensive) {
+            //    return (
+            //        <App.GameBoard board={this.data.creatorBoard}/>
+            //    );
+            //}
+            //if (noOpponent) {
+            //    // @TODO: messages module
+            //    return (
+            //        <module className="messages module">
+            //            <p className="centered light message">
+            //                No one dares to oppose you! Wait for someone foolish enough to try...
+            //            </p>
+            //            <button type="button" className="primary centered button" onClick={this.spawnBot}>Spawn bot
+            //            </button>
+            //        </module>
+            //    );
+            //} else {
+            //    return (
+            //        <App.GameBoard board={this.data.creatorBoard}/>
+            //    );
+            //}
         } else {
             return (
                 // @TODO: messages module
-                <p className="centered message">
-                    The game creator is missing! You can join or create another game <a href={RouterHelpers.pathFor('root')}>here!</a>
-                </p>
+                <module className="messages module">
+                    <p className="centered message">
+                        The game creator is missing! You can join or create another game <a
+                        href={RouterHelpers.pathFor('root')}>here!</a>
+                    </p>
+                </module>
             )
         }
     },
