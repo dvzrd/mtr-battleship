@@ -44,18 +44,36 @@ App.GameBoard = React.createClass({
 
         let targetId = this.data.targetId,
             targets = this.data.targets,
-            target = _.find(targets, function(target) { return target.id === targetId });
+            target = _.find(targets, function(target) { return target.id === targetId }),
+            board = Boards.findOne({owner: Meteor.user().username});
 
         if (!target) {
-            Bert.alert('You must lock on target before attacking', 'warning');
+            Bert.alert('You must lock on a target before attacking', 'warning');
         } else {
-            let targetAttributes = {
+            let attackAttributes = {
                 boardId: this.data.boardId,
                 targetId: target.id,
                 targetStatus: target.status
-            }
+            };
 
-            console.log(targetAttributes);
+            Meteor.call('attackTarget', attackAttributes, (error, report) => {
+                if (error) {
+                    Bert.alert(error.reason, 'warning');
+                } else {
+                    let updateAttributes = {
+                        boardId: board._id,
+                        status: 'defense'
+                    };
+
+                    Meteor.call('updateStatus', updateAttributes, (error) => {
+                        if (error) {
+                            Bert.alert(error.reason, 'warning');
+                        } else {
+                            Bert.alert('Your attack ' + report.status + ' ' + attackAttributes.targetId, report.class);
+                        }
+                    });
+                }
+            });
         }
     },
 
@@ -63,9 +81,10 @@ App.GameBoard = React.createClass({
     renderActions() {
         let user = Meteor.user(),
             isCreator = this.data.creator === user.username,
+            isOwner = this.data.boardOwner === user.username,
             noUnitsDeployed = this.data.status === null,
             ready = this.data.status === 'ready',
-            offensive = this.data.status === 'offense';
+            offensive = this.data.status === 'defense';
 
         if (noUnitsDeployed) {
             return (
@@ -73,7 +92,7 @@ App.GameBoard = React.createClass({
                     Units</button>
             );
         }
-        if (offensive) {
+        if (offensive && !isOwner) {
             return (
                 <button type="button" className="fluid negative button" onClick={this.handleTargetAttack}>Attack
                     Target</button>

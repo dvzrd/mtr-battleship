@@ -33,9 +33,9 @@ App.GameBoardTarget = React.createClass({
             noUnitsDeployed = this.data.boardStatus === null,
             isTarget = this.data.isTarget,
             ready = this.data.boardStatus === 'ready',
-            offensive = this.data.boardStatus === 'offense',
-            defensive = this.data.boardStatus === 'defensive',
-            targetEmpty = this.data.targetStatus === 'empty';
+            offensive = this.data.boardStatus === 'defense',
+            targetEmpty = this.data.targetStatus === 'empty',
+            targetAttacked = this.data.targetStatus === 'destroyed' || this.data.targetStatus === 'missed';
 
         if (isBoardOwner) {
             if (noUnitsDeployed) {
@@ -61,9 +61,6 @@ App.GameBoardTarget = React.createClass({
                         }
                     });
                 }
-            }
-            if (defensive) {
-                Bert.alert('You are on the defensive, wait for your opponent to make their move.', 'warning');
             } else {
                 Bert.alert('You cannot change unit positions when game is in progress', 'warning');
             }
@@ -74,22 +71,26 @@ App.GameBoardTarget = React.createClass({
                     targetId: this.data.targetId
                 };
 
-                if (!isTarget) {
-                    Meteor.call('chooseTarget', targetAttributes, (error) => {
-                        if (error) {
-                            Bert.alert(error.reason, 'warning');
-                        } else {
-                            Bert.alert('Locked on target ' + targetAttributes.targetId, 'success');
-                        }
-                    });
+                if (targetAttacked) {
+                    Bert.alert('You already attacked target ' + targetAttributes.targetId, 'warning');
                 } else {
-                    Meteor.call('removeTarget', targetAttributes, (error) => {
-                        if (error) {
-                            Bert.alert(error.reason, 'warning');
-                        } else {
-                            Bert.alert('Unlocked target ' + targetAttributes.targetId, 'warning');
-                        }
-                    });
+                    if (!isTarget) {
+                        Meteor.call('chooseTarget', targetAttributes, (error) => {
+                            if (error) {
+                                Bert.alert(error.reason, 'warning');
+                            } else {
+                                Bert.alert('Locked on target ' + targetAttributes.targetId, 'success');
+                            }
+                        });
+                    } else {
+                        Meteor.call('removeTarget', targetAttributes, (error) => {
+                            if (error) {
+                                Bert.alert(error.reason, 'warning');
+                            } else {
+                                Bert.alert('Unlocked target ' + targetAttributes.targetId, 'warning');
+                            }
+                        });
+                    }
                 }
             } else {
                 Bert.alert('Your opponent is a little slow, give them more time.', 'warning');

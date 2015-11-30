@@ -51,9 +51,7 @@ Meteor.methods({
                 targetId: null
             }), boardId = Boards.insert(board);
 
-            return {
-                _id: boardId
-            };
+            return {_id: boardId};
         }
     },
     updateStatus(updateAttributes) {
@@ -166,42 +164,55 @@ Meteor.methods({
             });
         }
     },
-    attackTarget(targetAttributes) {
-        check(targetAttributes, {
+    attackTarget(attackAttributes) {
+        check(attackAttributes, {
             boardId: String,
-            targetId: String
+            targetId: String,
+            targetStatus: String
         });
 
         let user = Meteor.user(),
-            board = Boards.findOne({_id: targetAttributes.boardId});
+            board = Boards.findOne({_id: attackAttributes.boardId}),
+            targetHit = attackAttributes.targetStatus === 'selected';
 
         if (!user) {
             throw new Meteor.Error('user-not-logged-in', 'Need to be logged in to remove targets from game board');
         }
         if (!board) {
             throw new Meteor.Error('game-board-does-not-exist', 'This game board is not available');
-        } else {
-            Boards.update({_id: targetAttributes.boardId, 'targets.id': targetAttributes.targetId}, {
-                $set: {'targets.$.isTarget': false, targetId: null}
-            });
         }
+        if (targetHit) {
+            Boards.update({_id: attackAttributes.boardId, 'targets.id': attackAttributes.targetId}, {
+                $set: {
+                    targetId: null,
+                    status: 'offense',
+                    'targets.$.isTarget': false,
+                    'targets.$.status': 'destroyed'
+                }
+            });
 
-        //if (targetHit) {
-        //    Boards.update({_id: targetAttributes.boardId, 'targets.id': targetAttributes.targetId}, {
-        //        $set: {'targets.$.status': 'destroyed'}
-        //    });
-        //
-        //    return {
-        //        score: 5
-        //    };
-        //} else {
-        //    Boards.update({_id: targetAttributes.boardId, 'targets.id': targetAttributes.targetId}, {
-        //        $set: {'targets.$.status': 'missed'}
-        //    });
-        //
-        //    return {
-        //        score: 0
-        //    }
-        //}
+            let report = {
+                status: 'destroyed',
+                class: 'success'
+            };
+
+            return report;
+        } else {
+            Boards.update({_id: attackAttributes.boardId, 'targets.id': attackAttributes.targetId}, {
+                $set: {
+                    targetId: null,
+                    status: 'offense',
+                    'targets.$.isTarget': false,
+                    'targets.$.status': 'missed'
+                }
+            });
+
+            let report = {
+                status: 'missed',
+                class: 'warning'
+            };
+
+            return report;
+        }
     }
 });
