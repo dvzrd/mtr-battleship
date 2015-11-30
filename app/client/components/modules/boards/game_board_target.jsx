@@ -12,6 +12,7 @@ App.GameBoardTarget = React.createClass({
 
     getMeteorData() {
         return {
+            gameId: this.props.boardProps.gameId,
             boardId: this.props.boardProps.boardId,
             boardStatus: this.props.boardProps.status,
             boardOwner: this.props.boardProps.owner,
@@ -66,10 +67,27 @@ App.GameBoardTarget = React.createClass({
             }
         } else {
             if (ready || offensive) {
-                // call method for offensive targeting
-                console.log(ready);
-                console.log(offensive);
-                console.log(ready || offensive);
+                let targetAttributes = {
+                    gameId: this.data.gameId,
+                    boardId: this.data.boardId,
+                    targetId: this.data.targetId
+                };
+
+                console.log(targetAttributes);
+
+                // return data.isTarget from props.isTarget
+
+                // if noTarget call chooseTarget
+                // else call removeTarget
+
+                //Meteor.call('chooseTarget', targetAttributes, (error, score) => {
+                //    if (error) {
+                //        Bert.alert(error.reason, 'warning');
+                //    } else {
+                //        Bert.alert('Selected target ' + targetAttributes.targetId, 'success');
+                //        console.log(score);
+                //    }
+                //});
             } else {
                 Bert.alert('Your opponent is a little slow, give them more time.', 'warning');
             }
@@ -90,11 +108,11 @@ App.GameBoardTarget = React.createClass({
         if (isSelected && isBoardOwner) {
             className += ' selected';
         }
-        if (isTarget) {
+        if (isTarget && !isBoardOwner) {
             className += ' target'
         }
         if (missed) {
-            className += 'missed'
+            className += ' missed'
         }
         if (destroyed) {
             className += ' destroyed'

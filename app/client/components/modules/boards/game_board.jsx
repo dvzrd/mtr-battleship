@@ -10,6 +10,7 @@ App.GameBoard = React.createClass({
 
     getMeteorData() {
         return {
+            gameId: this.props.gameProps.gameId,
             creator: this.props.gameProps.creator,
             boardId: this.props.board._id,
             boardOwner: this.props.board.owner,
@@ -79,6 +80,7 @@ App.GameBoard = React.createClass({
 
     render() {
         let boardProps = {
+            gameId: this.data.gameId,
             boardId: this.data.boardId,
             owner: this.data.boardOwner,
             status: this.data.status

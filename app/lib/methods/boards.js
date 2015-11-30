@@ -21,21 +21,34 @@ Meteor.methods({
                 status: null,
                 // @TODO: function to generate targets
                 targets: [
-                    {id: '1A', status: 'empty'}, {id: '2A', status: 'empty'},
-                    {id: '3A', status: 'empty'}, {id: '4A', status: 'empty'},
-                    {id: '5A', status: 'empty'}, {id: '1B', status: 'empty'},
-                    {id: '2B', status: 'empty'}, {id: '3B', status: 'empty'},
-                    {id: '4B', status: 'empty'}, {id: '5B', status: 'empty'},
-                    {id: '1C', status: 'empty'}, {id: '2C', status: 'empty'},
-                    {id: '3C', status: 'empty'}, {id: '4C', status: 'empty'},
-                    {id: '5C', status: 'empty'}, {id: '1D', status: 'empty'},
-                    {id: '2D', status: 'empty'}, {id: '3D', status: 'empty'},
-                    {id: '4D', status: 'empty'}, {id: '5D', status: 'empty'},
-                    {id: '1E', status: 'empty'}, {id: '2E', status: 'empty'},
-                    {id: '3E', status: 'empty'}, {id: '4E', status: 'empty'},
-                    {id: '5E', status: 'empty'}
+                    {id: '1A', status: 'empty', isTarget: false},
+                    {id: '2A', status: 'empty', isTarget: false},
+                    {id: '3A', status: 'empty', isTarget: false},
+                    {id: '4A', status: 'empty', isTarget: false},
+                    {id: '5A', status: 'empty', isTarget: false},
+                    {id: '1B', status: 'empty', isTarget: false},
+                    {id: '2B', status: 'empty', isTarget: false},
+                    {id: '3B', status: 'empty', isTarget: false},
+                    {id: '4B', status: 'empty', isTarget: false},
+                    {id: '5B', status: 'empty', isTarget: false},
+                    {id: '1C', status: 'empty', isTarget: false},
+                    {id: '2C', status: 'empty', isTarget: false},
+                    {id: '3C', status: 'empty', isTarget: false},
+                    {id: '4C', status: 'empty', isTarget: false},
+                    {id: '5C', status: 'empty', isTarget: false},
+                    {id: '1D', status: 'empty', isTarget: false},
+                    {id: '2D', status: 'empty', isTarget: false},
+                    {id: '3D', status: 'empty', isTarget: false},
+                    {id: '4D', status: 'empty', isTarget: false},
+                    {id: '5D', status: 'empty', isTarget: false},
+                    {id: '1E', status: 'empty', isTarget: false},
+                    {id: '2E', status: 'empty', isTarget: false},
+                    {id: '3E', status: 'empty', isTarget: false},
+                    {id: '4E', status: 'empty', isTarget: false},
+                    {id: '5E', status: 'empty', isTarget: false}
                 ],
-                placementCount: 0
+                placementCount: 0,
+                targetCount: 0
             }), boardId = Boards.insert(board);
 
             return {
@@ -111,13 +124,14 @@ Meteor.methods({
     },
     chooseTarget(targetAttributes) {
         check(targetAttributes, {
+            gameId: String,
             boardId: String,
-            boardOwner: String,
             targetId: String
         });
 
         var user = Meteor.user(),
-            board = Boards.findOne({_id: targetAttributes.boardId, owner: targetAttributes.boardOwner});
+            board = Boards.findOne({_id: targetAttributes.boardId}),
+            targetHit = board.targets.id === targetAttributes.targetId && board.targets.status === 'selected';
 
         if (!user) {
             throw new Meteor.Error('user-not-logged-in', 'Need to be logged in to target game board');
@@ -125,9 +139,48 @@ Meteor.methods({
         if (!board) {
             throw new Meteor.Error('game-board-does-not-exist', 'This game board is not in the collection');
         } else {
-            // @TODO: if targetId matches unit status selected
-            // set unit status to destroyed and add point to attacker
-            // else register as miss -- return messages to client
+            Boards.update({_id: targetAttributes.boardId, 'targets.id': targetAttributes.targetId}, {
+                $set: {'targets.$.isTarget': true},
+                $inc: { targetCount: +1 }
+            });
+            //if (targetHit) {
+            //    Boards.update({_id: targetAttributes.boardId, 'targets.id': targetAttributes.targetId}, {
+            //        $set: {'targets.$.status': 'destroyed'}
+            //    });
+            //
+            //    return {
+            //        score: 5
+            //    };
+            //} else {
+            //    Boards.update({_id: targetAttributes.boardId, 'targets.id': targetAttributes.targetId}, {
+            //        $set: {'targets.$.status': 'missed'}
+            //    });
+            //
+            //    return {
+            //        score: 0
+            //    }
+            //}
+        }
+    },
+    removeTarget(targetAttribute) {
+        check(targetAttributes, {
+            boardId: String,
+            targetId: String
+        });
+
+        var user = Meteor.user(),
+            board = Boards.findOne({_id: targetAttributes.boardId, owner: user.username});
+
+        if (!user) {
+            throw new Meteor.Error('user-not-logged-in', 'Need to be logged in to remove targets from game board');
+        }
+        if (!board) {
+            throw new Meteor.Error('game-board-does-not-exist', 'This game board is not available');
+        } else {
+            Boards.update({_id: targetAttributes.boardId, 'targets.id': targetAttributes.targetId}, {
+                $set: {'targets.$.isTarget': false},
+                $inc: { targetCount: -1 }
+            });
         }
     }
 });
