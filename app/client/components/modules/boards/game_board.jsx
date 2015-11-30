@@ -39,6 +39,7 @@ App.GameBoard = React.createClass({
     handleTargetAttack(event) {
         event.preventDefault();
 
+        console.log(this.data.targets);
         console.log('attack launched!');
     },
 
@@ -91,8 +92,7 @@ App.GameBoard = React.createClass({
                 <div className="grid">
                     {this.data.targets.map((target) => {
                         return (
-                            <App.GameBoardTarget key={target.id} boardProps={boardProps} targetId={target.id}
-                                                 status={target.status}/>
+                            <App.GameBoardTarget key={target.id} boardProps={boardProps} targetProps={target} />
                         );
                     })}
                 </div>

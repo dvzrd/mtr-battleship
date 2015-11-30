@@ -124,13 +124,13 @@ Meteor.methods({
     },
     chooseTarget(targetAttributes) {
         check(targetAttributes, {
-            gameId: String,
             boardId: String,
             targetId: String
         });
 
         var user = Meteor.user(),
             board = Boards.findOne({_id: targetAttributes.boardId}),
+            targetLimit = board.targetCount === 1,
             targetHit = board.targets.id === targetAttributes.targetId && board.targets.status === 'selected';
 
         if (!user) {
@@ -138,6 +138,9 @@ Meteor.methods({
         }
         if (!board) {
             throw new Meteor.Error('game-board-does-not-exist', 'This game board is not in the collection');
+        }
+        if (targetLimit) {
+            throw new Meteor.Error('max-targets', 'You can only pick one target, choose wisely.');
         } else {
             Boards.update({_id: targetAttributes.boardId, 'targets.id': targetAttributes.targetId}, {
                 $set: {'targets.$.isTarget': true},
@@ -162,14 +165,14 @@ Meteor.methods({
             //}
         }
     },
-    removeTarget(targetAttribute) {
+    removeTarget(targetAttributes) {
         check(targetAttributes, {
             boardId: String,
             targetId: String
         });
 
         var user = Meteor.user(),
-            board = Boards.findOne({_id: targetAttributes.boardId, owner: user.username});
+            board = Boards.findOne({_id: targetAttributes.boardId});
 
         if (!user) {
             throw new Meteor.Error('user-not-logged-in', 'Need to be logged in to remove targets from game board');

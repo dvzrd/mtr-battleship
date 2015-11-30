@@ -2,8 +2,7 @@ App.GameBoardTarget = React.createClass({
     mixins: [ReactMeteorData],
     propTypes: {
         boardProps: React.PropTypes.object,
-        targetId: React.PropTypes.string,
-        status: React.PropTypes.string
+        targetProps: React.PropTypes.object
     },
 
     shouldComponentUpdate() {
@@ -16,8 +15,9 @@ App.GameBoardTarget = React.createClass({
             boardId: this.props.boardProps.boardId,
             boardStatus: this.props.boardProps.status,
             boardOwner: this.props.boardProps.owner,
-            targetId: this.props.targetId,
-            targetStatus: this.props.status
+            targetId: this.props.targetProps.id,
+            targetStatus: this.props.targetProps.status,
+            isTarget: this.props.targetProps.isTarget
         };
     },
 
@@ -30,6 +30,7 @@ App.GameBoardTarget = React.createClass({
         let user = Meteor.user(),
             isBoardOwner = user.username === this.data.boardOwner,
             noUnitsDeployed = this.data.boardStatus === null,
+            isTarget = this.data.isTarget,
             ready = this.data.boardStatus === 'ready',
             offensive = this.data.boardStatus === 'offense',
             defensive = this.data.boardStatus === 'defensive',
@@ -68,26 +69,35 @@ App.GameBoardTarget = React.createClass({
         } else {
             if (ready || offensive) {
                 let targetAttributes = {
-                    gameId: this.data.gameId,
                     boardId: this.data.boardId,
                     targetId: this.data.targetId
                 };
 
                 console.log(targetAttributes);
+                console.log(isTarget);
 
                 // return data.isTarget from props.isTarget
 
                 // if noTarget call chooseTarget
                 // else call removeTarget
 
-                //Meteor.call('chooseTarget', targetAttributes, (error, score) => {
-                //    if (error) {
-                //        Bert.alert(error.reason, 'warning');
-                //    } else {
-                //        Bert.alert('Selected target ' + targetAttributes.targetId, 'success');
-                //        console.log(score);
-                //    }
-                //});
+                if (!isTarget) {
+                    Meteor.call('chooseTarget', targetAttributes, (error) => {
+                        if (error) {
+                            Bert.alert(error.reason, 'warning');
+                        } else {
+                            Bert.alert('Selected target ' + targetAttributes.targetId, 'success');
+                        }
+                    });
+                } else {
+                    Meteor.call('removeTarget', targetAttributes, (error) => {
+                        if (error) {
+                            Bert.alert(error.reason, 'warning');
+                        } else {
+                            Bert.alert('Removed target ' + targetAttributes.targetId, 'warning');
+                        }
+                    });
+                }
             } else {
                 Bert.alert('Your opponent is a little slow, give them more time.', 'warning');
             }
@@ -99,7 +109,7 @@ App.GameBoardTarget = React.createClass({
             idName = this.data.targetId,
             isBoardOwner = Meteor.user().username === this.data.boardOwner,
             isSelected = this.data.targetStatus === 'selected',
-            isTarget = this.data.targetStatus === 'target',
+            isTarget = this.data.isTarget,
             missed = this.data.targetStatus === 'missed',
             destroyed = this.data.targetStatus === 'destroyed';
 
@@ -108,7 +118,7 @@ App.GameBoardTarget = React.createClass({
         if (isSelected && isBoardOwner) {
             className += ' selected';
         }
-        if (isTarget && !isBoardOwner) {
+        if (isTarget) {
             className += ' target'
         }
         if (missed) {
