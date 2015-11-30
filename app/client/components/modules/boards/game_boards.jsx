@@ -22,13 +22,15 @@ App.GameBoards = React.createClass({
         };
     },
 
+    // @TODO: refactor bot spawn into separate client module
+
     spawnBot(event) {
         event.preventDefault();
 
         console.log('add HAL 9000 as opponent');
     },
 
-    // @TODO: refactor board render into separate module - employ micro-branching
+    // @TODO: refactor board render into separate client module - employ micro-branching
 
     renderGameBoard() {
         let user = Meteor.user(),
@@ -41,9 +43,6 @@ App.GameBoards = React.createClass({
 
 
         if (isCreator) {
-            let ready = this.data.creatorBoard.status === 'ready' && this.data.destroyerBoard,
-                offensive = this.data.creatorBoard.status === 'offense';
-
             if (noOpponent) {
                 // @TODO: messages module
                 return (
@@ -55,15 +54,19 @@ App.GameBoards = React.createClass({
                         </button>
                     </module>
                 );
-            }
-            if (ready || offensive) {
-                return (
-                    <App.GameBoard gameProps={gameProps} board={this.data.destroyerBoard}/>
-                );
             } else {
-                return (
-                    <App.GameBoard gameProps={gameProps} board={this.data.creatorBoard}/>
-                );
+                let ready = this.data.creatorBoard.status === 'ready' && this.data.destroyerBoard.status === 'ready',
+                    offensive = this.data.creatorBoard.status === 'offense';
+
+                if (ready || offensive) {
+                    return (
+                        <App.GameBoard gameProps={gameProps} board={this.data.destroyerBoard}/>
+                    );
+                } else {
+                    return (
+                        <App.GameBoard gameProps={gameProps} board={this.data.creatorBoard}/>
+                    );
+                }
             }
         } else {
             let noUnitsDeployed = this.data.destroyerBoard.status === null,
@@ -74,15 +77,16 @@ App.GameBoards = React.createClass({
                 return (
                     <App.GameBoard gameProps={gameProps} board={this.data.destroyerBoard}/>
                 );
-            }
-            if (ready || defensive) {
-                return (
-                    <App.GameBoard gameProps={gameProps} board={this.data.destroyerBoard}/>
-                );
             } else {
-                return (
-                    <App.GameBoard gameProps={gameProps} board={this.data.creatorBoard}/>
-                );
+                if (ready || defensive) {
+                    return (
+                        <App.GameBoard gameProps={gameProps} board={this.data.destroyerBoard}/>
+                    );
+                } else {
+                    return (
+                        <App.GameBoard gameProps={gameProps} board={this.data.creatorBoard}/>
+                    );
+                }
             }
         }
     },
