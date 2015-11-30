@@ -44,8 +44,7 @@ App.GameBoard = React.createClass({
 
         let targetId = this.data.targetId,
             targets = this.data.targets,
-            target = _.find(targets, function(target) { return target.id === targetId }),
-            board = Boards.findOne({owner: Meteor.user().username});
+            target = _.find(targets, function(target) { return target.id === targetId });
 
         if (!target) {
             Bert.alert('You must lock on a target before attacking', 'warning');
@@ -60,18 +59,10 @@ App.GameBoard = React.createClass({
                 if (error) {
                     Bert.alert(error.reason, 'warning');
                 } else {
-                    let updateAttributes = {
-                        boardId: board._id,
-                        status: 'defense'
-                    };
-
-                    Meteor.call('updateStatus', updateAttributes, (error) => {
-                        if (error) {
-                            Bert.alert(error.reason, 'warning');
-                        } else {
-                            Bert.alert('Your attack ' + report.status + ' ' + attackAttributes.targetId, report.class);
-                        }
-                    });
+                    //Bert.alert('Your attack ' + report.status + ' ' + attackAttributes.targetId, warning);
+                    // @TODO: if report.status === 'destroyed'
+                    // call update score method
+                    // else show alert for status.missed
                 }
             });
         }

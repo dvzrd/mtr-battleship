@@ -82,13 +82,13 @@ Meteor.methods({
     updateScore(scoreAttributes) {
         check(scoreAttributes, {
             gameId: String,
-            player: String,
+            attacker: String,
             boardId: String,
             targetId: String
         });
 
-        var game = Games.findOne({_id: gameId, completedAt: null}),
-            creatorScoredPoints = game.creator === scoreAttributes.player,
+        var game = Games.findOne({_id: scoreAttributes.gameId, completedAt: null}),
+            creatorScoredPoints = game.creator === scoreAttributes.attacker,
             pointsLimit = game.creatorScore === 25 || game.destroyerScore === 25,
             points = +5;
 
