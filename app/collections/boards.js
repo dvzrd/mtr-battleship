@@ -48,11 +48,10 @@ let BoardsSchema = new SimpleSchema({
         min: 0,
         max: 5
     },
-    targetCount: {
-        type: Number,
-        label: 'The number of targets placed on game board',
-        min: 0,
-        max: 1
+    targetId: {
+        type: String,
+        label: 'The id of target being attacked',
+        optional: true
     }
 });
 

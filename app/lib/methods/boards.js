@@ -4,7 +4,7 @@ Meteor.methods({
             gameId: String
         });
 
-        var now = new Date(),
+        let now = new Date(),
             user = Meteor.user(),
             duplicateBoard = Boards.findOne({gameId: boardAttributes.gameId, owner: user.username});
 
@@ -15,7 +15,7 @@ Meteor.methods({
             return Meteor.Error('game-board-already-exists', 'This game board already exists.');
         } else {
 
-            var board = _.extend(boardAttributes, {
+            let board = _.extend(boardAttributes, {
                 owner: user.username,
                 createdAt: now,
                 status: null,
@@ -48,7 +48,7 @@ Meteor.methods({
                     {id: '5E', status: 'empty', isTarget: false}
                 ],
                 placementCount: 0,
-                targetCount: 0
+                targetId: null
             }), boardId = Boards.insert(board);
 
             return {
@@ -62,7 +62,7 @@ Meteor.methods({
             status: String
         });
 
-        var user = Meteor.user(),
+        let user = Meteor.user(),
             board = Boards.findOne({_id: updateAttributes.boardId});
 
         if (!user) {
@@ -82,7 +82,7 @@ Meteor.methods({
             targetId: String
         });
 
-        var user = Meteor.user(),
+        let user = Meteor.user(),
             board = Boards.findOne({_id: targetAttributes.boardId, owner: user.username}),
             placementLimit = board.placementCount === 5;
 
@@ -107,7 +107,7 @@ Meteor.methods({
             targetId: String
         });
 
-        var user = Meteor.user(),
+        let user = Meteor.user(),
             board = Boards.findOne({_id: targetAttributes.boardId, owner: user.username});
 
         if (!user) {
@@ -128,10 +128,9 @@ Meteor.methods({
             targetId: String
         });
 
-        var user = Meteor.user(),
+        let user = Meteor.user(),
             board = Boards.findOne({_id: targetAttributes.boardId}),
-            targetLimit = board.targetCount === 1,
-            targetHit = board.targets.id === targetAttributes.targetId && board.targets.status === 'selected';
+            noTarget = board.targetId === null;
 
         if (!user) {
             throw new Meteor.Error('user-not-logged-in', 'Need to be logged in to target game board');
@@ -139,30 +138,12 @@ Meteor.methods({
         if (!board) {
             throw new Meteor.Error('game-board-does-not-exist', 'This game board is not in the collection');
         }
-        if (targetLimit) {
+        if (!noTarget) {
             throw new Meteor.Error('max-targets', 'You can only pick one target, choose wisely.');
         } else {
             Boards.update({_id: targetAttributes.boardId, 'targets.id': targetAttributes.targetId}, {
-                $set: {'targets.$.isTarget': true},
-                $inc: { targetCount: +1 }
+                $set: {'targets.$.isTarget': true, targetId: targetAttributes.targetId}
             });
-            //if (targetHit) {
-            //    Boards.update({_id: targetAttributes.boardId, 'targets.id': targetAttributes.targetId}, {
-            //        $set: {'targets.$.status': 'destroyed'}
-            //    });
-            //
-            //    return {
-            //        score: 5
-            //    };
-            //} else {
-            //    Boards.update({_id: targetAttributes.boardId, 'targets.id': targetAttributes.targetId}, {
-            //        $set: {'targets.$.status': 'missed'}
-            //    });
-            //
-            //    return {
-            //        score: 0
-            //    }
-            //}
         }
     },
     removeTarget(targetAttributes) {
@@ -171,7 +152,7 @@ Meteor.methods({
             targetId: String
         });
 
-        var user = Meteor.user(),
+        let user = Meteor.user(),
             board = Boards.findOne({_id: targetAttributes.boardId});
 
         if (!user) {
@@ -181,9 +162,46 @@ Meteor.methods({
             throw new Meteor.Error('game-board-does-not-exist', 'This game board is not available');
         } else {
             Boards.update({_id: targetAttributes.boardId, 'targets.id': targetAttributes.targetId}, {
-                $set: {'targets.$.isTarget': false},
-                $inc: { targetCount: -1 }
+                $set: {'targets.$.isTarget': false, targetId: null}
             });
         }
+    },
+    attackTarget(targetAttributes) {
+        check(targetAttributes, {
+            boardId: String,
+            targetId: String
+        });
+
+        let user = Meteor.user(),
+            board = Boards.findOne({_id: targetAttributes.boardId});
+
+        if (!user) {
+            throw new Meteor.Error('user-not-logged-in', 'Need to be logged in to remove targets from game board');
+        }
+        if (!board) {
+            throw new Meteor.Error('game-board-does-not-exist', 'This game board is not available');
+        } else {
+            Boards.update({_id: targetAttributes.boardId, 'targets.id': targetAttributes.targetId}, {
+                $set: {'targets.$.isTarget': false, targetId: null}
+            });
+        }
+
+        //if (targetHit) {
+        //    Boards.update({_id: targetAttributes.boardId, 'targets.id': targetAttributes.targetId}, {
+        //        $set: {'targets.$.status': 'destroyed'}
+        //    });
+        //
+        //    return {
+        //        score: 5
+        //    };
+        //} else {
+        //    Boards.update({_id: targetAttributes.boardId, 'targets.id': targetAttributes.targetId}, {
+        //        $set: {'targets.$.status': 'missed'}
+        //    });
+        //
+        //    return {
+        //        score: 0
+        //    }
+        //}
     }
 });

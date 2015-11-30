@@ -15,6 +15,7 @@ App.GameBoardTarget = React.createClass({
             boardId: this.props.boardProps.boardId,
             boardStatus: this.props.boardProps.status,
             boardOwner: this.props.boardProps.owner,
+            boardTarget: this.props.boardProps.targetId,
             targetId: this.props.targetProps.id,
             targetStatus: this.props.targetProps.status,
             isTarget: this.props.targetProps.isTarget
@@ -73,20 +74,12 @@ App.GameBoardTarget = React.createClass({
                     targetId: this.data.targetId
                 };
 
-                console.log(targetAttributes);
-                console.log(isTarget);
-
-                // return data.isTarget from props.isTarget
-
-                // if noTarget call chooseTarget
-                // else call removeTarget
-
                 if (!isTarget) {
                     Meteor.call('chooseTarget', targetAttributes, (error) => {
                         if (error) {
                             Bert.alert(error.reason, 'warning');
                         } else {
-                            Bert.alert('Selected target ' + targetAttributes.targetId, 'success');
+                            Bert.alert('Locked on target ' + targetAttributes.targetId, 'success');
                         }
                     });
                 } else {
@@ -94,7 +87,7 @@ App.GameBoardTarget = React.createClass({
                         if (error) {
                             Bert.alert(error.reason, 'warning');
                         } else {
-                            Bert.alert('Removed target ' + targetAttributes.targetId, 'warning');
+                            Bert.alert('Unlocked target ' + targetAttributes.targetId, 'warning');
                         }
                     });
                 }

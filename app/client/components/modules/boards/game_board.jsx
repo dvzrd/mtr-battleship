@@ -15,6 +15,7 @@ App.GameBoard = React.createClass({
             boardId: this.props.board._id,
             boardOwner: this.props.board.owner,
             status: this.props.board.status,
+            targetId: this.props.board.targetId,
             targets: this.props.board.targets
         };
     },
@@ -26,6 +27,8 @@ App.GameBoard = React.createClass({
             boardId: this.data.boardId,
             status: 'ready'
         };
+
+        // @TODO: validate if 5 selected before calling method
 
         Meteor.call('updateStatus', updateAttributes, (error) => {
             if (error) {
@@ -39,9 +42,23 @@ App.GameBoard = React.createClass({
     handleTargetAttack(event) {
         event.preventDefault();
 
-        console.log(this.data.targets);
-        console.log('attack launched!');
+        let targetId = this.data.targetId,
+            targets = this.data.targets,
+            target = _.find(targets, function(target) { return target.id === targetId });
+
+        if (!target) {
+            Bert.alert('You must lock on target before attacking', 'warning');
+        } else {
+            let targetAttributes = {
+                boardId: this.data.boardId,
+                targetId: target.id,
+                targetStatus: target.status
+            }
+
+            console.log(targetAttributes);
+        }
     },
+
 
     renderActions() {
         let user = Meteor.user(),
@@ -84,7 +101,8 @@ App.GameBoard = React.createClass({
             gameId: this.data.gameId,
             boardId: this.data.boardId,
             owner: this.data.boardOwner,
-            status: this.data.status
+            status: this.data.status,
+            targetId: this.data.targetId
         };
 
         return (
