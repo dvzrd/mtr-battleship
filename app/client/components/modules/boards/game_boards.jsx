@@ -41,7 +41,7 @@ App.GameBoards = React.createClass({
 
 
         if (isCreator) {
-            let ready = this.data.creatorBoard.status === 'ready' && this.data.destroyerBoard.status === 'ready',
+            let ready = this.data.creatorBoard.status === 'ready' && this.data.destroyerBoard,
                 offensive = this.data.creatorBoard.status === 'offense';
 
             if (noOpponent) {
@@ -66,9 +66,15 @@ App.GameBoards = React.createClass({
                 );
             }
         } else {
-            let ready = this.data.destroyerBoard.status === 'ready' && this.data.creatorBoard.status === 'ready',
+            let noUnitsDeployed = this.data.destroyerBoard.status === null,
+                ready = this.data.destroyerBoard.status === 'ready' && this.data.creatorBoard.status === 'ready',
                 defensive = this.data.destroyerBoard.status === 'defense';
 
+            if (noUnitsDeployed) {
+                return (
+                    <App.GameBoard gameProps={gameProps} board={this.data.destroyerBoard}/>
+                );
+            }
             if (ready || defensive) {
                 return (
                     <App.GameBoard gameProps={gameProps} board={this.data.destroyerBoard}/>

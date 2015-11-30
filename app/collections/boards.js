@@ -38,11 +38,21 @@ let BoardsSchema = new SimpleSchema({
         type: String,
         label: 'Status of the target cell'
     },
+    'targets.$.isTarget': {
+        type: Boolean,
+        label: 'Target cell is targeted by opponent'
+    },
     placementCount: {
         type: Number,
         label: 'The number of units placed on game board',
         min: 0,
         max: 5
+    },
+    targetCount: {
+        type: Number,
+        label: 'The number of targets placed on game board',
+        min: 0,
+        max: 1
     }
 });
 
