@@ -22,8 +22,7 @@ App.GameBoardTarget = React.createClass({
         };
     },
 
-    // @TODO: break this up and move into a separate module
-    // see /client/modules/game_create.js for reference
+    // @TODO: refactor handleTargetClick into a separate client module - employ micro-branching
 
     handleTargetClick(event) {
         event.preventDefault();
