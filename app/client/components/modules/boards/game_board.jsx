@@ -80,7 +80,6 @@ App.GameBoard = React.createClass({
 
     renderActions() {
         let user = Meteor.user(),
-            isCreator = this.data.creator === user.username,
             isOwner = this.data.boardOwner === user.username,
             noUnitsDeployed = this.data.status === null,
             ready = this.data.status === 'ready',
