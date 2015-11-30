@@ -86,6 +86,7 @@ App.GameBoard = React.createClass({
             ready = this.data.status === 'ready',
             offensive = this.data.status === 'defense';
 
+        // @TODO: check if both ready
         if (noUnitsDeployed) {
             return (
                 <button type="button" className="fluid primary button" onClick={this.handleUnitDeployment}>Deploy
@@ -98,6 +99,7 @@ App.GameBoard = React.createClass({
                     Target</button>
             );
         }
+        // @TODO: fix this - it lets creator attack before other player is ready
         if (ready && isCreator) {
             return (
                 <button type="button" className="fluid negative button" onClick={this.handleTargetAttack}>Attack
