@@ -8,13 +8,19 @@
   margin: 0;
   padding: $space-tiny $space-base;
   outline: 0;
-  border: 0;
+  border: $space-micro solid $highlight-color;
   border-radius: $space-micro;
-  background-color: $link-color;
-  color: $light;
+  background-color: $highlight-color;
+  color: $header-color;
   font-size: $space-base;
 
+  &:hover {
+    background-color: transparent;
+    color: $highlight-color;
+  }
+
   &.primary {
+    border: 0;
     background-color: $primary-color;
     color: $light;
 
@@ -25,6 +31,7 @@
   }
 
   &.secondary {
+    border: 0;
     background-color: $secondary-color;
     color: $light;
 
@@ -34,6 +41,7 @@
   }
 
   &.negative {
+    border: 0;
     background-color: $negative-color;
     color: $light;
 
@@ -142,7 +150,7 @@
 .label {
   padding: $space-tiny $space-base;
   border-radius: $space-micro;
-  background-color: $neutral-color;
+  background-color: $highlight-color;
   color: $secondary-color;
   font-size: $font-size-small;
 

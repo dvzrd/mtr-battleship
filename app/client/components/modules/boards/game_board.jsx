@@ -154,8 +154,8 @@ App.GameBoard = React.createClass({
 
         if (noUnitsDeployed && isOwner) {
             return (
-                <module className="bottom fixed actions module">
-                    <button type="button" className="centered primary button" onClick={this.handleUnitDeployment}>Deploy
+                <module className="actions module">
+                    <button type="button" className="centered button" onClick={this.handleUnitDeployment}>Deploy
                         Units
                     </button>
                 </module>
@@ -163,7 +163,7 @@ App.GameBoard = React.createClass({
         }
         if (offensive && !isOwner) {
             return (
-                <module className="bottom fixed actions module">
+                <module className="actions module">
                     <button type="button" className="centered negative button" onClick={this.handleTargetAttack}>Attack
                         Target
                     </button>
@@ -172,7 +172,7 @@ App.GameBoard = React.createClass({
         }
         if (ready && !isOwner) {
             return (
-                <module className="bottom fixed actions module">
+                <module className="actions module">
                     <button type="button" className="centered negative button" onClick={this.handleTargetAttack}>Attack
                         Target
                     </button>
@@ -181,7 +181,7 @@ App.GameBoard = React.createClass({
         } else {
             return (
                 // @TODO: messages module
-                <module className="bottom fixed primary messages module">
+                <module className="messages module">
                     <p className="light message">
                         Opponent is planning something...
                     </p>

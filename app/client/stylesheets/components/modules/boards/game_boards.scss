@@ -12,7 +12,9 @@
     width: $full;
     margin: $space-jumbo auto;
     padding: 0;
-    border: $space-micro solid $highlight-color;
+    border: $space-mini solid $highlight-color;
+    border-bottom-right-radius: $space-mini;
+    border-bottom-left-radius: $space-mini;
 
     @media (min-width: $phone-width) {
       width: $three-quarters;
@@ -41,31 +43,38 @@
         padding: $space-base;
         box-shadow: 0 0 0 $space-quantum $highlight-color;
 
+        &:hover {
+          background-color: rgba($highlight-color, 0.5);
+        }
+
         &.selected {
-          background-color: $highlight-color;
+          background-color: rgba($primary-color, 0.5);
         }
 
         &.target {
-          background-color: $info-color;
+          background-color: rgba($secondary-color, 0.5);
         }
 
         &.missed {
-          background-color: $caution-color;
+          background-color: rgba($caution-color, 0.5);
         }
 
         &.destroyed {
-          background-color: $negative-color;
-        }
-
-        &:hover {
-          background-color: $highlight-color;
+          background-color: rgba($negative-color, 0.5);
         }
       }
     }
 
-    .bottom.fixed.module {
-      bottom: $space-large + $space-tiny;
+    .actions.module {
+      position: absolute;
+      padding: 0;
       z-index: 1;
+
+      .centered.button {
+        width: $half;
+        border-bottom-left-radius: $space-base;
+        border-bottom-right-radius: $space-base;
+      }
     }
   }
 }
