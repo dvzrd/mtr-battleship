@@ -15,8 +15,10 @@ App.Battle = React.createClass({
         } else {
             return (
                 <view className="animated fadeIn battle view">
-                    <App.GameDetails />
-                    <App.GameBoards game={this.data.game} />
+                    <section className="animated fadeInDown section">
+                        <App.GameDetails />
+                        <App.GameBoards game={this.data.game}/>
+                    </section>
 
                     <p>chat module</p>
                 </view>
