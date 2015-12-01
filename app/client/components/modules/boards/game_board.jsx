@@ -28,17 +28,19 @@ App.GameBoard = React.createClass({
         let updateAttributes = {
             boardId: this.data.board._id,
             status: 'ready'
-        };
+        }, allUnitsPlaced = this.data.board.placementCount === 5;
 
-        // @TODO: validate if 5 selected before calling method
-
-        Meteor.call('updateStatus', updateAttributes, (error) => {
-            if (error) {
-                Bert.alert(error.reason, 'warning');
-            } else {
-                Bert.alert('Your units are deployed, get ready for battle!', 'success');
-            }
-        });
+        if (allUnitsPlaced) {
+            Meteor.call('updateStatus', updateAttributes, (error) => {
+                if (error) {
+                    Bert.alert(error.reason, 'warning');
+                } else {
+                    Bert.alert('Your units are deployed, get ready for battle!', 'success');
+                }
+            });
+        } else {
+            Bert.alert('You still have units in reserve, place them on the board!', 'warning');
+        }
     },
 
     handleTargetAttack(event) {
