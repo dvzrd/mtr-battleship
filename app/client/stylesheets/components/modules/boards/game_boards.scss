@@ -7,10 +7,6 @@
   width: $full;
   height: $full;
   padding: 0;
-  background: $background-image;
-  background-size: cover;
-  background-position: $half $half;
-  background-repeat: no-repeat;
 
   .game.board.module {
     width: $full;
@@ -65,6 +61,11 @@
           background-color: $highlight-color;
         }
       }
+    }
+
+    .bottom.fixed.module {
+      bottom: $space-large + $space-tiny;
+      z-index: 1;
     }
   }
 }

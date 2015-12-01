@@ -2,11 +2,6 @@
 
 // button
 
-.buttons {
-  display: block;
-  width: $full;
-}
-
 .button {
   display: inline-block;
   cursor: pointer;
@@ -86,6 +81,23 @@
   position: relative;
   margin: 0;
   padding: $space-base;
+
+  &.fixed {
+    position: fixed;
+    left: 0;
+
+    &.bottom {
+      bottom: 0;
+    }
+  }
+
+  &.actions {
+    width: $full;
+  }
+
+  &.messages {
+
+  }
 }
 
 // title
