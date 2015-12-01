@@ -173,7 +173,6 @@ Meteor.methods({
 
         let user = Meteor.user(),
             board = Boards.findOne({_id: attackAttributes.boardId}),
-            userBoard = Boards.findOne({owner: user.username}),
             targetHit = attackAttributes.targetStatus === 'selected';
 
         if (!user) {
@@ -191,19 +190,6 @@ Meteor.methods({
                     'targets.$.status': 'destroyed'
                 }
             });
-
-            debugger;
-
-            Boards.update({_id: userBoard._id}, {
-                $set: {status: 'defense'}
-            });
-
-            debugger;
-
-            let report = {status: 'destroyed'};
-            return report;
-
-            debugger;
         } else {
             Boards.update({_id: attackAttributes.boardId, 'targets.id': attackAttributes.targetId}, {
                 $set: {
@@ -213,19 +199,6 @@ Meteor.methods({
                     'targets.$.status': 'missed'
                 }
             });
-
-            debugger;
-
-            Boards.update({_id: userBoard._id}, {
-                $set: {status: 'defense'}
-            });
-
-            debugger;
-
-            let report = {status: 'missed'};
-            return report;
-
-            debugger;
         }
     }
 });

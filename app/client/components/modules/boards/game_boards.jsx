@@ -43,7 +43,6 @@ App.GameBoards = React.createClass({
                 creator: this.data.creator
             };
 
-
         if (isCreator) {
             if (noOpponent) {
                 // @TODO: messages module
@@ -57,6 +56,7 @@ App.GameBoards = React.createClass({
                     </module>
                 );
             } else {
+
                 let ready = creatorBoard.status === 'ready' && destroyerBoard.status === 'ready',
                     offensive = creatorBoard.status === 'offense';
 
@@ -80,6 +80,8 @@ App.GameBoards = React.createClass({
                     <App.GameBoard gameProps={gameProps} boardId={destroyerBoard._id}/>
                 );
             } else {
+
+
                 if (ready || defensive) {
                     return (
                         <App.GameBoard gameProps={gameProps} boardId={destroyerBoard._id}/>
