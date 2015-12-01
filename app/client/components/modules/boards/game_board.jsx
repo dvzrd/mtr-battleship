@@ -23,6 +23,8 @@ App.GameBoard = React.createClass({
         };
     },
 
+    // @TODO: refactor unit deployment into separate client module
+
     handleUnitDeployment(event) {
         event.preventDefault();
 
@@ -44,11 +46,12 @@ App.GameBoard = React.createClass({
         }
     },
 
+    // @TODO: refactor target attack into separate client module - employ micro-branching
+
     handleTargetAttack(event) {
         event.preventDefault();
 
         let user = Meteor.user(),
-            game = this.data.game,
             gameId = this.data.gameId,
             targetId = this.data.board.targetId,
             targets = this.data.board.targets,
@@ -64,7 +67,7 @@ App.GameBoard = React.createClass({
                 targetStatus: target.status
             };
 
-            // @TODO: break all these calls down into functions inside a client module
+            // @TODO: break all these calls down into functions inside the client module
 
             Meteor.call('attackTarget', attackAttributes, (error, report) => {
                 if (error) {
@@ -93,14 +96,39 @@ App.GameBoard = React.createClass({
                                     if (error) {
                                         Bert.alert(error.reason, 'warning');
                                     } else {
-                                        // @TODO: if response.attacker === creator && max points
-                                        // add creator as winner and complete the game
-                                        // else if
-                                        // response.attacker === destroyer && max points
-                                        // add destroyer as winner and complete the game
-                                        // else default alert
-                                        //    Bert.alert('You completely wiped out the enemy\'s position at ' + attackAttributes.targetId + '!', 'success');
 
+                                        let game = this.data.game;
+
+                                        if (response.attacker === 'creator' && game.creatorScore === 25) {
+                                            let winnerAttributes = {
+                                                gameId: gameId,
+                                                winner: game.creator
+                                            };
+
+                                            Meteor.call('declareWinner', winnerAttributes, (error) => {
+                                               if (error) {
+                                                   Bert.alert(error.reason, 'warning');
+                                               } else {
+                                                   Bert.alert(game.creator + ' is the winner of this battle', 'success');
+                                               }
+                                            });
+                                        }
+                                        if (response.attacker === 'destroyer' && game.destroyerScore === 25) {
+                                            let winnerAttributes = {
+                                                gameId: gameId,
+                                                winner: game.destroyer
+                                            };
+
+                                            Meteor.call('declareWinner', winnerAttributes, (error) => {
+                                                if (error) {
+                                                    Bert.alert(error.reason, 'warning');
+                                                } else {
+                                                    Bert.alert(game.destroyer + ' is the winner of this battle', 'success');
+                                                }
+                                            });
+                                        } else {
+                                            Bert.alert('You completely wiped out the enemy\'s position at ' + attackAttributes.targetId + '!', 'success');
+                                        }
                                     }
                                 });
                             } else {
@@ -113,6 +141,7 @@ App.GameBoard = React.createClass({
         }
     },
 
+    // @TODO: component for board actions
 
     renderActions() {
         let user = Meteor.user(),
@@ -133,7 +162,6 @@ App.GameBoard = React.createClass({
                     Target</button>
             );
         }
-        // @TODO: fix this - it lets creator attack before other player is ready
         if (ready && !isOwner) {
             return (
                 <button type="button" className="fluid negative button" onClick={this.handleTargetAttack}>Attack

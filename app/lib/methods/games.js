@@ -87,14 +87,14 @@ Meteor.methods({
 
         var game = Games.findOne({_id: scoreAttributes.gameId, completedAt: null}),
             creatorScoredPoints = game.creator === scoreAttributes.attacker,
-            pointsLimit = game.creatorScore === 25 || game.destroyerScore === 25,
+            winner = game.creatorScore === 25 || game.destroyerScore === 25,
             points = +5;
 
         if (!game) {
             throw new Meteor.Error('game-does-not-exist', 'This game is not in the collection');
         }
-        if (pointsLimit) {
-            throw new Meteor.Error('points-limit-reached', 'You have reached the limit of the amount of points you can score');
+        if (winner) {
+            throw new Meteor.Error('winner-already-exists', 'The max number of points already has been awarded.');
         } else {
             if (creatorScoredPoints) {
                 Games.update(scoreAttributes.gameId, {
@@ -121,7 +121,7 @@ Meteor.methods({
             winner: String
         });
 
-        var game = Games.findOne({_id: gameId}),
+        var game = Games.findOne({_id: winnerAttributes.gameId}),
             now = new Date();
 
         if (!game) {
