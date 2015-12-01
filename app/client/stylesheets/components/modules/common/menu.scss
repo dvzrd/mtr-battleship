@@ -3,18 +3,22 @@
 .menu.module {
   padding: 0;
 
-  .button {
-    position: fixed;
-    bottom: 0;
-    margin: $space-micro;
-    z-index: 1;
+  .actions.module {
+    padding: 0;
 
-    &.left {
-      left: 0;
-    }
+    .button {
+      position: fixed;
+      bottom: 0;
+      margin: $space-micro;
+      z-index: 1;
 
-    &.right {
-      right: 0;
+      &.left {
+        left: 0;
+      }
+
+      &.right {
+        right: 0;
+      }
     }
   }
 }

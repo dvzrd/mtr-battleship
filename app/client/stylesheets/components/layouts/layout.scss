@@ -18,15 +18,15 @@ html {
       overflow: hidden;
 
       .header {
-        position: relative;
-        display: flex;
-        flex-wrap: wrap;
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: $full;
         margin: 0;
         padding: 0;
-
-        .module {
-          flex: 1;
-        }
+        border-top: $space-mini solid $secondary-color;
+        z-index: 1;
       }
 
       .main {

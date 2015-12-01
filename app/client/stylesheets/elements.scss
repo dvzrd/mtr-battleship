@@ -148,7 +148,10 @@
 // label
 
 .label {
+  display: inline-block;
+  position: relative;
   padding: $space-tiny $space-base;
+  border: 0;
   border-radius: $space-micro;
   background-color: $highlight-color;
   color: $secondary-color;

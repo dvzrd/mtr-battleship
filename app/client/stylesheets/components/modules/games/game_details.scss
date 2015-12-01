@@ -3,7 +3,7 @@
 .game.details.module {
   display: flex;
   flex-wrap: wrap;
-  top: $space-base;
+  top: $space-large + $space-small;
   margin: auto;
   padding: 0;
   z-index: 2;
@@ -22,14 +22,47 @@
 
   .player {
     flex: 1;
+    position: relative;
+    bottom: $space-mini;
     margin: 0;
 
+    .label {
+      border-radius: 0;
+      width: 90%;
+
+      @media (min-width: $phone-width) {
+        width: $three-quarters;
+      }
+
+      @media (min-width: $tablet-width) {
+        width: $half;
+      }
+
+      @media (min-width: $laptop-width) {
+        width: auto;
+      }
+
+      &:after,
+      &:before {
+        content: '';
+        display: block;
+        position: absolute;
+        bottom: 0;
+        height: 0;
+        width: 0;
+      }
+    }
+
     &.creator {
-      text-align: left;
 
       .label {
-        border-top-left-radius: $space-mini;
-        border-top-right-radius: $space-base;
+
+        &:after {
+          right: -$space-large;
+          border: $space-base solid $highlight-color;
+          border-top: $space-base solid transparent;
+          border-right: $space-base solid transparent;
+        }
       }
     }
 
@@ -37,8 +70,13 @@
       text-align: right;
 
       .label {
-        border-top-left-radius: $space-base;
-        border-top-right-radius: $space-mini;
+
+        &:before {
+          left: -$space-large;
+          border: $space-base solid $highlight-color;
+          border-top: $space-base solid transparent;
+          border-left: $space-base solid transparent;
+        }
       }
     }
   }

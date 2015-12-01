@@ -12,7 +12,6 @@
     width: $full;
     margin: $space-jumbo auto;
     padding: 0;
-    border: $space-mini solid $highlight-color;
     border-bottom-right-radius: $space-mini;
     border-bottom-left-radius: $space-mini;
 
@@ -36,11 +35,13 @@
       height: $fluid-three-quarters;
       margin: 0;
       padding: 0;
+      border: $space-micro solid $highlight-color;
 
       .cell {
         cursor: pointer;
         flex: 0 0 20%;
         padding: $space-base;
+        border: $space-atomic solid $highlight-color;
         box-shadow: 0 0 0 $space-quantum $highlight-color;
 
         &:hover {
@@ -52,7 +53,7 @@
         }
 
         &.target {
-          background-color: rgba($secondary-color, 0.5);
+          background-color: rgba($negative-color, 0.5);
         }
 
         &.missed {
@@ -66,14 +67,51 @@
     }
 
     .actions.module {
-      position: absolute;
       padding: 0;
-      z-index: 1;
+      border: 0;
+      border-top: $space-large solid $highlight-color;
+      border-left: $space-large solid transparent;
+      border-right: $space-large solid transparent;
+      background: transparent;
+      width: $three-quarters;
+      margin: auto;
+      display: block;
+      position: relative;
 
-      .centered.button {
+      @media (min-width: $tablet-width) {
         width: $half;
-        border-bottom-left-radius: $space-base;
-        border-bottom-right-radius: $space-base;
+      }
+
+      &:before {
+        content: '';
+        opacity: 0;
+        position: absolute;
+        bottom: 0;
+        left: $half;
+        transform: translate(-$half, 0);
+        border-style: solid;
+        border-width: $space-base $space-base $space-base;
+        border-color: transparent transparent $highlight-color transparent;
+        transition: all $faster;
+      }
+
+      &:hover {
+
+        &:before {
+          opacity: 1;
+          bottom: $space-large;
+        }
+      }
+
+      .fluid.centered.button {
+        position: absolute;
+        bottom: 0;
+        border: 0;
+        background-color: transparent;
+
+        &:hover {
+          color: $secondary-color;
+        }
       }
     }
   }

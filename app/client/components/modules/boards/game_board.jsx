@@ -155,7 +155,7 @@ App.GameBoard = React.createClass({
         if (noUnitsDeployed && isOwner) {
             return (
                 <module className="actions module">
-                    <button type="button" className="centered button" onClick={this.handleUnitDeployment}>Deploy
+                    <button type="button" className="fluid centered button" onClick={this.handleUnitDeployment}>Deploy
                         Units
                     </button>
                 </module>
@@ -164,7 +164,7 @@ App.GameBoard = React.createClass({
         if (offensive && !isOwner) {
             return (
                 <module className="actions module">
-                    <button type="button" className="centered negative button" onClick={this.handleTargetAttack}>Attack
+                    <button type="button" className="fluid centered button" onClick={this.handleTargetAttack}>Attack
                         Target
                     </button>
                 </module>
@@ -173,7 +173,7 @@ App.GameBoard = React.createClass({
         if (ready && !isOwner) {
             return (
                 <module className="actions module">
-                    <button type="button" className="centered negative button" onClick={this.handleTargetAttack}>Attack
+                    <button type="button" className="fluid centered button" onClick={this.handleTargetAttack}>Attack
                         Target
                     </button>
                 </module>
