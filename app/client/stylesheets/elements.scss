@@ -22,21 +22,21 @@
   &.primary {
     border: 0;
     background-color: $primary-color;
-    color: $light;
+    color: $offset-color;
 
     &:hover {
       background-color: $secondary-color;
-      color: $light;
+      color: $offset-color;
     }
   }
 
   &.secondary {
     border: 0;
     background-color: $secondary-color;
-    color: $light;
+    color: $offset-color;
 
     &:hover {
-      color: $primary-color;
+      color: $highlight-color;
     }
   }
 
