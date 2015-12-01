@@ -82,30 +82,36 @@ Meteor.methods({
     updateScore(scoreAttributes) {
         check(scoreAttributes, {
             gameId: String,
-            player: String,
-            boardId: String,
-            targetId: String
+            attacker: String
         });
 
-        var game = Games.findOne({_id: gameId, completedAt: null}),
-            creatorScoredPoints = game.creator === scoreAttributes.player,
-            pointsLimit = game.creatorScore === 25 || game.destroyerScore === 25,
+        var game = Games.findOne({_id: scoreAttributes.gameId, completedAt: null}),
+            creatorScoredPoints = game.creator === scoreAttributes.attacker,
+            winner = game.creatorScore === 25 || game.destroyerScore === 25,
             points = +5;
 
         if (!game) {
             throw new Meteor.Error('game-does-not-exist', 'This game is not in the collection');
         }
-        if (pointsLimit) {
-            throw new Meteor.Error('points-limit-reached', 'You have reached the limit of the amount of points you can score');
+        if (winner) {
+            throw new Meteor.Error('winner-already-exists', 'The max number of points already has been awarded.');
         } else {
             if (creatorScoredPoints) {
                 Games.update(scoreAttributes.gameId, {
-                    $set: {'creatorScore': points}
+                    $inc: {'creatorScore': points}
                 });
+
+                let response = {attacker: 'creator'};
+
+                return response;
             } else {
                 Games.update(scoreAttributes.gameId, {
-                    $set: {'destroyerScore': points}
+                    $inc: {'destroyerScore': points}
                 });
+
+                let response = {attacker: 'destroyer'};
+
+                return response;
             }
         }
     },
@@ -115,7 +121,7 @@ Meteor.methods({
             winner: String
         });
 
-        var game = Games.findOne({_id: gameId}),
+        var game = Games.findOne({_id: winnerAttributes.gameId}),
             now = new Date();
 
         if (!game) {

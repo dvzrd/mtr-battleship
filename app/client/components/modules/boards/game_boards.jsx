@@ -18,7 +18,8 @@ App.GameBoards = React.createClass({
             creator: creator,
             destroyer: destroyer,
             creatorBoard: Boards.findOne({gameId: gameId, owner: creator}),
-            destroyerBoard: Boards.findOne({gameId: gameId, owner: destroyer})
+            destroyerBoard: Boards.findOne({gameId: gameId, owner: destroyer}),
+            game: Games.findOne({_id: gameId})
         };
     },
 
@@ -30,21 +31,49 @@ App.GameBoards = React.createClass({
         console.log('add HAL 9000 as opponent');
     },
 
+    renderNotice() {
+        let game = this.data.game,
+            gameOver = game.winner && game.completedAt;
+
+        // @TODO: messages module
+
+        if (gameOver) {
+            return (
+                <module className="messages module">
+                    <p className="centered light message">
+                        The game is over! The winner is {game.winner}!
+                    </p>
+                    <a className="primary centered button" href={RouterHelpers.pathFor('root')}>Go home!</a>
+                </module>
+            );
+        } else {
+            return (
+                <module className="messages module">
+                    <p className="centered light message">
+                        This game has been marked completed but no winner was declared... quite strange.
+                    </p>
+                    <a className="primary centered button" href={RouterHelpers.pathFor('root')}>Take me home!</a>
+                </module>
+            );
+        }
+    },
+
     // @TODO: refactor board render into separate client module - employ micro-branching
 
     renderGameBoard() {
         let user = Meteor.user(),
             isCreator = this.data.creator === user.username,
-            noOpponent = this.data.creatorBoard.status === 'ready' && !this.data.destroyerBoard,
+            creatorBoard = this.data.creatorBoard,
+            destroyerBoard = this.data.destroyerBoard,
+            noOpponent = creatorBoard.status === 'ready' && !destroyerBoard,
             gameProps = {
                 gameId: this.data.gameId,
                 creator: this.data.creator
             };
 
-
         if (isCreator) {
             if (noOpponent) {
-                // @TODO: messages module
+                // @TODO: messages module - move into renderNotice
                 return (
                     <module className="messages module">
                         <p className="centered light message">
@@ -55,36 +84,39 @@ App.GameBoards = React.createClass({
                     </module>
                 );
             } else {
-                let ready = this.data.creatorBoard.status === 'ready' && this.data.destroyerBoard.status === 'ready',
-                    offensive = this.data.creatorBoard.status === 'offense';
+
+                let ready = creatorBoard.status === 'ready' && destroyerBoard.status === 'ready',
+                    offensive = creatorBoard.status === 'offense';
 
                 if (ready || offensive) {
                     return (
-                        <App.GameBoard gameProps={gameProps} board={this.data.destroyerBoard}/>
+                        <App.GameBoard gameProps={gameProps} boardId={destroyerBoard._id}/>
                     );
                 } else {
                     return (
-                        <App.GameBoard gameProps={gameProps} board={this.data.creatorBoard}/>
+                        <App.GameBoard gameProps={gameProps} boardId={creatorBoard._id}/>
                     );
                 }
             }
         } else {
-            let noUnitsDeployed = this.data.destroyerBoard.status === null,
-                ready = this.data.destroyerBoard.status === 'ready' && this.data.creatorBoard.status === 'ready',
-                defensive = this.data.destroyerBoard.status === 'defense';
+            let noUnitsDeployed = destroyerBoard.status === null,
+                ready = destroyerBoard.status === 'ready' && creatorBoard.status === 'ready',
+                defensive = destroyerBoard.status === 'defense';
 
             if (noUnitsDeployed) {
                 return (
-                    <App.GameBoard gameProps={gameProps} board={this.data.destroyerBoard}/>
+                    <App.GameBoard gameProps={gameProps} boardId={destroyerBoard._id}/>
                 );
             } else {
+
+
                 if (ready || defensive) {
                     return (
-                        <App.GameBoard gameProps={gameProps} board={this.data.destroyerBoard}/>
+                        <App.GameBoard gameProps={gameProps} boardId={destroyerBoard._id}/>
                     );
                 } else {
                     return (
-                        <App.GameBoard gameProps={gameProps} board={this.data.creatorBoard}/>
+                        <App.GameBoard gameProps={gameProps} boardId={creatorBoard._id}/>
                     );
                 }
             }
@@ -95,9 +127,11 @@ App.GameBoards = React.createClass({
         if (this.data.isLoading) {
             return <App.Loading />;
         } else {
+            let gameOver = this.data.game.winner || this.data.game.completedAt;
+
             return (
                 <module className="game boards module">
-                    {this.renderGameBoard()}
+                    {(gameOver) ? this.renderNotice() : this.renderGameBoard()}
                 </module>
             )
         }

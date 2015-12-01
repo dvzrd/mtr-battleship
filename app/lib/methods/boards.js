@@ -191,10 +191,7 @@ Meteor.methods({
                 }
             });
 
-            let report = {
-                status: 'destroyed',
-                class: 'success'
-            };
+            let report = {status: 'destroyed'};
 
             return report;
         } else {
@@ -207,10 +204,7 @@ Meteor.methods({
                 }
             });
 
-            let report = {
-                status: 'missed',
-                class: 'warning'
-            };
+            let report = {status: 'missed'};
 
             return report;
         }

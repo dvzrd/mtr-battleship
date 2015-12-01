@@ -2,66 +2,81 @@ App.GameBoard = React.createClass({
     mixins: [ReactMeteorData],
     PropTypes: {
         gameProps: React.PropTypes.object,
-        board: React.PropTypes.object
+        boardId: React.PropTypes.string
     },
     shouldComponentUpdate() {
         return true;
     },
 
     getMeteorData() {
+        let user = Meteor.user(),
+            boardId = this.props.boardId,
+            subscription = Meteor.subscribe('board', boardId);
+
         return {
+            isLoading: !subscription.ready(),
             gameId: this.props.gameProps.gameId,
             creator: this.props.gameProps.creator,
-            boardId: this.props.board._id,
-            boardOwner: this.props.board.owner,
-            status: this.props.board.status,
-            targetId: this.props.board.targetId,
-            targets: this.props.board.targets
+            board: Boards.findOne({_id: boardId}),
+            userBoard: Boards.findOne({owner: user.username}),
+            game: Games.findOne({_id: this.props.gameProps.gameId})
         };
     },
+
+    // @TODO: refactor unit deployment into separate client module
 
     handleUnitDeployment(event) {
         event.preventDefault();
 
         let updateAttributes = {
-            boardId: this.data.boardId,
+            boardId: this.data.board._id,
             status: 'ready'
-        };
+        }, allUnitsPlaced = this.data.board.placementCount === 5;
 
-        // @TODO: validate if 5 selected before calling method
-
-        Meteor.call('updateStatus', updateAttributes, (error) => {
-            if (error) {
-                Bert.alert(error.reason, 'warning');
-            } else {
-                Bert.alert('Your units are deployed, get ready for battle!', 'success');
-            }
-        });
+        if (allUnitsPlaced) {
+            Meteor.call('updateStatus', updateAttributes, (error) => {
+                if (error) {
+                    Bert.alert(error.reason, 'warning');
+                } else {
+                    Bert.alert('Your units are deployed, get ready for battle!', 'success');
+                }
+            });
+        } else {
+            Bert.alert('You still have units in reserve, place them on the board!', 'warning');
+        }
     },
+
+    // @TODO: refactor target attack into separate client module - employ micro-branching
 
     handleTargetAttack(event) {
         event.preventDefault();
 
-        let targetId = this.data.targetId,
-            targets = this.data.targets,
+        let user = Meteor.user(),
+            gameId = this.data.gameId,
+            targetId = this.data.board.targetId,
+            targets = this.data.board.targets,
             target = _.find(targets, function(target) { return target.id === targetId }),
-            board = Boards.findOne({owner: Meteor.user().username});
+            userBoardId = this.data.userBoard._id;
 
         if (!target) {
             Bert.alert('You must lock on a target before attacking', 'warning');
         } else {
             let attackAttributes = {
-                boardId: this.data.boardId,
+                boardId: this.data.board._id,
                 targetId: target.id,
                 targetStatus: target.status
             };
+
+            // @TODO: break all these calls down into functions inside the client module
 
             Meteor.call('attackTarget', attackAttributes, (error, report) => {
                 if (error) {
                     Bert.alert(error.reason, 'warning');
                 } else {
-                    let updateAttributes = {
-                        boardId: board._id,
+
+                    let targetStatus = report.status,
+                        updateAttributes = {
+                        boardId: userBoardId,
                         status: 'defense'
                     };
 
@@ -69,7 +84,56 @@ App.GameBoard = React.createClass({
                         if (error) {
                             Bert.alert(error.reason, 'warning');
                         } else {
-                            Bert.alert('Your attack ' + report.status + ' ' + attackAttributes.targetId, report.class);
+
+                            if (targetStatus === 'destroyed') {
+
+                                let scoreAttributes = {
+                                    gameId: gameId,
+                                    attacker: user.username
+                                };
+
+                                Meteor.call('updateScore', scoreAttributes, (error, response) => {
+                                    if (error) {
+                                        Bert.alert(error.reason, 'warning');
+                                    } else {
+
+                                        let game = this.data.game;
+
+                                        if (response.attacker === 'creator' && game.creatorScore === 25) {
+                                            let winnerAttributes = {
+                                                gameId: gameId,
+                                                winner: game.creator
+                                            };
+
+                                            Meteor.call('declareWinner', winnerAttributes, (error) => {
+                                               if (error) {
+                                                   Bert.alert(error.reason, 'warning');
+                                               } else {
+                                                   Bert.alert(game.creator + ' is the winner of this battle', 'success');
+                                               }
+                                            });
+                                        }
+                                        if (response.attacker === 'destroyer' && game.destroyerScore === 25) {
+                                            let winnerAttributes = {
+                                                gameId: gameId,
+                                                winner: game.destroyer
+                                            };
+
+                                            Meteor.call('declareWinner', winnerAttributes, (error) => {
+                                                if (error) {
+                                                    Bert.alert(error.reason, 'warning');
+                                                } else {
+                                                    Bert.alert(game.destroyer + ' is the winner of this battle', 'success');
+                                                }
+                                            });
+                                        } else {
+                                            Bert.alert('You completely wiped out the enemy\'s position at ' + attackAttributes.targetId + '!', 'success');
+                                        }
+                                    }
+                                });
+                            } else {
+                                Bert.alert('Your attack failed! No units were found at ' + attackAttributes.targetId + '.', 'warning');
+                            }
                         }
                     });
                 }
@@ -77,13 +141,14 @@ App.GameBoard = React.createClass({
         }
     },
 
+    // @TODO: component for board actions
 
     renderActions() {
         let user = Meteor.user(),
-            isOwner = this.data.boardOwner === user.username,
-            noUnitsDeployed = this.data.status === null,
-            ready = this.data.status === 'ready',
-            offensive = this.data.status === 'defense';
+            isOwner = this.data.board.owner === user.username,
+            noUnitsDeployed = this.data.board.status === null,
+            ready = this.data.board.status === 'ready',
+            offensive = this.data.board.status === 'defense';
 
         if (noUnitsDeployed && isOwner) {
             return (
@@ -97,7 +162,6 @@ App.GameBoard = React.createClass({
                     Target</button>
             );
         }
-        // @TODO: fix this - it lets creator attack before other player is ready
         if (ready && !isOwner) {
             return (
                 <button type="button" className="fluid negative button" onClick={this.handleTargetAttack}>Attack
@@ -118,23 +182,27 @@ App.GameBoard = React.createClass({
     render() {
         let boardProps = {
             gameId: this.data.gameId,
-            boardId: this.data.boardId,
-            owner: this.data.boardOwner,
-            status: this.data.status,
-            targetId: this.data.targetId
+            boardId: this.data.board._id,
+            owner: this.data.board.owner,
+            status: this.data.board.status,
+            targetId: this.data.board.targetId
         };
 
-        return (
-            <module className="game board module" id={boardProps.boardId}>
-                <div className="grid">
-                    {this.data.targets.map((target) => {
-                        return (
-                            <App.GameBoardTarget key={target.id} boardProps={boardProps} targetProps={target} />
-                        );
-                    })}
-                </div>
-                {this.renderActions()}
-            </module>
-        );
+        if (this.data.isLoading) {
+            return <App.Loading />;
+        } else {
+            return (
+                <module className="game board module" id={boardProps.boardId}>
+                    <div className="grid">
+                        {this.data.board.targets.map((target) => {
+                            return (
+                                <App.GameBoardTarget key={target.id} boardProps={boardProps} targetProps={target} />
+                            );
+                        })}
+                    </div>
+                    {this.renderActions()}
+                </module>
+            );
+        }
     }
 });
