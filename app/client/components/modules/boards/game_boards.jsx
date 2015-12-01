@@ -18,7 +18,8 @@ App.GameBoards = React.createClass({
             creator: creator,
             destroyer: destroyer,
             creatorBoard: Boards.findOne({gameId: gameId, owner: creator}),
-            destroyerBoard: Boards.findOne({gameId: gameId, owner: destroyer})
+            destroyerBoard: Boards.findOne({gameId: gameId, owner: destroyer}),
+            game: Games.findOne({_id: gameId})
         };
     },
 
@@ -28,6 +29,33 @@ App.GameBoards = React.createClass({
         event.preventDefault();
 
         console.log('add HAL 9000 as opponent');
+    },
+
+    renderNotice() {
+        let game = this.data.game,
+            gameOver = game.winner && game.completedAt;
+
+        // @TODO: messages module
+
+        if (gameOver) {
+            return (
+                <module className="messages module">
+                    <p className="centered light message">
+                        The game is over! The winner is {game.winner}!
+                    </p>
+                    <a className="primary centered button" href={RouterHelpers.pathFor('root')}>Go home!</a>
+                </module>
+            );
+        } else {
+            return (
+                <module className="messages module">
+                    <p className="centered light message">
+                        This game has been marked completed but no winner was declared... quite strange.
+                    </p>
+                    <a className="primary centered button" href={RouterHelpers.pathFor('root')}>Take me home!</a>
+                </module>
+            );
+        }
     },
 
     // @TODO: refactor board render into separate client module - employ micro-branching
@@ -45,7 +73,7 @@ App.GameBoards = React.createClass({
 
         if (isCreator) {
             if (noOpponent) {
-                // @TODO: messages module
+                // @TODO: messages module - move into renderNotice
                 return (
                     <module className="messages module">
                         <p className="centered light message">
@@ -99,9 +127,11 @@ App.GameBoards = React.createClass({
         if (this.data.isLoading) {
             return <App.Loading />;
         } else {
+            let gameOver = this.data.game.winner || this.data.game.completedAt;
+
             return (
                 <module className="game boards module">
-                    {this.renderGameBoard()}
+                    {(gameOver) ? this.renderNotice() : this.renderGameBoard()}
                 </module>
             )
         }
