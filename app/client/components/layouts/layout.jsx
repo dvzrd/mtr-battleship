@@ -2,7 +2,7 @@ App.Layout = React.createClass({
     render() {
         return (
             <layout className="layout">
-                <header className="animated fadeInDown header">
+                <header className="header">
                     <App.Logo />
                 </header>
 
@@ -10,7 +10,7 @@ App.Layout = React.createClass({
                     {this.props.view}
                 </main>
 
-                <footer className="animated fadeInUp footer">
+                <footer className="footer">
                     <App.Menu />
                     <App.Copyright />
                 </footer>
