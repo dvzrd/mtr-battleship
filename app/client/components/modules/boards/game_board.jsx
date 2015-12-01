@@ -2,21 +2,21 @@ App.GameBoard = React.createClass({
     mixins: [ReactMeteorData],
     PropTypes: {
         gameProps: React.PropTypes.object,
-        board: React.PropTypes.object
+        boardId: React.PropTypes.string
     },
     shouldComponentUpdate() {
         return true;
     },
 
     getMeteorData() {
+        let boardId = this.props.boardId,
+            subscription = Meteor.subscribe('board', boardId);
+
         return {
+            isLoading: !subscription.ready(),
             gameId: this.props.gameProps.gameId,
             creator: this.props.gameProps.creator,
-            boardId: this.props.board._id,
-            boardOwner: this.props.board.owner,
-            status: this.props.board.status,
-            targetId: this.props.board.targetId,
-            targets: this.props.board.targets
+            board: Boards.findOne({_id: boardId})
         };
     },
 
@@ -24,7 +24,7 @@ App.GameBoard = React.createClass({
         event.preventDefault();
 
         let updateAttributes = {
-            boardId: this.data.boardId,
+            boardId: this.data.board._id,
             status: 'ready'
         };
 
@@ -42,18 +42,20 @@ App.GameBoard = React.createClass({
     handleTargetAttack(event) {
         event.preventDefault();
 
-        let targetId = this.data.targetId,
-            targets = this.data.targets,
+        let targetId = this.data.board.targetId,
+            targets = this.data.board.targets,
             target = _.find(targets, function(target) { return target.id === targetId });
 
         if (!target) {
             Bert.alert('You must lock on a target before attacking', 'warning');
         } else {
             let attackAttributes = {
-                boardId: this.data.boardId,
+                boardId: this.data.board._id,
                 targetId: target.id,
                 targetStatus: target.status
             };
+
+            console.log(attackAttributes);
 
             Meteor.call('attackTarget', attackAttributes, (error, report) => {
                 if (error) {
@@ -63,6 +65,12 @@ App.GameBoard = React.createClass({
                     // @TODO: if report.status === 'destroyed'
                     // call update score method
                     // else show alert for status.missed
+                    //console.log(report.status);
+                    if (report.status === 'destroyed') {
+                        Bert.alert('The attack on ' + attackAttributes.targetId + ' destroyed the enemy position!', 'success');
+                    } else {
+                        Bert.alert('The enemy eluded us this time. The attack on ' + attackAttributes.targetId + ' failed!', 'warning');
+                    }
                 }
             });
         }
@@ -71,10 +79,13 @@ App.GameBoard = React.createClass({
 
     renderActions() {
         let user = Meteor.user(),
-            isOwner = this.data.boardOwner === user.username,
-            noUnitsDeployed = this.data.status === null,
-            ready = this.data.status === 'ready',
-            offensive = this.data.status === 'defense';
+            isOwner = this.data.board.owner === user.username,
+            noUnitsDeployed = this.data.board.status === null,
+            ready = this.data.board.status === 'ready',
+            offensive = this.data.board.status === 'defense';
+
+        console.log(this.data.board.status);
+        debugger;
 
         if (noUnitsDeployed && isOwner) {
             return (
@@ -109,23 +120,27 @@ App.GameBoard = React.createClass({
     render() {
         let boardProps = {
             gameId: this.data.gameId,
-            boardId: this.data.boardId,
-            owner: this.data.boardOwner,
-            status: this.data.status,
-            targetId: this.data.targetId
+            boardId: this.data.board._id,
+            owner: this.data.board.owner,
+            status: this.data.board.status,
+            targetId: this.data.board.targetId
         };
 
-        return (
-            <module className="game board module" id={boardProps.boardId}>
-                <div className="grid">
-                    {this.data.targets.map((target) => {
-                        return (
-                            <App.GameBoardTarget key={target.id} boardProps={boardProps} targetProps={target} />
-                        );
-                    })}
-                </div>
-                {this.renderActions()}
-            </module>
-        );
+        if (this.data.isLoading) {
+            return <App.Loading />;
+        } else {
+            return (
+                <module className="game board module" id={boardProps.boardId}>
+                    <div className="grid">
+                        {this.data.board.targets.map((target) => {
+                            return (
+                                <App.GameBoardTarget key={target.id} boardProps={boardProps} targetProps={target} />
+                            );
+                        })}
+                    </div>
+                    {this.renderActions()}
+                </module>
+            );
+        }
     }
 });

@@ -35,7 +35,9 @@ App.GameBoards = React.createClass({
     renderGameBoard() {
         let user = Meteor.user(),
             isCreator = this.data.creator === user.username,
-            noOpponent = this.data.creatorBoard.status === 'ready' && !this.data.destroyerBoard,
+            creatorBoard = this.data.creatorBoard,
+            destroyerBoard = this.data.destroyerBoard,
+            noOpponent = creatorBoard.status === 'ready' && !destroyerBoard,
             gameProps = {
                 gameId: this.data.gameId,
                 creator: this.data.creator
@@ -55,36 +57,36 @@ App.GameBoards = React.createClass({
                     </module>
                 );
             } else {
-                let ready = this.data.creatorBoard.status === 'ready' && this.data.destroyerBoard.status === 'ready',
-                    offensive = this.data.creatorBoard.status === 'offense';
+                let ready = creatorBoard.status === 'ready' && destroyerBoard.status === 'ready',
+                    offensive = creatorBoard.status === 'offense';
 
                 if (ready || offensive) {
                     return (
-                        <App.GameBoard gameProps={gameProps} board={this.data.destroyerBoard}/>
+                        <App.GameBoard gameProps={gameProps} boardId={destroyerBoard._id}/>
                     );
                 } else {
                     return (
-                        <App.GameBoard gameProps={gameProps} board={this.data.creatorBoard}/>
+                        <App.GameBoard gameProps={gameProps} boardId={creatorBoard._id}/>
                     );
                 }
             }
         } else {
-            let noUnitsDeployed = this.data.destroyerBoard.status === null,
-                ready = this.data.destroyerBoard.status === 'ready' && this.data.creatorBoard.status === 'ready',
-                defensive = this.data.destroyerBoard.status === 'defense';
+            let noUnitsDeployed = destroyerBoard.status === null,
+                ready = destroyerBoard.status === 'ready' && creatorBoard.status === 'ready',
+                defensive = destroyerBoard.status === 'defense';
 
             if (noUnitsDeployed) {
                 return (
-                    <App.GameBoard gameProps={gameProps} board={this.data.destroyerBoard}/>
+                    <App.GameBoard gameProps={gameProps} boardId={destroyerBoard._id}/>
                 );
             } else {
                 if (ready || defensive) {
                     return (
-                        <App.GameBoard gameProps={gameProps} board={this.data.destroyerBoard}/>
+                        <App.GameBoard gameProps={gameProps} boardId={destroyerBoard._id}/>
                     );
                 } else {
                     return (
-                        <App.GameBoard gameProps={gameProps} board={this.data.creatorBoard}/>
+                        <App.GameBoard gameProps={gameProps} boardId={creatorBoard._id}/>
                     );
                 }
             }

@@ -83,8 +83,7 @@ Meteor.methods({
         check(scoreAttributes, {
             gameId: String,
             attacker: String,
-            boardId: String,
-            targetId: String
+            boardId: String
         });
 
         var game = Games.findOne({_id: scoreAttributes.gameId, completedAt: null}),

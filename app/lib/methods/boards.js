@@ -192,9 +192,18 @@ Meteor.methods({
                 }
             });
 
+            debugger;
+
             Boards.update({_id: userBoard._id}, {
                 $set: {status: 'defense'}
             });
+
+            debugger;
+
+            let report = {status: 'destroyed'};
+            return report;
+
+            debugger;
         } else {
             Boards.update({_id: attackAttributes.boardId, 'targets.id': attackAttributes.targetId}, {
                 $set: {
@@ -205,9 +214,18 @@ Meteor.methods({
                 }
             });
 
+            debugger;
+
             Boards.update({_id: userBoard._id}, {
                 $set: {status: 'defense'}
             });
+
+            debugger;
+
+            let report = {status: 'missed'};
+            return report;
+
+            debugger;
         }
     }
 });
