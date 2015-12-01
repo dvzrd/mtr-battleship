@@ -27,7 +27,7 @@ App.GameCreate = React.createClass({
         );
     },
     render() {
-        let className = 'create game module';
+        let className = 'animated fadeInUp create game module';
 
         if (this.props.isActive) {
             className += ' active';

@@ -16,7 +16,7 @@ App.Games = React.createClass({
             return <App.Loading />;
         } else {
             return (
-                <module className="games module">
+                <module className="animated fadeInUp games module">
                     {noGames ?
                         // TODO: make component for messages
                         <p className="centered message">There are no games, try adding some!</p> :

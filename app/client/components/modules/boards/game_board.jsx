@@ -55,7 +55,9 @@ App.GameBoard = React.createClass({
             gameId = this.data.gameId,
             targetId = this.data.board.targetId,
             targets = this.data.board.targets,
-            target = _.find(targets, function(target) { return target.id === targetId }),
+            target = _.find(targets, function (target) {
+                return target.id === targetId
+            }),
             userBoardId = this.data.userBoard._id;
 
         if (!target) {
@@ -76,9 +78,9 @@ App.GameBoard = React.createClass({
 
                     let targetStatus = report.status,
                         updateAttributes = {
-                        boardId: userBoardId,
-                        status: 'defense'
-                    };
+                            boardId: userBoardId,
+                            status: 'defense'
+                        };
 
                     Meteor.call('updateStatus', updateAttributes, (error) => {
                         if (error) {
@@ -106,11 +108,11 @@ App.GameBoard = React.createClass({
                                             };
 
                                             Meteor.call('declareWinner', winnerAttributes, (error) => {
-                                               if (error) {
-                                                   Bert.alert(error.reason, 'warning');
-                                               } else {
-                                                   Bert.alert(game.creator + ' is the winner of this battle', 'success');
-                                               }
+                                                if (error) {
+                                                    Bert.alert(error.reason, 'warning');
+                                                } else {
+                                                    Bert.alert(game.creator + ' is the winner of this battle', 'success');
+                                                }
                                             });
                                         }
                                         if (response.attacker === 'destroyer' && game.destroyerScore === 25) {
@@ -152,25 +154,34 @@ App.GameBoard = React.createClass({
 
         if (noUnitsDeployed && isOwner) {
             return (
-                <button type="button" className="fluid primary button" onClick={this.handleUnitDeployment}>Deploy
-                    Units</button>
+                <module className="actions module">
+                    <button type="button" className="fluid centered button" onClick={this.handleUnitDeployment}>Deploy
+                        Units
+                    </button>
+                </module>
             );
         }
         if (offensive && !isOwner) {
             return (
-                <button type="button" className="fluid negative button" onClick={this.handleTargetAttack}>Attack
-                    Target</button>
+                <module className="actions module">
+                    <button type="button" className="fluid centered button" onClick={this.handleTargetAttack}>Attack
+                        Target
+                    </button>
+                </module>
             );
         }
         if (ready && !isOwner) {
             return (
-                <button type="button" className="fluid negative button" onClick={this.handleTargetAttack}>Attack
-                    Target</button>
+                <module className="actions module">
+                    <button type="button" className="fluid centered button" onClick={this.handleTargetAttack}>Attack
+                        Target
+                    </button>
+                </module>
             );
         } else {
             return (
                 // @TODO: messages module
-                <module className="primary messages module">
+                <module className="messages module">
                     <p className="light message">
                         Opponent is planning something...
                     </p>
@@ -196,7 +207,7 @@ App.GameBoard = React.createClass({
                     <div className="grid">
                         {this.data.board.targets.map((target) => {
                             return (
-                                <App.GameBoardTarget key={target.id} boardProps={boardProps} targetProps={target} />
+                                <App.GameBoardTarget key={target.id} boardProps={boardProps} targetProps={target}/>
                             );
                         })}
                     </div>

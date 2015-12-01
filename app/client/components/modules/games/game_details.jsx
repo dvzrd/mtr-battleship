@@ -23,7 +23,7 @@ App.GameDetails = React.createClass({
             // @TODO: show button to add opponent ai
             return (
                 <div className="player creator">
-                    <span className="secondary username label">
+                    <span className="username label">
                         No Opponent
                     </span>
                 </div>
@@ -31,7 +31,7 @@ App.GameDetails = React.createClass({
         } else {
             return (
                 <div className="player creator">
-                    <span className="secondary username label">
+                    <span className="username label">
                         {this.data.game.creator} <span className="points">
                         {this.data.game.creatorScore} points</span>
                     </span>
@@ -45,7 +45,7 @@ App.GameDetails = React.createClass({
             // @TODO: show button to add opponent ai
             return (
                 <div className="player destroyer">
-                    <span className="secondary username label">
+                    <span className="username label">
                         No Opponent
                     </span>
                 </div>
@@ -53,7 +53,7 @@ App.GameDetails = React.createClass({
         } else {
             return (
                 <div className="player destroyer">
-                    <span className="secondary username label">
+                    <span className="username label">
                         {this.data.game.destroyer} <span className="points">
                         {this.data.game.destroyerScore} points</span>
                     </span>

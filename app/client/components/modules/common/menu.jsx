@@ -46,12 +46,12 @@ App.Menu = React.createClass({
         // @TODO: move these buttons into own component with propTypes for different button varieties
         if (!Meteor.loggingIn() && Meteor.user()) {
             return (
-                <div className="buttons">
+                <module className="actions module">
                     {this.renderActiveButton()}
                     <a className="right secondary icon button" href={RouterHelpers.pathFor('dashboard')}>
                         <i className="fa fa-user"></i>
                     </a>
-                </div>
+                </module>
 
             );
         } else {

@@ -27,8 +27,39 @@ App.GameBoards = React.createClass({
 
     spawnBot(event) {
         event.preventDefault();
+        let gameId = this.data.gameId;
 
-        console.log('add HAL 9000 as opponent');
+        // @ TODO: modify join game method to accept username from client
+
+        // bot can be added by using an existing bot account {username: 'HAL9000'}
+        // when bot is added, create a game board (createGameBoard method)
+        // game board already has units placed (ready status) (Collection.botBoards)
+        // as game creator, user will make first attack
+        // when bot is on offensive - generate random targetId (1 to 5 + A to E)
+        // ensure random targetId is never the same each round (has to change after each attack)
+        // add some generated comments when bot hits or misses or gets hit, etc (low priority)
+        // this loops until game ends
+
+        //Meteor.call('joinGame', gameId, (error) => {
+        //    if (error) {
+        //        Bert.alert(error.reason, 'warning');
+        //    } else {
+        //        Bert.alert('Get ready to destroy!', 'success');
+        //
+        //        // @TODO: refactor - separate module createGameBoard
+        //        let boardAttributes = {
+        //            gameId: gameId
+        //        };
+        //
+        //        Meteor.call('createGameBoard', boardAttributes, (error, boardId) => {
+        //            if (error) {
+        //                Bert.alert(error.reason, 'success');
+        //            } else {
+        //                FlowRouter.go(path);
+        //            }
+        //        });
+        //    }
+        //});
     },
 
     renderNotice() {

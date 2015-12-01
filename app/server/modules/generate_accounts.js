@@ -14,12 +14,10 @@ let administrators = [
 ];
 
 let generateAccounts = () => {
-    let fakeUserCount = 5,
-        usersExist = _checkIfAccountsExist(administrators.length + fakeUserCount);
+    let usersExist = _checkIfAccountsExist(administrators.length);
 
     if (!usersExist) {
         _createUsers(administrators);
-        _createUsers(_generateFakeUsers(fakeUserCount));
     }
 };
 
@@ -52,21 +50,6 @@ let _createUser = (user) => {
             name: user.name
         }
     });
-};
-
-let _generateFakeUsers = (count) => {
-    let users = [];
-
-    for (let i = 0; i < count; i++) {
-        users.push({
-            name: {first: faker.name.firstName(), last: faker.name.lastName()},
-            email: faker.internet.email(),
-            username: faker.internet.userName(),
-            password: 'password'
-        });
-    }
-
-    return users;
 };
 
 Modules.server.generateAccounts = generateAccounts;

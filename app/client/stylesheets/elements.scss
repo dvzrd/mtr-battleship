@@ -2,43 +2,46 @@
 
 // button
 
-.buttons {
-  display: block;
-  width: $full;
-}
-
 .button {
   display: inline-block;
   cursor: pointer;
   margin: 0;
   padding: $space-tiny $space-base;
   outline: 0;
-  border: 0;
+  border: $space-micro solid $highlight-color;
   border-radius: $space-micro;
-  background-color: $link-color;
-  color: $light;
+  background-color: $highlight-color;
+  color: $header-color;
   font-size: $space-base;
 
+  &:hover {
+    background-color: transparent;
+    color: $highlight-color;
+  }
+
   &.primary {
+    border: 0;
     background-color: $primary-color;
-    color: $light;
+    color: $offset-color;
 
     &:hover {
       background-color: $secondary-color;
-      color: $light;
+      color: $offset-color;
     }
   }
 
   &.secondary {
+    border: 0;
     background-color: $secondary-color;
-    color: $light;
+    color: $offset-color;
 
     &:hover {
-      color: $primary-color;
+      color: $highlight-color;
     }
   }
 
   &.negative {
+    border: 0;
     background-color: $negative-color;
     color: $light;
 
@@ -86,6 +89,23 @@
   position: relative;
   margin: 0;
   padding: $space-base;
+
+  &.fixed {
+    position: fixed;
+    left: 0;
+
+    &.bottom {
+      bottom: 0;
+    }
+  }
+
+  &.actions {
+    width: $full;
+  }
+
+  &.messages {
+
+  }
 }
 
 // title
@@ -128,9 +148,12 @@
 // label
 
 .label {
+  display: inline-block;
+  position: relative;
   padding: $space-tiny $space-base;
+  border: 0;
   border-radius: $space-micro;
-  background-color: $neutral-color;
+  background-color: $highlight-color;
   color: $secondary-color;
   font-size: $font-size-small;
 
