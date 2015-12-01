@@ -18,7 +18,8 @@ App.GameBoard = React.createClass({
             gameId: this.props.gameProps.gameId,
             creator: this.props.gameProps.creator,
             board: Boards.findOne({_id: boardId}),
-            userBoard: Boards.findOne({owner: user.username})
+            userBoard: Boards.findOne({owner: user.username}),
+            game: Games.findOne({_id: this.props.gameProps.gameId})
         };
     },
 
@@ -46,7 +47,9 @@ App.GameBoard = React.createClass({
     handleTargetAttack(event) {
         event.preventDefault();
 
-        let gameId = this.data.gameId,
+        let user = Meteor.user(),
+            game = this.data.game,
+            gameId = this.data.gameId,
             targetId = this.data.board.targetId,
             targets = this.data.board.targets,
             target = _.find(targets, function(target) { return target.id === targetId }),
@@ -83,14 +86,21 @@ App.GameBoard = React.createClass({
 
                                 let scoreAttributes = {
                                     gameId: gameId,
-                                    attacker: Meteor.user().username
+                                    attacker: user.username
                                 };
 
-                                Meteor.call('updateScore', scoreAttributes, (error) => {
+                                Meteor.call('updateScore', scoreAttributes, (error, response) => {
                                     if (error) {
                                         Bert.alert(error.reason, 'warning');
                                     } else {
-                                        Bert.alert('You completely wiped out the enemy\'s position at ' + attackAttributes.targetId + '!', 'success');
+                                        // @TODO: if response.attacker === creator && max points
+                                        // add creator as winner and complete the game
+                                        // else if
+                                        // response.attacker === destroyer && max points
+                                        // add destroyer as winner and complete the game
+                                        // else default alert
+                                        //    Bert.alert('You completely wiped out the enemy\'s position at ' + attackAttributes.targetId + '!', 'success');
+
                                     }
                                 });
                             } else {

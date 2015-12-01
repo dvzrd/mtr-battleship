@@ -100,10 +100,18 @@ Meteor.methods({
                 Games.update(scoreAttributes.gameId, {
                     $inc: {'creatorScore': points}
                 });
+
+                let response = {attacker: 'creator'};
+
+                return response;
             } else {
                 Games.update(scoreAttributes.gameId, {
                     $inc: {'destroyerScore': points}
                 });
+
+                let response = {attacker: 'destroyer'};
+
+                return response;
             }
         }
     },
