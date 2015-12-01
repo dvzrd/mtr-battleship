@@ -44,7 +44,8 @@ App.GameBoard = React.createClass({
     handleTargetAttack(event) {
         event.preventDefault();
 
-        let targetId = this.data.board.targetId,
+        let gameId = this.data.gameId,
+            targetId = this.data.board.targetId,
             targets = this.data.board.targets,
             target = _.find(targets, function(target) { return target.id === targetId }),
             userBoardId = this.data.userBoard._id;
@@ -58,22 +59,15 @@ App.GameBoard = React.createClass({
                 targetStatus: target.status
             };
 
-            Meteor.call('attackTarget', attackAttributes, (error) => {
+            // @TODO: break all these calls down into functions inside a client module
+
+            Meteor.call('attackTarget', attackAttributes, (error, report) => {
                 if (error) {
                     Bert.alert(error.reason, 'warning');
                 } else {
-                    //Bert.alert('Your attack ' + report.status + ' ' + attackAttributes.targetId, warning);
-                    // @TODO: if report.status === 'destroyed'
-                    // call update score method
-                    // else show alert for status.missed
-                    //console.log(report.status);
-                    //if (report.status === 'destroyed') {
-                    //    Bert.alert('The attack on ' + attackAttributes.targetId + ' destroyed the enemy position!', 'success');
-                    //} else {
-                    //    Bert.alert('The enemy eluded us this time. The attack on ' + attackAttributes.targetId + ' failed!', 'warning');
-                    //}
 
-                    let updateAttributes = {
+                    let targetStatus = report.status,
+                        updateAttributes = {
                         boardId: userBoardId,
                         status: 'defense'
                     };
@@ -82,7 +76,24 @@ App.GameBoard = React.createClass({
                         if (error) {
                             Bert.alert(error.reason, 'warning');
                         } else {
-                            Bert.alert('You attacked ' + attackAttributes.targetId + '! Going on the defensive.', 'success')
+
+                            if (targetStatus === 'destroyed') {
+
+                                let scoreAttributes = {
+                                    gameId: gameId,
+                                    attacker: Meteor.user().username
+                                };
+
+                                Meteor.call('updateScore', scoreAttributes, (error) => {
+                                    if (error) {
+                                        Bert.alert(error.reason, 'warning');
+                                    } else {
+                                        Bert.alert('You completely wiped out the enemy\'s position at ' + attackAttributes.targetId + '!', 'success');
+                                    }
+                                });
+                            } else {
+                                Bert.alert('Your attack failed! No units were found at ' + attackAttributes.targetId + '.', 'warning');
+                            }
                         }
                     });
                 }

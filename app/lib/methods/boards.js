@@ -190,6 +190,10 @@ Meteor.methods({
                     'targets.$.status': 'destroyed'
                 }
             });
+
+            let report = {status: 'destroyed'};
+
+            return report;
         } else {
             Boards.update({_id: attackAttributes.boardId, 'targets.id': attackAttributes.targetId}, {
                 $set: {
@@ -199,6 +203,10 @@ Meteor.methods({
                     'targets.$.status': 'missed'
                 }
             });
+
+            let report = {status: 'missed'};
+
+            return report;
         }
     }
 });

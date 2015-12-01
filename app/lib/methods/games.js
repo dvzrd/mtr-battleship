@@ -82,8 +82,7 @@ Meteor.methods({
     updateScore(scoreAttributes) {
         check(scoreAttributes, {
             gameId: String,
-            attacker: String,
-            boardId: String
+            attacker: String
         });
 
         var game = Games.findOne({_id: scoreAttributes.gameId, completedAt: null}),
@@ -99,11 +98,11 @@ Meteor.methods({
         } else {
             if (creatorScoredPoints) {
                 Games.update(scoreAttributes.gameId, {
-                    $set: {'creatorScore': points}
+                    $inc: {'creatorScore': points}
                 });
             } else {
                 Games.update(scoreAttributes.gameId, {
-                    $set: {'destroyerScore': points}
+                    $inc: {'destroyerScore': points}
                 });
             }
         }
