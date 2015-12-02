@@ -1,7 +1,7 @@
-let relativeFormat = (date, format) => {
-    return moment(date, format).fromNow();
+let fromNow = (date) => {
+    return moment(date).fromNow();
 };
 
 DateHelpers = {
-    relativeFormat: relativeFormat
+    fromNow: fromNow
 };

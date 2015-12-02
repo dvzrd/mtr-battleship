@@ -23,7 +23,7 @@ App.GameItem = React.createClass({
                         gameId: gameId
                     };
 
-                    Meteor.call('createGameBoard', boardAttributes, (error, boardId) => {
+                    Meteor.call('createGameBoard', boardAttributes, (error) => {
                         if (error) {
                             Bert.alert(error.reason, 'success');
                         } else {
@@ -40,9 +40,8 @@ App.GameItem = React.createClass({
 
                 <h2 className="title">
                     {this.props.game.title}
-                    <small className="date">Render date here</small>
+                    <small className="meta">created {DateHelpers.fromNow(this.props.game.createdAt)} by {this.props.game.creator}</small>
                 </h2>
-                <span className="creator">Created by {this.props.game.creator}</span>
                 <span className="count">Players: {this.props.game.playerCount}</span>
 
             </li>
