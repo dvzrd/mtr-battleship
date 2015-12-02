@@ -1,12 +1,17 @@
 App.GameCommentForm = React.createClass({
-    mixins: [],
-
-    propTypes: {},
-
     handleSubmit(event) {
         event.preventDefault();
+        let gameId = FlowRouter.getParam('_id'),
+            commentAttributes = {
+                gameId: gameId,
+                comment: $('[name="comment"]').val()
+            };
 
-        console.log('post comment');
+        Meteor.call('postComment', commentAttributes, (error) => {
+            if (error) {
+                Bert.alert(error.reason, 'warning');
+            }
+        });
     },
 
     render() {

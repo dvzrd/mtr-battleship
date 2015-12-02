@@ -14,6 +14,7 @@
   color: $header-color;
   font-size: $space-base;
   text-align: center;
+  transition: all $faster;
 
   &:hover {
     background-color: transparent;
@@ -37,7 +38,7 @@
     color: $offset-color;
 
     &:hover {
-      color: $highlight-color;
+      color: $primary-color;
     }
   }
 
@@ -259,6 +260,10 @@
     margin: 0 auto;
     align-items: center;
     justify-content: center;
+
+    .user {
+      margin-left: $space-mini;
+    }
   }
 
   &.light {
@@ -276,6 +281,7 @@
   width: $full;
   height: $fluid-full;
   margin: auto;
+  padding: $space-base;
   background-color: rgba($secondary-color, 0.9);
   opacity: 0;
   z-index: -1;

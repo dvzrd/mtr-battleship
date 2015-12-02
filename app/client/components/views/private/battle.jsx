@@ -1,5 +1,6 @@
 App.Battle = React.createClass({
     mixins: [ReactMeteorData],
+
     getMeteorData() {
         let gameId = FlowRouter.getParam('_id'),
             subscription = Meteor.subscribe('game', gameId);
@@ -9,6 +10,7 @@ App.Battle = React.createClass({
             game: Games.findOne({_id: gameId})
         };
     },
+
     render() {
         if (this.data.isLoading) {
             return <App.Loading />;

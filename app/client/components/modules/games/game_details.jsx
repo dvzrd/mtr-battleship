@@ -7,8 +7,8 @@ App.GameDetails = React.createClass({
     },
 
     getMeteorData() {
-        let gameId = FlowRouter.getParam('_id');
-        let subscription = Meteor.subscribe('game', gameId);
+        let gameId = FlowRouter.getParam('_id'),
+            subscription = Meteor.subscribe('game', gameId);
 
         return {
             isLoading: !subscription.ready(),
