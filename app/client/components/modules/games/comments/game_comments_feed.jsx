@@ -3,6 +3,13 @@ App.GameCommentsFeed = React.createClass({
 
     propTypes: {},
 
+    componentDidMount() {
+        // @TODO: scroll down to the bottom of chat
+
+        let comments = $('.comments.list');
+        comments.scrollTop = comments[0].scrollHeight;
+    },
+
     shouldComponentUpdate() {
         return true;
     },
@@ -11,11 +18,27 @@ App.GameCommentsFeed = React.createClass({
 
     render() {
         return (
-            <module className="game comments feed">
-                <ul className="unstyled comments list">
-                    <App.GameComment />
-                </ul>
-            </module>
+            <ul className="unstyled comments list">
+                <App.GameComment />
+                <App.GameComment />
+                <App.GameComment />
+                <App.GameComment />
+                <App.GameComment />
+                <App.GameComment />
+                <App.GameComment />
+                <App.GameComment />
+                <App.GameComment />
+                <App.GameComment />
+                <App.GameComment />
+                <App.GameComment />
+                <App.GameComment />
+                <App.GameComment />
+                <App.GameComment />
+                <App.GameComment />
+                <App.GameComment />
+                <App.GameComment />
+                <App.GameComment />
+            </ul>
         );
     }
 });
