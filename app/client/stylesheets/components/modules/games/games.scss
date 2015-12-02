@@ -20,6 +20,10 @@
         background-color: $offset-color;
       }
 
+      &.full {
+        background-color: rgba($negative-color, 0.25);
+      }
+
       .title {
         display: block;
         margin: 0;

@@ -92,6 +92,10 @@ App.GameBoards = React.createClass({
         });
     },
 
+    goHome() {
+        FlowRouter.go('root');
+    },
+
     renderNotice() {
         let game = this.data.game,
             gameOver = game.winner && game.completedAt;
@@ -102,18 +106,18 @@ App.GameBoards = React.createClass({
             return (
                 <module className="messages module">
                     <p className="centered light message">
-                        The game is over! The winner is {game.winner}!
+                        The game is over! The winner is <span className="user">{game.winner}</span>!
                     </p>
-                    <a className="primary centered button" href={RouterHelpers.pathFor('root')}>Go home!</a>
+                    <button type="button" className="primary centered button" onClick={this.goHome}>Take me home</button>
                 </module>
             );
         } else {
             return (
                 <module className="messages module">
                     <p className="centered light message">
-                        This game has been marked completed but no winner was declared... quite strange.
+                        This game has been marked completed! Find or make a new game!
                     </p>
-                    <a className="primary centered button" href={RouterHelpers.pathFor('root')}>Take me home!</a>
+                    <button type="button" className="primary centered button" onClick={this.goHome}>Take me home</button>
                 </module>
             );
         }

@@ -48,16 +48,23 @@ App.GameItem = React.createClass({
             }
         }
     },
+
     render() {
+        let className = 'game item';
+
+        if (this.props.game.playerCount === 2) {
+            className += ' full'
+        }
+
         return (
-            <li className="game item" onClick={this.handleGameJoin}>
+            <li className={className} onClick={this.handleGameJoin}>
 
                 <h2 className="title">
                     {this.props.game.title}
-                    <small className="meta">created {DateHelpers.fromNow(this.props.game.createdAt)} by {this.props.game.creator}</small>
+                    <small className="meta">
+                        created {DateHelpers.fromNow(this.props.game.createdAt)} by <span className="user">{this.props.game.creator}</span>
+                    </small>
                 </h2>
-                <span className="count">Players: {this.props.game.playerCount}</span>
-
             </li>
         );
     }
