@@ -1,20 +1,8 @@
 @import '../../../_variables';
 
 .create.game.modal {
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: $full;
-  height: $fluid-full;
-  margin: auto;
-  background-color: rgba(57, 56, 62, 0.9);
 
-  .form {
-    margin-top: 40vh;
-
-    .button {
-      position: relative;
-      margin: auto;
-    }
+  .title {
+    margin-top: 35vh;
   }
 }

@@ -51,8 +51,9 @@ App.GameCreate = React.createClass({
                     <label className="label" htmlFor="title"><i className="fa fa-rocket"></i></label>
                     <input type="text" name="title" className="title input" placeholder="Title of your game"
                            autofocus/>
+                    <button type="submit" className="primary icon button"><i className="fa fa-plus"></i></button>
                 </div>
-                <button type="submit" className="primary centered button">Create Game</button>
+
             </form>
         );
     },
@@ -60,6 +61,7 @@ App.GameCreate = React.createClass({
     render() {
         return (
             <modal className="create game modal">
+                <h2 className="centered light title">Create a game</h2>
                 {this.renderForm()}
             </modal>
         );

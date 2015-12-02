@@ -1,18 +1,12 @@
 App.Menu = React.createClass({
     PropTypes: {},
 
-    getInitialState: function () {
-        return {renderGameCreate: false};
-    },
-
     shouldComponentUpdate() {
         return true;
     },
 
-    handleCreateToggle(event) {
+    handleModalToggle(event) {
         event.preventDefault();
-
-        this.setState({renderGameCreate: !this.state.renderGameCreate});
 
         $('.modal').toggleClass('active');
     },
@@ -33,12 +27,6 @@ App.Menu = React.createClass({
         });
     },
 
-    handleChatToggle(event) {
-        event.preventDefault();
-
-        $('.modal').toggleClass('active');
-    },
-
     // @TODO: move to actions module
     renderLeftButton() {
         // @TODO: make a router helper
@@ -50,8 +38,8 @@ App.Menu = React.createClass({
             )
         } else {
             return (
-                <button type="button" className="left secondary icon button" onClick={this.handleCreateToggle}>
-                    {this.state.renderGameCreate ? <i className="fa fa-times"></i> : <i className="fa fa-plus"></i>}
+                <button type="button" className="left secondary icon button" onClick={this.handleModalToggle}>
+                    <i className="fa fa-gamepad"></i>
                 </button>
             )
         }
@@ -68,7 +56,7 @@ App.Menu = React.createClass({
         }
         if (FlowRouter.current().route.name === 'battle') {
             return (
-                <button type="button" className="right secondary icon button" onClick={this.handleChatToggle}>
+                <button type="button" className="right secondary icon button" onClick={this.handleModalToggle}>
                     <i className="fa fa-comments-o"></i>
                 </button>
             );
