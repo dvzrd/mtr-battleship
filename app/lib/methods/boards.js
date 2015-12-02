@@ -81,7 +81,7 @@ Meteor.methods({
         });
 
         let user = Meteor.user(),
-            board = Boards.findOne({_id: targetAttributes.boardId, owner: user.username}),
+            board = Boards.findOne({_id: targetAttributes.boardId}),
             placementLimit = board.placementCount === 5;
 
         if (!user) {

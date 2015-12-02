@@ -59,33 +59,38 @@ App.GameBoards = React.createClass({
                     if (error) {
                         Bert.alert(error.reason, 'success');
                     } else {
+                        let board = boardId,
+                            targets = ['5A','2B','4C','3D','1E'];
 
-                        // loop this 5 times using random cell ids
+                        // @TODO: make a collection of unit placements for bot - get one at random
 
-                        let targetAttributes = {
-                            boardId: boardId._id,
-                            targetId: '1A'
+                        for (var target = 0; target < targets.length; target++) {
+                            let targetAttributes = {
+                                boardId: board._id,
+                                targetId: targets[target]
+                            };
+
+                            console.log(targetAttributes);
+
+                            Meteor.call('placeUnit', targetAttributes, (error) => {
+                                if (error) {
+                                    Bert.alert(error.reason, 'warning');
+                                } else {
+                                    console.log('Bot placed unit on ' + targetAttributes.targetId);
+                                }
+                            });
+                        }
+
+                        let updateAttributes = {
+                            boardId: board._id,
+                            status: 'ready'
                         };
 
-                        console.log(targetAttributes);
-
-                        //Meteor.call('placeUnit', targetAttributes, (error) => {
-                        //    if (error) {
-                        //        Bert.alert(error.reason, 'warning');
-                        //    } else {
-                        //        console.log('placed unit on ' + targetAttributes.targetId);
-                        //    }
-                        //});
-
-                        // when loop finishes call updateStatus method
-
-                        //Meteor.call('updateStatus', updateAttributes, (error) => {
-                        //    if (error) {
-                        //        Bert.alert(error.reason, 'warning');
-                        //    } else {
-                        //        Bert.alert('Your units are deployed, get ready for battle!', 'success');
-                        //    }
-                        //});
+                        Meteor.call('updateStatus', updateAttributes, (error) => {
+                            if (error) {
+                                Bert.alert(error.reason, 'warning');
+                            }
+                        });
                     }
                 });
             }
