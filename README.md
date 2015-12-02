@@ -237,6 +237,7 @@ environments/       # Environments folder
   * [fourseven:scss](https://github.com/fourseven/meteor-scss)
   * [stevezhu:lodash](https://github.com/stevezhu/meteor-lodash)
   * [digilord:faker](https://github.com/digilord/meteor-faker)
+  * [momentjs:moment](https://github.com/moment/moment/)
   * [msavin:mongol](https://github.com/msavin/Mongol)
 
 ## License
