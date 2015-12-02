@@ -10,10 +10,15 @@
 
     .comment.item {
       padding: 1em;
-      background-color: $neutral-color;
+      background-color: $offset-color;
 
-      .title {
+      .user {
         margin: 0;
+        color: $primary-color;
+
+        .date {
+          font-weight: normal;
+        }
       }
 
       .comment {

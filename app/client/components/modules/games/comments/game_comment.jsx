@@ -8,7 +8,7 @@ App.GameComment = React.createClass({
         return (
             <li className="comment item">
                 <h4 className="user">
-                    username <small className="date">date</small>
+                    <span className="date">[date]</span> username:
                 </h4>
                 <p className="comment">comment</p>
             </li>

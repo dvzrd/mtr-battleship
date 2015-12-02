@@ -25,19 +25,6 @@ App.GameCommentsFeed = React.createClass({
                 <App.GameComment />
                 <App.GameComment />
                 <App.GameComment />
-                <App.GameComment />
-                <App.GameComment />
-                <App.GameComment />
-                <App.GameComment />
-                <App.GameComment />
-                <App.GameComment />
-                <App.GameComment />
-                <App.GameComment />
-                <App.GameComment />
-                <App.GameComment />
-                <App.GameComment />
-                <App.GameComment />
-                <App.GameComment />
             </ul>
         );
     }

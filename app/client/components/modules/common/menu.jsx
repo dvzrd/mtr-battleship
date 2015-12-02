@@ -50,7 +50,7 @@ App.Menu = React.createClass({
         if (FlowRouter.current().route.name === 'root') {
             return (
                 <a className="right secondary icon button" href={RouterHelpers.pathFor('dashboard')}>
-                    <i className="fa fa-user"></i>
+                    <i className="fa fa-users"></i>
                 </a>
             );
         }
