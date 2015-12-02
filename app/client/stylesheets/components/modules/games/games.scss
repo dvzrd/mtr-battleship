@@ -1,27 +1,35 @@
 @import '../../../_variables';
 
 .games.module {
-  padding: 0;
+  margin-top: $space-mini;
 
   .games.list {
+    margin: auto;
+
+    @media (min-width: $tablet-width) {
+      width: $three-quarters;
+    }
+
+    @media (min-width: $large-desktop-width) {
+      width: $half;
+    }
 
     .game.item {
       cursor: pointer;
       display: block;
-      margin: 0;
+      margin-bottom: $space-base;
       padding: $space-base;
-      border-bottom: $space-micro solid $neutral-color;
-
-      &:last-child {
-        border: 0;
-      }
+      border: $space-micro solid $highlight-color;
+      border-radius: $space-micro;
+      background-color: $offset-color;
 
       &:hover {
-        background-color: $offset-color;
+        border-color: $primary-color;
       }
 
       &.full {
-        background-color: rgba($negative-color, 0.25);
+        border-color: rgba($negative-color, 0.75);
+        background-color: rgba($negative-color, 0.15);
       }
 
       .title {

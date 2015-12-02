@@ -3,13 +3,26 @@
 .game.comments.modal {
 
   .comments.list {
-    margin: 2em auto;
-    padding: 1em;
-    height: 75vh;
+    margin: $space-base auto;
+    height: $fluid-three-quarters;
     overflow: auto;
 
+    @media (min-width: $phone-width) {
+      width: $three-quarters;
+    }
+
+    @media (min-width: $tablet-width) {
+      width: $two-thirds;
+    }
+
+    @media (min-width: $laptop-width) {
+      width: $half;
+    }
+
     .comment.item {
-      padding: 1em;
+      margin: $space-base auto;
+      padding: $space-base;
+      border-radius: $space-micro;
       background-color: $offset-color;
 
       .user {
