@@ -9,7 +9,7 @@ App.GameItem = React.createClass({
         if (!user) {
             Bert.alert('not-logged-in', 'You need to be logged in to join a game.', 'warning');
         } else {
-            userIsPlaying = this.props.game.creator === user.username || this.props.game.destroyer === user.username,
+            let userIsPlaying = this.props.game.creator === user.username || this.props.game.destroyer === user.username,
                 gameIsFull = this.props.game.playerCount === 2 && !userIsPlaying,
                 pathDef = '/battle/:_id',
                 params = {_id: gameId},
@@ -67,7 +67,8 @@ App.GameItem = React.createClass({
                 <h2 className="title">
                     {this.props.game.title}
                     <small className="meta">
-                        created {DateHelpers.fromNow(this.props.game.createdAt)} by <span className="user">{this.props.game.creator}</span>
+                        created {DateHelpers.fromNow(this.props.game.createdAt)} by <span
+                        className="user">{this.props.game.creator}</span>
                     </small>
                 </h2>
             </li>
