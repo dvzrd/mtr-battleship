@@ -2,7 +2,7 @@
 
 A battleship game built with Meteor and React.
 
-[VIEW THE DEMO](http://spacebattle.meteor.com)
+[IN PRODUCTION](http://spacebattle.co)
 
 * [What it is](#what-it-is)
 * [How to use](#how-to-use)
@@ -18,6 +18,8 @@ A battleship game built with Meteor and React.
 A simple battleship game that uses an API
 
 ### The API endpoints
+
+> A more thorough breakdown coming soon.
 
 * Create a game
 * Destroy a game
@@ -41,7 +43,8 @@ A simple battleship game that uses an API
 
 * ~~Add in user sessions so the server can handle more than one game at a time.~~
 * Add a leaderboard that keeps winner’s initials and ranks them according to the time it took them to win.
-* Deploy the application.
+* ~~Players can post comments (chat) during a game.~~
+* ~~Deploy the application.~~
 
 ## How to use
 
