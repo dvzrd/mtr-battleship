@@ -4,7 +4,7 @@ Meteor.methods({
             title: String
         });
 
-        var now = new Date(),
+        let now = new Date(),
             user = Meteor.user(),
             duplicateTitle = Games.findOne({title: creatorAttributes.title, completedAt: null});
 
@@ -15,7 +15,7 @@ Meteor.methods({
             return Meteor.Error('game-title-already-exists', 'This game title already exists.');
         } else {
 
-            var game = _.extend(creatorAttributes, {
+            let game = _.extend(creatorAttributes, {
                 creator: user.username,
                 creatorScore: 0,
                 createdAt: now,
@@ -31,40 +31,30 @@ Meteor.methods({
             };
         }
     },
-    joinGame(gameId) {
-        check(gameId, String);
+    joinGame(joinAttributes) {
+        check(joinAttributes, {
+            gameId: String,
+            destroyer: String
+        });
 
-        var user = Meteor.user(),
-            game = Games.findOne({_id: gameId}),
-            userIsPlaying = game.creator === user.username || game.destroyer === user.username,
-            gameIsFull = game.playerCount === 2 && !userIsPlaying,
-            pathDef = '/battle/:_id',
-            params = {_id: gameId},
-            path = FlowRouter.path(pathDef, params);
+        let user = Meteor.user(),
+            game = Games.findOne({_id: joinAttributes.gameId});
 
         if (!user) {
             throw new Meteor.Error('user-not-logged-in', 'Need to be logged in to join a game');
         }
         if (!game) {
             throw new Meteor.Error('game-does-not-exist', 'This game is not in the collection');
-        }
-        if (gameIsFull) {
-            // @TODO: method for joining a recently created and available game
-            return Meteor.Error('game-full', 'This game is full.');
         } else {
-            if (userIsPlaying) {
-                FlowRouter.go(path);
-            } else {
-                Games.update(gameId, {
-                    $set: {'destroyer': user.username, 'playerCount': 2}
-                });
-            }
+            Games.update(joinAttributes.gameId, {
+                $set: {'destroyer': joinAttributes.destroyer, 'playerCount': 2}
+            });
         }
     },
     completeGame(gameId) {
         check(gameId, String);
 
-        var user = Meteor.user(),
+        let user = Meteor.user(),
             game = Games.findOne({_id: gameId}),
             now = new Date();
 
@@ -85,7 +75,7 @@ Meteor.methods({
             attacker: String
         });
 
-        var game = Games.findOne({_id: scoreAttributes.gameId, completedAt: null}),
+        let game = Games.findOne({_id: scoreAttributes.gameId, completedAt: null}),
             creatorScoredPoints = game.creator === scoreAttributes.attacker,
             winner = game.creatorScore === 25 || game.destroyerScore === 25,
             points = +5;
@@ -121,7 +111,7 @@ Meteor.methods({
             winner: String
         });
 
-        var game = Games.findOne({_id: winnerAttributes.gameId}),
+        let game = Games.findOne({_id: winnerAttributes.gameId}),
             now = new Date();
 
         if (!game) {

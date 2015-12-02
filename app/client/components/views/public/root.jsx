@@ -3,6 +3,7 @@ App.Root = React.createClass({
         return (
             <view className="animated fadeIn root view">
                 <App.Games />
+                <App.GameCreate />
             </view>
         );
     }

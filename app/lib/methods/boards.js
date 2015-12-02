@@ -1,12 +1,13 @@
 Meteor.methods({
     createGameBoard(boardAttributes) {
         check(boardAttributes, {
-            gameId: String
+            gameId: String,
+            owner: String
         });
 
         let now = new Date(),
             user = Meteor.user(),
-            duplicateBoard = Boards.findOne({gameId: boardAttributes.gameId, owner: user.username});
+            duplicateBoard = Boards.findOne({gameId: boardAttributes.gameId, owner: boardAttributes.owner});
 
         if (!user) {
             throw new Meteor.Error('user-not-logged-in', 'You need to be logged in to create a game board.');
@@ -16,7 +17,6 @@ Meteor.methods({
         } else {
 
             let board = _.extend(boardAttributes, {
-                owner: user.username,
                 createdAt: now,
                 status: null,
                 // @TODO: function to generate targets
@@ -81,7 +81,7 @@ Meteor.methods({
         });
 
         let user = Meteor.user(),
-            board = Boards.findOne({_id: targetAttributes.boardId, owner: user.username}),
+            board = Boards.findOne({_id: targetAttributes.boardId}),
             placementLimit = board.placementCount === 5;
 
         if (!user) {
@@ -167,6 +167,7 @@ Meteor.methods({
     attackTarget(attackAttributes) {
         check(attackAttributes, {
             boardId: String,
+            boardStatus: String,
             targetId: String,
             targetStatus: String
         });
@@ -185,7 +186,7 @@ Meteor.methods({
             Boards.update({_id: attackAttributes.boardId, 'targets.id': attackAttributes.targetId}, {
                 $set: {
                     targetId: null,
-                    status: 'offense',
+                    status: attackAttributes.boardStatus,
                     'targets.$.isTarget': false,
                     'targets.$.status': 'destroyed'
                 }
@@ -198,7 +199,7 @@ Meteor.methods({
             Boards.update({_id: attackAttributes.boardId, 'targets.id': attackAttributes.targetId}, {
                 $set: {
                     targetId: null,
-                    status: 'offense',
+                    status: attackAttributes.boardStatus,
                     'targets.$.isTarget': false,
                     'targets.$.status': 'missed'
                 }

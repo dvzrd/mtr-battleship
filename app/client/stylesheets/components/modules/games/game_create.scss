@@ -1,25 +1,8 @@
 @import '../../../_variables';
 
-.create.game.module {
-  display: none;
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: $full;
-  height: $fluid-full;
-  margin: auto;
-  background-color: rgba(57, 56, 62, 0.9);
+.create.game.modal {
 
-  &.active {
-    display: block;
-  }
-
-  .form {
-    margin-top: 40vh;
-
-    .button {
-      position: relative;
-      margin: auto;
-    }
+  .title {
+    margin-top: 35vh;
   }
 }

@@ -19,7 +19,7 @@ App.Games = React.createClass({
                 <module className="animated fadeInUp games module">
                     {noGames ?
                         // TODO: make component for messages
-                        <p className="centered message">There are no games, try adding some!</p> :
+                        <p className="centered message">There are no games, click the gamepad icon to start!</p> :
                         <App.GamesList games={this.data.games}/>}
                 </module>
             );

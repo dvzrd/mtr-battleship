@@ -48,7 +48,7 @@ App.GameBoardTarget = React.createClass({
                         if (error) {
                             Bert.alert(error.reason, 'warning');
                         } else {
-                            Bert.alert('Unit placed on ' + targetAttributes.targetId, 'success');
+                            console.log('Unit placed on ' + targetAttributes.targetId);
                         }
                     });
                 } else {
@@ -56,7 +56,7 @@ App.GameBoardTarget = React.createClass({
                         if (error) {
                             Bert.alert(error.reason, 'warning');
                         } else {
-                            Bert.alert('Unit removed from ' + targetAttributes.targetId, 'warning');
+                            console.log('Unit removed from ' + targetAttributes.targetId);
                         }
                     });
                 }
@@ -78,7 +78,7 @@ App.GameBoardTarget = React.createClass({
                             if (error) {
                                 Bert.alert(error.reason, 'warning');
                             } else {
-                                Bert.alert('Locked on target ' + targetAttributes.targetId, 'success');
+                                console.log('Locked on target ' + targetAttributes.targetId);
                             }
                         });
                     } else {
@@ -86,7 +86,7 @@ App.GameBoardTarget = React.createClass({
                             if (error) {
                                 Bert.alert(error.reason, 'warning');
                             } else {
-                                Bert.alert('Unlocked target ' + targetAttributes.targetId, 'warning');
+                                console.log('Unlocked target ' + targetAttributes.targetId);
                             }
                         });
                     }

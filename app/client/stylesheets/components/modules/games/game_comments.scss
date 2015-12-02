@@ -1,0 +1,29 @@
+@import '../../../_variables';
+
+.game.comments.modal {
+
+  .comments.list {
+    margin: 2em auto;
+    padding: 1em;
+    height: 75vh;
+    overflow: auto;
+
+    .comment.item {
+      padding: 1em;
+      background-color: $offset-color;
+
+      .user {
+        margin: 0;
+        color: $primary-color;
+
+        .date {
+          font-weight: normal;
+        }
+      }
+
+      .comment {
+        margin: 0;
+      }
+    }
+  }
+}

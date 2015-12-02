@@ -13,6 +13,7 @@
   background-color: $highlight-color;
   color: $header-color;
   font-size: $space-base;
+  text-align: center;
 
   &:hover {
     background-color: transparent;
@@ -46,7 +47,7 @@
     color: $light;
 
     &:hover {
-      color: $primary-color;
+      color: $secondary-color;
     }
   }
 
@@ -116,6 +117,10 @@
   &.centered {
     text-align: center;
   }
+
+  &.light {
+    color: $light;
+  }
 }
 
 // list
@@ -172,7 +177,7 @@
 
 .form {
   width: $full;
-  margin: $space-giant auto $space-base;
+  margin: $space-base auto;
 
   @media (min-width: $phone-width) {
     width: $three-quarters;
@@ -232,6 +237,12 @@
       line-height: $line-height-base;
       font-size: $font-size-base;
     }
+
+    .button {
+      margin-left: -$space-quantum;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
   }
 }
 
@@ -252,5 +263,27 @@
 
   &.light {
     color: $light;
+  }
+}
+
+// modal
+
+.modal {
+  display: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: $full;
+  height: $fluid-full;
+  margin: auto;
+  background-color: rgba($secondary-color, 0.9);
+  opacity: 0;
+  z-index: -1;
+  transition: all $faster;
+
+  &.active {
+    display: block;
+    opacity: 1;
+    z-index: 1;
   }
 }
