@@ -6,12 +6,12 @@ App.Menu = React.createClass({
     shouldComponentUpdate() {
         return true;
     },
-    handleCreateClick: function (event) {
+    handleCreateToggle(event) {
         event.preventDefault();
 
         this.setState({renderGameCreate: !this.state.renderGameCreate});
     },
-    handleCompleteGameClick: function (event) {
+    handleCompleteGameClick(event) {
         event.preventDefault();
         // @TODO: refactor - move this call into gameComplete with reactive gameId
 
@@ -26,8 +26,14 @@ App.Menu = React.createClass({
             }
         });
     },
-    renderActiveButton() {
-        // @TODO: move this login into button component
+    handleChatToggle(event) {
+        event.preventDefault();
+
+        console.log('toggle chat module');
+    },
+    // @TODO: move to actions module
+    renderLeftButton() {
+        // @TODO: make a router helper
         if (FlowRouter.current().route.name === 'battle') {
             return (
                 <button type="button" className="left secondary icon button" onClick={this.handleCompleteGameClick}>
@@ -36,10 +42,33 @@ App.Menu = React.createClass({
             )
         } else {
             return (
-                <button type="button" className="left secondary icon button" onClick={this.handleCreateClick}>
+                <button type="button" className="left secondary icon button" onClick={this.handleCreateToggle}>
                     {this.state.renderGameCreate ? <i className="fa fa-times"></i> : <i className="fa fa-plus"></i>}
                 </button>
             )
+        }
+    },
+    renderRightButton() {
+        // @TODO: make a router helper
+        if (FlowRouter.current().route.name === 'root') {
+            return (
+                <a className="right secondary icon button" href={RouterHelpers.pathFor('dashboard')}>
+                    <i className="fa fa-user"></i>
+                </a>
+            );
+        }
+        if (FlowRouter.current().route.name === 'battle') {
+            return (
+                <button type="button" className="right secondary icon button" onClick={this.handleChatToggle}>
+                    <i className="fa fa-comments-o"></i>
+                </button>
+            );
+        } else {
+            return (
+                <a className="right secondary icon button" href={RouterHelpers.pathFor('root')}>
+                    <i className="fa fa-home"></i>
+                </a>
+            );
         }
     },
     renderButtons() {
@@ -47,10 +76,8 @@ App.Menu = React.createClass({
         if (!Meteor.loggingIn() && Meteor.user()) {
             return (
                 <module className="actions module">
-                    {this.renderActiveButton()}
-                    <a className="right secondary icon button" href={RouterHelpers.pathFor('dashboard')}>
-                        <i className="fa fa-user"></i>
-                    </a>
+                    {this.renderLeftButton()}
+                    {this.renderRightButton()}
                 </module>
 
             );
