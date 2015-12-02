@@ -27,7 +27,8 @@ App.GameBoards = React.createClass({
 
     spawnBot(event) {
         event.preventDefault();
-        let gameId = this.data.gameId;
+        let gameId = this.data.gameId,
+            bot = 'HAL9000';
 
         // bot can be added by using an existing bot account {username: 'HAL9000'}
         // when bot is added, create a game board (createGameBoard method)
@@ -40,7 +41,7 @@ App.GameBoards = React.createClass({
 
         let joinAttributes = {
             gameId: gameId,
-            destroyer: 'HAL9000'
+            destroyer: bot
         };
 
         Meteor.call('joinGame', joinAttributes, (error) => {
@@ -50,7 +51,8 @@ App.GameBoards = React.createClass({
                 Bert.alert('HAL9000 joins the battle!', 'success');
 
                 let boardAttributes = {
-                    gameId: gameId
+                    gameId: gameId,
+                    owner: bot
                 };
 
                 Meteor.call('createGameBoard', boardAttributes, (error, boardId) => {
@@ -58,7 +60,32 @@ App.GameBoards = React.createClass({
                         Bert.alert(error.reason, 'success');
                     } else {
 
-                        // unit placement
+                        // loop this 5 times using random cell ids
+
+                        let targetAttributes = {
+                            boardId: boardId._id,
+                            targetId: '1A'
+                        };
+
+                        console.log(targetAttributes);
+
+                        //Meteor.call('placeUnit', targetAttributes, (error) => {
+                        //    if (error) {
+                        //        Bert.alert(error.reason, 'warning');
+                        //    } else {
+                        //        console.log('placed unit on ' + targetAttributes.targetId);
+                        //    }
+                        //});
+
+                        // when loop finishes call updateStatus method
+
+                        //Meteor.call('updateStatus', updateAttributes, (error) => {
+                        //    if (error) {
+                        //        Bert.alert(error.reason, 'warning');
+                        //    } else {
+                        //        Bert.alert('Your units are deployed, get ready for battle!', 'success');
+                        //    }
+                        //});
                     }
                 });
             }

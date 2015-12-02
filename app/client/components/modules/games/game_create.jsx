@@ -5,9 +5,9 @@ App.GameCreate = React.createClass({
 
         let gameAttributes = {
             title: $('[name="title"]').val()
-        }, currentUser = Meteor.user();
+        }, user = Meteor.user();
 
-        if (!currentUser) {
+        if (!user) {
             Bert.alert('You need to be logged in to create games', 'warning');
         }
         if (gameAttributes.title === '') {
@@ -28,11 +28,12 @@ App.GameCreate = React.createClass({
 
                     Bert.alert('Game created!', 'success');
 
-                    let gameAttributes = {
-                        gameId: gameId._id
+                    let boardAttributes = {
+                        gameId: gameId._id,
+                        owner: user.username
                     };
 
-                    Meteor.call('createGameBoard', gameAttributes, (error) => {
+                    Meteor.call('createGameBoard', boardAttributes, (error) => {
                         if (error) {
                             console.error(error.reason);
                         } else {

@@ -1,12 +1,13 @@
 Meteor.methods({
     createGameBoard(boardAttributes) {
         check(boardAttributes, {
-            gameId: String
+            gameId: String,
+            owner: String
         });
 
         let now = new Date(),
             user = Meteor.user(),
-            duplicateBoard = Boards.findOne({gameId: boardAttributes.gameId, owner: user.username});
+            duplicateBoard = Boards.findOne({gameId: boardAttributes.gameId, owner: boardAttributes.owner});
 
         if (!user) {
             throw new Meteor.Error('user-not-logged-in', 'You need to be logged in to create a game board.');
@@ -16,7 +17,6 @@ Meteor.methods({
         } else {
 
             let board = _.extend(boardAttributes, {
-                owner: user.username,
                 createdAt: now,
                 status: null,
                 // @TODO: function to generate targets
