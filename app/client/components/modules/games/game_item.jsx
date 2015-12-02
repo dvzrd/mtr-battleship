@@ -11,12 +11,9 @@ App.GameItem = React.createClass({
             params = {_id: gameId},
             path = FlowRouter.path(pathDef, params);
 
-        if (!user) {
-            Bert.alert('You need to be logged in to join a game', 'warning');
-        }
         if (gameIsFull) {
             // @TODO: method for joining a recently created and available game
-            return Meteor.Error('game-full', 'This game is full.');
+            Bert.alert('game-full', 'This game is full.', 'warning');
         } else {
             if (userIsPlaying) {
                 FlowRouter.go(path);

@@ -30,10 +30,6 @@ App.GameBoards = React.createClass({
         let gameId = this.data.gameId,
             bot = 'HAL9000';
 
-        // bot can be added by using an existing bot account {username: 'HAL9000'}
-        // when bot is added, create a game board (createGameBoard method)
-        // game board already has units placed (ready status) (Collection.botBoards)
-        // as game creator, user will make first attack
         // when bot is on offensive - generate random targetId (1 to 5 + A to E)
         // ensure random targetId is never the same each round (has to change after each attack)
         // add some generated comments when bot hits or misses or gets hit, etc (low priority)
@@ -48,7 +44,6 @@ App.GameBoards = React.createClass({
             if (error) {
                 Bert.alert(error.reason, 'warning');
             } else {
-                Bert.alert('HAL9000 joins the battle!', 'success');
 
                 let boardAttributes = {
                     gameId: gameId,
@@ -60,7 +55,7 @@ App.GameBoards = React.createClass({
                         Bert.alert(error.reason, 'success');
                     } else {
                         let board = boardId,
-                            targets = ['5A','2B','4C','3D','1E'];
+                            targets = ['5A', '2B', '4C', '3D', '1E'];
 
                         // @TODO: make a collection of unit placements for bot - get one at random
 
@@ -69,8 +64,6 @@ App.GameBoards = React.createClass({
                                 boardId: board._id,
                                 targetId: targets[target]
                             };
-
-                            console.log(targetAttributes);
 
                             Meteor.call('placeUnit', targetAttributes, (error) => {
                                 if (error) {
@@ -89,6 +82,8 @@ App.GameBoards = React.createClass({
                         Meteor.call('updateStatus', updateAttributes, (error) => {
                             if (error) {
                                 Bert.alert(error.reason, 'warning');
+                            } else {
+                                Bert.alert('HAL9000 joins the battle!', 'success');
                             }
                         });
                     }
@@ -152,13 +147,87 @@ App.GameBoards = React.createClass({
             } else {
 
                 let ready = creatorBoard.status === 'ready' && destroyerBoard.status === 'ready',
-                    offensive = creatorBoard.status === 'offense';
+                    offensive = creatorBoard.status === 'offense',
+                    botOpponent = creatorBoard.status === 'defense' && destroyerBoard.owner === 'HAL9000';
 
                 if (ready || offensive) {
                     return (
                         <App.GameBoard gameProps={gameProps} boardId={destroyerBoard._id}/>
                     );
                 } else {
+
+                    if (botOpponent) {
+                        // @TODO: make this into separate function - break it up
+
+                        let targets = _.filter(creatorBoard.targets, function(target) {
+                                if (target.status === 'empty' || target.status === 'selected') {
+                                    return target
+                                }
+                                //return ~target.status.indexOf('empty', 'selected');
+                            }),
+                            attackTarget = _.sample(targets);
+
+                        let attackAttributes = {
+                            boardId: creatorBoard._id,
+                            boardStatus: 'offense',
+                            targetId: attackTarget.id,
+                            targetStatus: attackTarget.status
+                        };
+
+                        setTimeout(() => {
+                            Meteor.call('attackTarget', attackAttributes, (error, report) => {
+                                if (error) {
+                                    console.error(error.reason, 'warning');
+                                } else {
+
+                                    let targetStatus = report.status,
+                                        updateAttributes = {
+                                        boardId: destroyerBoard._id,
+                                        status: 'defense'
+                                    };
+
+                                    Meteor.call('updateStatus', updateAttributes, (error) => {
+                                        if (error) {
+                                            console.error(error.reason, 'warning');
+                                        } else {
+
+                                            if (targetStatus === 'destroyed') {
+                                                let scoreAttributes = {
+                                                    gameId: this.data.gameId,
+                                                    attacker: destroyerBoard.owner
+                                                };
+
+                                                Meteor.call('updateScore', scoreAttributes, (error) => {
+                                                    if (error) {
+                                                        console.error(error.reason, 'warning');
+                                                    } else {
+
+                                                        if (this.data.game.destroyerScore === 25) {
+                                                            let winnerAttributes = {
+                                                                gameId: this.data.gameId,
+                                                                winner: destroyerBoard.owner
+                                                            };
+
+                                                            Meteor.call('declareWinner', winnerAttributes, (error) => {
+                                                                if (error) {
+                                                                    Bert.alert(error.reason, 'warning');
+                                                                } else {
+                                                                    Bert.alert(game.destroyer + ' is the winner of this battle', 'success');
+                                                                }
+                                                            });
+                                                        } else {
+                                                            Bert.alert('HAL9000 destroyed your position at ' + attackAttributes.targetId + '!', 'warning');
+                                                        }
+                                                    }
+                                                });
+                                            }
+                                        }
+                                    });
+                                }
+                            });
+                        }, 3000);
+                    }
+
                     return (
                         <App.GameBoard gameProps={gameProps} boardId={creatorBoard._id}/>
                     );

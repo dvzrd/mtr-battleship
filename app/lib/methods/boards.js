@@ -167,6 +167,7 @@ Meteor.methods({
     attackTarget(attackAttributes) {
         check(attackAttributes, {
             boardId: String,
+            boardStatus: String,
             targetId: String,
             targetStatus: String
         });
@@ -185,7 +186,7 @@ Meteor.methods({
             Boards.update({_id: attackAttributes.boardId, 'targets.id': attackAttributes.targetId}, {
                 $set: {
                     targetId: null,
-                    status: 'offense',
+                    status: attackAttributes.boardStatus,
                     'targets.$.isTarget': false,
                     'targets.$.status': 'destroyed'
                 }
@@ -198,7 +199,7 @@ Meteor.methods({
             Boards.update({_id: attackAttributes.boardId, 'targets.id': attackAttributes.targetId}, {
                 $set: {
                     targetId: null,
-                    status: 'offense',
+                    status: attackAttributes.boardStatus,
                     'targets.$.isTarget': false,
                     'targets.$.status': 'missed'
                 }

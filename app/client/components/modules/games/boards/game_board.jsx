@@ -65,11 +65,12 @@ App.GameBoard = React.createClass({
         } else {
             let attackAttributes = {
                 boardId: this.data.board._id,
+                boardStatus: 'offense',
                 targetId: target.id,
                 targetStatus: target.status
             };
 
-            // @TODO: break all these calls down into functions inside the client module
+            // @TODO: break all these calls down into functions
 
             Meteor.call('attackTarget', attackAttributes, (error, report) => {
                 if (error) {
