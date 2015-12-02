@@ -88,7 +88,7 @@ App.GameBoards = React.createClass({
         }
     },
 
-    // @TODO: refactor board render into separate client module - employ micro-branching
+    // @TODO: refactor board render into smaller modules - employ micro-branching
 
     renderGameBoard() {
         let user = Meteor.user(),
