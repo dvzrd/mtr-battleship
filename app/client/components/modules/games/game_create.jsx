@@ -1,20 +1,4 @@
 App.GameCreate = React.createClass({
-    mixins: [ReactMeteorData],
-
-    propTypes: {
-        isActive: React.PropTypes.bool,
-        className: React.PropTypes.string
-    },
-
-    shouldComponentUpdate() {
-        return true;
-    },
-
-    getMeteorData() {
-        return {
-            isActive: this.props.isActive
-        }
-    },
 
     handleSubmit(event) {
         event.preventDefault();
@@ -29,6 +13,8 @@ App.GameCreate = React.createClass({
         if (gameAttributes.title === '') {
             Bert.alert('Your game needs a title so others can find it', 'warning');
         } else {
+            // @TODO: break this up a bit
+
             Meteor.call('createGame', gameAttributes, (error, gameId) => {
                 let pathDef = '/battle/:_id',
                     params = gameId,
@@ -37,12 +23,11 @@ App.GameCreate = React.createClass({
                 if (error) {
                     Bert.alert(error.reason, 'warning');
                 } else {
-                    //@TODO: find a better way to toggle this modal
-                    $('.create.game.module.active').removeClass('active');
+                    //@TODO: find a better way to toggle modal
+                    //$('.modal').removeClass('active');
 
                     Bert.alert('Game created!', 'success');
 
-                    // @TODO: refactor this call to gameBoardCreate module
                     let gameAttributes = {
                         gameId: gameId._id
                     };
@@ -73,16 +58,10 @@ App.GameCreate = React.createClass({
     },
 
     render() {
-        let className = 'animated fadeInUp create game module';
-
-        if (this.data.isActive) {
-            className += ' active';
-        }
-
         return (
-            <module className={className}>
+            <modal className="create game modal">
                 {this.renderForm()}
-            </module>
+            </modal>
         );
     }
 });

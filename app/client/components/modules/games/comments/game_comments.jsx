@@ -1,17 +1,10 @@
 App.GameComments = React.createClass({
-    mixins: [ReactMeteorData],
-
-    propTypes: {},
-
-    shouldComponentUpdate() {
-        return true;
-    },
-
     render() {
         return (
-            <module className="game comments module">
+            <modal className="game comments modal">
+                <App.GameCommentsFeed />
                 <App.GameCommentForm />
-            </module>
+            </modal>
         );
     }
 });

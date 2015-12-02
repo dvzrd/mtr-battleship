@@ -1,16 +1,22 @@
 App.Menu = React.createClass({
     PropTypes: {},
+
     getInitialState: function () {
         return {renderGameCreate: false};
     },
+
     shouldComponentUpdate() {
         return true;
     },
+
     handleCreateToggle(event) {
         event.preventDefault();
 
         this.setState({renderGameCreate: !this.state.renderGameCreate});
+
+        $('.modal').toggleClass('active');
     },
+
     handleCompleteGameClick(event) {
         event.preventDefault();
         // @TODO: refactor - move this call into gameComplete with reactive gameId
@@ -26,11 +32,13 @@ App.Menu = React.createClass({
             }
         });
     },
+
     handleChatToggle(event) {
         event.preventDefault();
 
-        console.log('toggle chat module');
+        $('.modal').toggleClass('active');
     },
+
     // @TODO: move to actions module
     renderLeftButton() {
         // @TODO: make a router helper
@@ -48,6 +56,7 @@ App.Menu = React.createClass({
             )
         }
     },
+
     renderRightButton() {
         // @TODO: make a router helper
         if (FlowRouter.current().route.name === 'root') {
@@ -71,6 +80,7 @@ App.Menu = React.createClass({
             );
         }
     },
+
     renderButtons() {
         // @TODO: move these buttons into own component with propTypes for different button varieties
         if (!Meteor.loggingIn() && Meteor.user()) {
@@ -91,11 +101,11 @@ App.Menu = React.createClass({
             );
         }
     },
+
     render() {
         return (
             <module className="menu module">
                 {this.renderButtons()}
-                <App.GameCreate isActive={!!this.state.renderGameCreate}/>
             </module>
         );
     }

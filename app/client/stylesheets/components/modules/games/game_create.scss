@@ -1,7 +1,6 @@
 @import '../../../_variables';
 
-.create.game.module {
-  display: none;
+.create.game.modal {
   position: fixed;
   left: 0;
   top: 0;
@@ -9,10 +8,6 @@
   height: $fluid-full;
   margin: auto;
   background-color: rgba(57, 56, 62, 0.9);
-
-  &.active {
-    display: block;
-  }
 
   .form {
     margin-top: 40vh;

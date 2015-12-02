@@ -3,10 +3,6 @@ App.GameCommentForm = React.createClass({
 
     propTypes: {},
 
-    shouldComponentUpdate() {
-        return true;
-    },
-
     handleSubmit(event) {
         event.preventDefault();
 
