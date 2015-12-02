@@ -3,7 +3,8 @@ App.GameItem = React.createClass({
         event.preventDefault();
 
         // @TODO: refactor - separate module gameJoin
-        var pathDef = '/battle/:_id',
+        let user = Meteor.user(),
+            pathDef = '/battle/:_id',
             gameId = this.props.game._id,
             params = {_id: gameId},
             path = FlowRouter.path(pathDef, params),
@@ -12,7 +13,12 @@ App.GameItem = React.createClass({
         if (!currentUser) {
             Bert.alert('You need to be logged in to join a game', 'warning');
         } else {
-            Meteor.call('joinGame', gameId, (error) => {
+            let joinAttributes = {
+                gameId: gameId,
+                destroyer: user.username
+            };
+
+            Meteor.call('joinGame', joinAttributes, (error) => {
                 if (error) {
                     Bert.alert(error.reason, 'warning');
                 } else {

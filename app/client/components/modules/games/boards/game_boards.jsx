@@ -29,8 +29,6 @@ App.GameBoards = React.createClass({
         event.preventDefault();
         let gameId = this.data.gameId;
 
-        // @ TODO: modify join game method to accept username from client
-
         // bot can be added by using an existing bot account {username: 'HAL9000'}
         // when bot is added, create a game board (createGameBoard method)
         // game board already has units placed (ready status) (Collection.botBoards)
@@ -40,25 +38,31 @@ App.GameBoards = React.createClass({
         // add some generated comments when bot hits or misses or gets hit, etc (low priority)
         // this loops until game ends
 
-        //Meteor.call('joinGame', gameId, (error) => {
-        //    if (error) {
-        //        Bert.alert(error.reason, 'warning');
-        //    } else {
-        //        Bert.alert('Get ready to destroy!', 'success');
-        //
-        //        let boardAttributes = {
-        //            gameId: gameId
-        //        };
-        //
-        //        Meteor.call('createGameBoard', boardAttributes, (error, boardId) => {
-        //            if (error) {
-        //                Bert.alert(error.reason, 'success');
-        //            } else {
-        //                FlowRouter.go(path);
-        //            }
-        //        });
-        //    }
-        //});
+        let joinAttributes = {
+            gameId: gameId,
+            destroyer: 'HAL9000'
+        };
+
+        Meteor.call('joinGame', joinAttributes, (error) => {
+            if (error) {
+                Bert.alert(error.reason, 'warning');
+            } else {
+                Bert.alert('HAL9000 joins the battle!', 'success');
+
+                let boardAttributes = {
+                    gameId: gameId
+                };
+
+                Meteor.call('createGameBoard', boardAttributes, (error, boardId) => {
+                    if (error) {
+                        Bert.alert(error.reason, 'success');
+                    } else {
+
+                        // unit placement
+                    }
+                });
+            }
+        });
     },
 
     renderNotice() {

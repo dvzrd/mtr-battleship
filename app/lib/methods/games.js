@@ -31,15 +31,18 @@ Meteor.methods({
             };
         }
     },
-    joinGame(gameId) {
-        check(gameId, String);
+    joinGame(joinAttributes) {
+        check(joinAttributes, {
+            gameId: String,
+            destroyer: String
+        });
 
         var user = Meteor.user(),
-            game = Games.findOne({_id: gameId}),
+            game = Games.findOne({_id: joinAttributes.gameId}),
             userIsPlaying = game.creator === user.username || game.destroyer === user.username,
             gameIsFull = game.playerCount === 2 && !userIsPlaying,
             pathDef = '/battle/:_id',
-            params = {_id: gameId},
+            params = {_id: joinAttributes.gameId},
             path = FlowRouter.path(pathDef, params);
 
         if (!user) {
@@ -55,8 +58,8 @@ Meteor.methods({
             if (userIsPlaying) {
                 FlowRouter.go(path);
             } else {
-                Games.update(gameId, {
-                    $set: {'destroyer': user.username, 'playerCount': 2}
+                Games.update(joinAttributes.gameId, {
+                    $set: {'destroyer': joinAttributes.destroyer, 'playerCount': 2}
                 });
             }
         }
