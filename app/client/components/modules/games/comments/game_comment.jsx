@@ -14,11 +14,10 @@ App.GameComment = React.createClass({
     },
 
     componentDidMount() {
-        // @TODO: scroll down to last comment
+        let $comments = $('.comments.list'),
+            $comment = $('.comment.item:last-child');
 
-        let $comments = $('.comments.list');
-
-        $comments.scrollTop($comments.scrollHeight);
+        $comments.scrollTop($comments.scrollTop() + $comment.position().top);
     },
 
     render() {

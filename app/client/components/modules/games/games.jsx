@@ -17,9 +17,7 @@ App.Games = React.createClass({
         } else {
             return (
                 <module className="animated fadeInDown games module">
-                    {noGames ?
-                        // TODO: make component for messages
-                        <p className="centered message">There are no games, click the gamepad icon to start!</p> :
+                    {noGames ? <p className="centered message">There are no active games at the moment!</p> :
                         <App.GamesList games={this.data.games}/>}
                 </module>
             );

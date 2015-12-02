@@ -10,6 +10,8 @@ App.GameCommentForm = React.createClass({
         Meteor.call('postComment', commentAttributes, (error) => {
             if (error) {
                 Bert.alert(error.reason, 'warning');
+            } else {
+                $('[name="comment"]').val('');
             }
         });
     },

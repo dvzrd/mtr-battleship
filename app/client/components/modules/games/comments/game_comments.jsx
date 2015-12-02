@@ -8,17 +8,20 @@ App.GameComments = React.createClass({
 
         return {
             isLoading: !subscription.ready(),
-            comments: Comments.find({}, {sort: {createdAt: -1}}).fetch()
+            comments: Comments.find({}, {sort: {createdAt: 1}}).fetch()
         };
     },
 
     render() {
+        let noComments = this.data.comments.length === 0;
+
         if (this.data.isLoading) {
             return <App.Loading />;
         } else {
             return (
                 <modal className="game comments modal">
-                    <App.GameCommentsFeed comments={this.data.comments}/>
+                    {noComments ? <p className="centered light message">There are no comments for this game.</p> :
+                    <App.GameCommentsFeed comments={this.data.comments}/>}
                     <App.GameCommentForm />
                 </modal>
             );
