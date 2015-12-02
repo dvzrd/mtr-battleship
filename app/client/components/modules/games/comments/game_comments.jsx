@@ -10,7 +10,7 @@ App.GameComments = React.createClass({
     render() {
         return (
             <module className="game comments module">
-                <p>game comments module</p>
+                <App.GameCommentForm />
             </module>
         );
     }
