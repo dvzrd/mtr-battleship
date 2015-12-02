@@ -13,6 +13,14 @@ App.GameComment = React.createClass({
         return true;
     },
 
+    componentDidMount() {
+        // @TODO: scroll down to last comment
+
+        let $comments = $('.comments.list');
+
+        $comments.scrollTop($comments.scrollHeight);
+    },
+
     render() {
         let sender = this.data.comment.sender,
             date = DateHelpers.format(this.data.comment.createdAt),
