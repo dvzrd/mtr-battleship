@@ -56,9 +56,11 @@ App.Menu = React.createClass({
             );
         } else {
             return (
-                <a className="right secondary icon button" href={RouterHelpers.pathFor('login')}>
-                    <i className="fa fa-plug"></i>
-                </a>
+                <module className="actions module">
+                    <a className="right secondary icon button" href={RouterHelpers.pathFor('login')}>
+                        <i className="fa fa-plug"></i>
+                    </a>
+                </module>
             );
         }
     },

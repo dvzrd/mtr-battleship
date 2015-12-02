@@ -18,6 +18,10 @@ App.Signup = React.createClass({
                         <input type="email" name="emailAddress" className="email input" placeholder="Email Address"/>
                     </div>
                     <div className="input group">
+                        <label className="label" htmlFor="username"><i className="fa fa-user"></i></label>
+                        <input type="text" name="username" className="username input" placeholder="Username"/>
+                    </div>
+                    <div className="input group">
                         <label className="label" htmlFor="password"><i className="fa fa-unlock"></i></label>
                         <input type="password" name="password" className="password input" placeholder="Password"/>
                     </div>

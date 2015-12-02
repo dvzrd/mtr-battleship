@@ -46,7 +46,6 @@ App.GameBoards = React.createClass({
         //    } else {
         //        Bert.alert('Get ready to destroy!', 'success');
         //
-        //        // @TODO: refactor - separate module createGameBoard
         //        let boardAttributes = {
         //            gameId: gameId
         //        };

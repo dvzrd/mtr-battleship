@@ -13,6 +13,10 @@ let validation = (component) => {
                 required: true,
                 email: true
             },
+            username: {
+                required: true,
+                minlength: 3
+            },
             password: {
                 required: true,
                 minlength: 6
@@ -22,6 +26,10 @@ let validation = (component) => {
             emailAddress: {
                 required: 'Need an email address here.',
                 email: 'Is this email address legit?'
+            },
+            username: {
+                required: 'Need a username here.',
+                minlength: 'Need at least three characters, please.'
             },
             password: {
                 required: 'Need a password here.',
@@ -37,6 +45,7 @@ let validation = (component) => {
 let _handleSignup = () => {
     let user = {
         email: $('[name="emailAddress"]').val(),
+        username: $('[name="username"]').val(),
         password: $('[name="password"]').val()
     };
 

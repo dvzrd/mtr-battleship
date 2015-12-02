@@ -50,11 +50,10 @@ let _handleGameCreate = () => {
                     gameId: gameId._id
                 };
 
-                Meteor.call('createGameBoard', gameAttributes, (error, boardId) => {
+                Meteor.call('createGameBoard', gameAttributes, (error) => {
                     if (error) {
                         console.error(error.reason);
                     } else {
-                        console.log('created game board ' + boardId);
                         FlowRouter.go(path);
                     }
                 });
