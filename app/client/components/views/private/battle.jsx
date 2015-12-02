@@ -19,8 +19,6 @@ App.Battle = React.createClass({
                         <App.GameDetails />
                         <App.GameBoards game={this.data.game}/>
                     </section>
-
-                    <p>chat module</p>
                 </view>
             );
         }

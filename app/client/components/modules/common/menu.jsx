@@ -37,7 +37,7 @@ App.Menu = React.createClass({
         if (FlowRouter.current().route.name === 'battle') {
             return (
                 <button type="button" className="left secondary icon button" onClick={this.handleCompleteGameClick}>
-                    <i className="fa fa-trash"></i>
+                    <i className="fa fa-ban"></i>
                 </button>
             )
         } else {

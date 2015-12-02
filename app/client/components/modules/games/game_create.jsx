@@ -1,19 +1,31 @@
 App.GameCreate = React.createClass({
+    mixins: [ReactMeteorData],
+
     componentDidMount() {
         Modules.client.gameCreate({
             form: '#gameCreate'
         });
     },
+
     propTypes: {
         isActive: React.PropTypes.bool,
         className: React.PropTypes.string
     },
+
     shouldComponentUpdate() {
         return true;
     },
+
+    getMeteorData() {
+        return {
+            isActive: this.props.isActive
+        }
+    },
+
     handleSubmit(event) {
         event.preventDefault();
     },
+
     renderForm() {
         return (
             <form id="gameCreate" className="create game form" onSubmit={this.handleSubmit}>
@@ -26,10 +38,11 @@ App.GameCreate = React.createClass({
             </form>
         );
     },
+
     render() {
         let className = 'animated fadeInUp create game module';
 
-        if (this.props.isActive) {
+        if (this.data.isActive) {
             className += ' active';
         }
 
