@@ -75,14 +75,16 @@ Meteor.methods({
             attacker: String
         });
 
-        let game = Games.findOne({_id: scoreAttributes.gameId, completedAt: null}),
-            creatorScoredPoints = game.creator === scoreAttributes.attacker,
-            winner = game.creatorScore === 25 || game.destroyerScore === 25,
-            points = +5;
+        let game = Games.findOne({_id: scoreAttributes.gameId, completedAt: null});
 
         if (!game) {
             throw new Meteor.Error('game-does-not-exist', 'This game is not in the collection');
         }
+
+        let creatorScoredPoints = game.creator === scoreAttributes.attacker,
+            winner = game.creatorScore === 25 || game.destroyerScore === 25,
+            points = +5;
+
         if (winner) {
             throw new Meteor.Error('winner-already-exists', 'The max number of points already has been awarded.');
         } else {
