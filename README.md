@@ -52,46 +52,36 @@ A simple battleship game that uses an API
 
 Make sure [Meteor is installed and up to date](https://www.meteor.com/install) or run:
 
-```
+```sh
 curl https://install.meteor.com/ | sh
 ```
 
 ### Run Locally
 
-```
+```sh
 git clone git@github.com:amazingBastard/mtr-battleship.git
 cd mtr-battleship
 ```
 
-Run the following to get the bash file to work:
+Run the following to get the bash file to work:  
 
 ```
 chmod +x ./run.sh
 ```
 
-Now you can start the app with the following command:
-
-```
-./run.sh
-```
-
-The app should now be running on:
-
-```
-http://localhost:3000
-```
+Now you can start the app with the following command `./run.sh` and the app should now be running on <http://localhost:3000>
 
 ### Deployment
 
-Make sure you have Meteor Up (mup) installed.
+Make sure you have Meteor Up (mup) installed.  
 
-```
+```sh
 npm install -g mup
 ```
 
-Configure your mup.json file for deployment in environments/production dir. This is an example file:
+Configure your mup.json file for deployment in environments/production dir. This is an example file:  
 
-```
+```js
 {
   // Server authentication info
   "servers": [
