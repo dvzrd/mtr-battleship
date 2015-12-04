@@ -3,7 +3,7 @@ App.Dashboard = React.createClass({
         return (
             <view className="animated fadeIn dashboard view">
                 <module className="module">
-                    <p className="message">dashboard view coming soon</p>
+                    <p className="centered message">dashboard view coming soon</p>
                     <button type="button" className="centered secondary icon button" onClick={Meteor.logout}>
                         <i className="fa fa-power-off"></i> Logout
                     </button>
